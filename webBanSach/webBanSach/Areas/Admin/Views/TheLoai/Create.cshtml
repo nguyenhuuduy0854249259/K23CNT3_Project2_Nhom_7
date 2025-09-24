@@ -1,0 +1,18 @@
+﻿@model webBanSach.Models.TheLoai
+@{
+    ViewData["Title"] = "Thêm thể loại";
+}
+
+<h2>➕ Thêm thể loại</h2>
+<hr />
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="TenLoai" class="form-label"></label>
+        <input asp-for="TenLoai" class="form-control" />
+        <span asp-validation-for="TenLoai" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">💾 Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">↩️ Quay lại</a>
+</form>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<webBanSach.Models.TheLoai>
+@{
+    ViewData["Title"] = "Quản lý thể loại";
+}
+
+<h2 class="mb-3">📚 Danh sách thể loại</h2>
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchString" class="form-control" placeholder="Tìm theo tên thể loại..." />
+        <button type="submit" class="btn btn-primary">🔍 Tìm</button>
+        <a asp-action="Create" class="btn btn-success ms-2">➕ Thêm thể loại</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-head">
+        <tr>
+            <th>Mã loại</th>
+            <th>Tên loại</th>
+            <th style="width:150px;">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaLoai</td>
+                <td>@item.TenLoai</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.MaLoai" class="btn btn-sm btn-info">👁️</a>
+                    <a asp-action="Edit" asp-route-id="@item.MaLoai" class="btn btn-sm btn-warning">✏️</a>
+                    <button type="button" class="btn btn-danger btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal"
+                            data-id="@item.MaLoai"
+                            data-name="@item.TenLoai">
+                        🗑️
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- Modal xác nhận xóa -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <form id="deleteForm" method="post">
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa NXB <strong id="deleteItemName"></strong>?
+                    <input type="hidden" name="id" id="deleteItemId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var deleteModal = document.getElementById('confirmDeleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            var name = button.getAttribute('data-name');
+
+            document.getElementById('deleteItemName').textContent = name;
+            document.getElementById('deleteItemId').value = id;
+
+            // POST tới /Admin/NhaXuatBan/Delete/{id}
+            document.getElementById('deleteForm').action = '/Admin/NhaXuatBan/Delete/' + id;
+        });
+    </script>
+}

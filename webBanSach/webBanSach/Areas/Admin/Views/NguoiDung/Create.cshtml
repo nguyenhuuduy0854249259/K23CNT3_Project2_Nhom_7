@@ -1,0 +1,83 @@
+﻿@model webBanSach.ViewModels.NguoiDungViewModel
+
+@{
+    ViewData["Title"] = "Thêm Người Dùng";
+}
+
+<h2 class="mb-4">➕ Thêm Người dùng mới</h2>
+
+<form asp-action="Create" enctype="multipart/form-data" method="post" class="row g-3">
+    <!-- Họ tên -->
+    <div class="col-md-6">
+        <label asp-for="HoTen" class="form-label">Họ và tên</label>
+        <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+
+    <!-- Email -->
+    <div class="col-md-6">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <!-- Mật khẩu -->
+    <div class="col-md-6">
+        <label asp-for="MatKhau" class="form-label">Mật khẩu</label>
+        <input asp-for="MatKhau" class="form-control" type="password" />
+        <span asp-validation-for="MatKhau" class="text-danger"></span>
+    </div>
+
+    <!-- SĐT -->
+    <div class="col-md-6">
+        <label asp-for="SDT" class="form-label">Số điện thoại</label>
+        <input asp-for="SDT" class="form-control" />
+        <span asp-validation-for="SDT" class="text-danger"></span>
+    </div>
+
+    <!-- Địa chỉ -->
+    <div class="col-12">
+        <label asp-for="DiaChi" class="form-label">Địa chỉ</label>
+        <input asp-for="DiaChi" class="form-control" />
+        <span asp-validation-for="DiaChi" class="text-danger"></span>
+    </div>
+
+    <!-- Loại người dùng -->
+    <div class="col-md-6">
+        <label asp-for="LoaiNguoiDung" class="form-label">Loại người dùng</label>
+        <select asp-for="LoaiNguoiDung" class="form-select">
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+        </select>
+        <span asp-validation-for="LoaiNguoiDung" class="text-danger"></span>
+    </div>
+
+    <!-- Trạng thái -->
+    <div class="col-md-6">
+        <label asp-for="TrangThai" class="form-label">Trạng thái</label>
+        <select asp-for="TrangThai" class="form-select">
+            <option value="Hoạt động">Hoạt động</option>
+            <option value="Khóa">Khóa</option>
+        </select>
+        <span asp-validation-for="TrangThai" class="text-danger"></span>
+    </div>
+
+    <!-- Ảnh đại diện -->
+    <div class="col-12">
+        <label asp-for="HinhAnhFile" class="form-label">Ảnh đại diện</label>
+        <input asp-for="HinhAnhFile" type="file" class="form-control" />
+        <span asp-validation-for="HinhAnhFile" class="text-danger"></span>
+    </div>
+
+    <!-- Buttons -->
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">💾 Lưu</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,45 @@
+﻿@model webBanSach.Models.KhuyenMai
+@{
+    ViewData["Title"] = "Chi tiết Khuyến mãi";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card shadow-sm p-4">
+    <dl class="row">
+        <dt class="col-sm-3">Mã Code</dt>
+        <dd class="col-sm-9">@Model.MaCode</dd>
+
+        <dt class="col-sm-3">Mô tả</dt>
+        <dd class="col-sm-9">@Model.MoTa</dd>
+
+        <dt class="col-sm-3">% Giảm</dt>
+        <dd class="col-sm-9">@Model.PhanTramGiam %</dd>
+
+        <dt class="col-sm-3">Giảm tối đa</dt>
+        <dd class="col-sm-9">@Model.GiamToiDa?.ToString("N0") đ</dd>
+
+        <dt class="col-sm-3">Ngày bắt đầu</dt>
+        <dd class="col-sm-9">@Model.NgayBatDau.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Ngày kết thúc</dt>
+        <dd class="col-sm-9">@Model.NgayKetThuc.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Trạng thái</dt>
+        <dd class="col-sm-9">
+            @if (Model.TrangThai == true)
+            {
+                <span class="badge bg-success">Đang áp dụng</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Ngừng</span>
+            }
+        </dd>
+    </dl>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.MaKM" class="btn btn-warning">✏️ Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary">⬅ Quay lại</a>
+</div>

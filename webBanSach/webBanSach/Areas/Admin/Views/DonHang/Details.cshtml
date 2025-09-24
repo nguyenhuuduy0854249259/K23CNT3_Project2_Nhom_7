@@ -1,0 +1,86 @@
+﻿@model webBanSach.Models.DonHang
+@{
+    ViewData["Title"] = "Chi tiết Đơn hàng";
+}
+
+<h3><i class="fa-solid fa-file-invoice"></i> Chi tiết Đơn hàng #@Model.MaDH</h3>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><b>Khách hàng:</b> @Model.MaNDNavigation?.HoTen</p>
+        <p><b>Ngày đặt:</b> @Model.NgayDat?.ToString("dd/MM/yyyy")</p>
+        <p>
+            <b>Trạng thái:</b>
+            <span class="badge bg-@(Model.TrangThai == "Hoàn tất" ? "success" :
+                                    Model.TrangThai == "Đang giao" ? "info" :
+                                    Model.TrangThai == "Hủy" ? "danger" : "secondary")">
+                @Model.TrangThai
+            </span>
+        </p>
+    </div>
+</div>
+
+<h5>Danh sách sản phẩm</h5>
+<table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Sách</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+            <th>Tổng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ct in Model.CT_DonHangs)
+        {
+            <tr>
+                <td>@ct.MaSachNavigation?.TenSach</td>
+                <td>@ct.SoLuong</td>
+                <td>@ct.DonGia.ToString("N0") đ</td>
+                <td>@(ct.SoLuong * ct.DonGia).ToString("N0") đ</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex gap-2 mt-3">
+
+    <!-- Form cập nhật trạng thái, chỉ hiện nếu chưa Hoàn tất/Hủy -->
+    @if (Model.TrangThai != "Hoàn tất" && Model.TrangThai != "Hủy")
+    {
+        <form asp-action="UpdateStatus" method="post" class="d-flex gap-2">
+            <input type="hidden" name="id" value="@Model.MaDH" />
+            <input type="hidden" name="returnTo" value="Details" />
+            <select name="trangThai" class="form-select">
+                @foreach (var s in ViewBag.StatusList as string[])
+                {
+                    <option value="@s" selected="@(s == Model.TrangThai)">@s</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </form>
+    }
+
+    <!-- Nút Hủy, chỉ hiện nếu chưa Hủy/Hoàn tất -->
+    @if (Model.TrangThai != "Hủy" && Model.TrangThai != "Hoàn tất")
+    {
+        <form asp-action="Cancel" asp-route-id="@Model.MaDH" method="post">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?');">
+                <i class="fa fa-times"></i> Hủy đơn hàng
+            </button>
+        </form>
+    }
+
+    <!-- Nút xóa nếu trạng thái Hủy -->
+    @if (Model.TrangThai == "Hủy")
+    {
+        <form asp-action="Delete" asp-route-id="@Model.MaDH" method="post">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Xóa đơn hàng Hủy này?');">
+                <i class="fa fa-trash"></i> Xóa
+            </button>
+        </form>
+    }
+
+    <!-- Nút Quay lại -->
+    <a asp-action="Index" class="btn btn-secondary ms-auto">⬅ Quay lại danh sách</a>
+</div>

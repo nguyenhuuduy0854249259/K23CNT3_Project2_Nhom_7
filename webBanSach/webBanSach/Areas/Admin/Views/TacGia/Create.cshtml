@@ -1,0 +1,28 @@
+﻿@model webBanSach.Models.TacGia
+
+@{
+    ViewData["Title"] = "Thêm Tác giả";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div class="mb-3">
+                <label asp-for="TenTG" class="form-label"></label>
+                <input asp-for="TenTG" class="form-control" placeholder="Nhập tên tác giả..." />
+                <span asp-validation-for="TenTG" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">💾 Lưu</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">⬅️ Quay lại</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

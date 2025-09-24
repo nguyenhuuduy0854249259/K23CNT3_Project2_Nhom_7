@@ -1,0 +1,107 @@
+﻿@model IEnumerable<webBanSach.Models.LienHe>
+
+@{
+    ViewData["Title"] = "Danh sách Liên hệ";
+}
+
+<h2 class="mb-3">Danh sách Liên hệ</h2>
+
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm theo tên, email, tiêu đề..." />
+        <button type="submit" class="btn btn-primary">Tìm</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover align-middle shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Tiêu đề</th>
+            <th>Ngày gửi</th>
+            <th>Trạng thái</th>
+            <th>Người dùng</th>
+            <th style="width:200px;">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.HoTen</td>
+                <td>@item.Email</td>
+                <td>@item.TieuDe</td>
+                <td>@item.NgayGui?.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    @if (item.TrangThai == "DaXuLy")
+                    {
+                        <span class="badge bg-success">Đã xử lý</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Chưa xử lý</span>
+                    }
+                </td>
+                <td>@item.MaNDNavigation?.HoTen</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.MaLH" class="btn btn-info btn-sm">
+                        👁️
+                    </a>
+                    <form asp-action="Toggle" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@item.MaLH" />
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            ✔️
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-danger btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal"
+                            data-id="@item.MaLH"
+                            data-name="@item.HoTen">
+                        🗑️
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal xác nhận xóa -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <form id="deleteForm" method="post">
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa liên hệ từ <strong id="deleteItemName"></strong>?
+                    <input type="hidden" name="id" id="deleteItemId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var deleteModal = document.getElementById('confirmDeleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            var name = button.getAttribute('data-name');
+
+            document.getElementById('deleteItemName').textContent = name;
+            document.getElementById('deleteItemId').value = id;
+
+            // POST tới /Admin/LienHe/Delete/{id}
+            document.getElementById('deleteForm').action = '/Admin/LienHe/Delete/' + id;
+        });
+    </script>
+}

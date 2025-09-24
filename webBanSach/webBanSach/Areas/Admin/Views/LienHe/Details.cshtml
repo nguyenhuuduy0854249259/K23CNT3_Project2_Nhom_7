@@ -1,0 +1,62 @@
+﻿@model webBanSach.Models.LienHe
+
+@{
+    ViewData["Title"] = "Chi tiết Liên hệ";
+}
+
+<div class="card shadow">
+    <div class="card-header bg-info text-white">
+        <h4><i class="fa-solid fa-envelope"></i> Chi tiết Liên hệ</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Họ tên</dt>
+            <dd class="col-sm-9">@Model.HoTen</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Tiêu đề</dt>
+            <dd class="col-sm-9">@Model.TieuDe</dd>
+
+            <dt class="col-sm-3">Nội dung</dt>
+            <dd class="col-sm-9">@Model.NoiDung</dd>
+
+            <dt class="col-sm-3">Ngày gửi</dt>
+            <dd class="col-sm-9">@Model.NgayGui?.ToString("dd/MM/yyyy HH:mm")</dd>
+
+            <dt class="col-sm-3">Người gửi</dt>
+            <dd class="col-sm-9">@Model.MaNDNavigation?.HoTen</dd>
+
+            <dt class="col-sm-3">Trạng thái</dt>
+            <dd class="col-sm-9">
+                @if (Model.TrangThai == "DaXuLy")
+                {
+                    <span class="badge bg-success">Đã xử lý</span>
+                }
+                else
+                {
+                    <span class="badge bg-warning text-dark">Chưa xử lý</span>
+                }
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+        <a asp-action="Index" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Quay lại</a>
+        <div>
+            <form asp-action="Toggle" method="post" class="d-inline">
+                <input type="hidden" name="id" value="@Model.MaLH" />
+                <button type="submit" class="btn btn-warning">
+                    <i class="fa fa-check-circle"></i> Đổi trạng thái
+                </button>
+            </form>
+
+            <form asp-action="DeleteConfirmed" method="post" class="d-inline">
+                <input type="hidden" name="id" value="@Model.MaLH" />
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa liên hệ này?')">
+                    <i class="fa fa-trash"></i> Xóa
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

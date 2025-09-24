@@ -1,0 +1,23 @@
+﻿@model webBanSach.Models.TacGia
+
+@{
+    ViewData["Title"] = "Chi tiết Tác giả";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Mã tác giả</dt>
+            <dd class="col-sm-9">@Model.MaTG</dd>
+
+            <dt class="col-sm-3">Tên tác giả</dt>
+            <dd class="col-sm-9">@Model.TenTG</dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Edit" asp-route-id="@Model.MaTG" class="btn btn-warning">✏️ Sửa</a>
+        <a asp-action="Index" class="btn btn-secondary ms-2">⬅️ Quay lại</a>
+    </div>
+</div>

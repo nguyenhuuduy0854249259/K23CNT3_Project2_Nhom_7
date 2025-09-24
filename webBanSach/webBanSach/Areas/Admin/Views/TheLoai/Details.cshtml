@@ -1,0 +1,75 @@
+﻿@model webBanSach.Models.TheLoai
+@{
+    ViewData["Title"] = "Chi tiết Thể loại";
+}
+
+<div class="row">
+    <!-- Thông tin thể loại -->
+    <div class="col-md-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light fw-bold">📖 Thông tin thể loại</div>
+            <div class="card-body">
+                <p><strong>Mã loại:</strong> #@Model.MaLoai</p>
+                <p><strong>Tên loại:</strong> @Model.TenLoai</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thao tác -->
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-light fw-bold">⚙️ Thao tác</div>
+            <div class="card-body">
+                <a asp-action="Edit" asp-route-id="@Model.MaLoai" class="btn btn-warning w-100 mb-2">✏️ Chỉnh sửa thể loại</a>
+
+                <button type="button" class="btn btn-danger w-100 mb-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmDeleteModal"
+                        data-id="@Model.MaLoai"
+                        data-name="@Model.TenLoai">
+                    🗑️ Xóa thể loại
+                </button>
+
+                <a asp-action="Index" class="btn btn-info w-100">🔙 Quay lại danh sách</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xác nhận xóa -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa thể loại <strong id="deleteItemName"></strong>?
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="post">
+                    <input type="hidden" name="id" id="deleteItemId" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var deleteModal = document.getElementById('confirmDeleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            var name = button.getAttribute('data-name');
+
+            document.getElementById('deleteItemName').textContent = name;
+            document.getElementById('deleteItemId').value = id;
+
+            document.getElementById('deleteForm').action = '/Admin/TheLoai/Delete/' + id;
+        });
+    </script>
+}

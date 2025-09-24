@@ -1,0 +1,134 @@
+﻿@* Areas/Admin/Views/Shared/_LayoutAdmin.cshtml *@
+@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Quản trị Web Bán Sách</title>
+
+    <!-- Bootstrap & Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="~/css/admin-theme.css" />
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header text-center p-3">
+            <img src="@Context.Session.GetString("AdminAvatar")"
+                 alt="Admin Avatar"
+                 class="rounded-circle"
+                 style="width:80px; height:80px; object-fit:cover; margin-bottom:10px;" />
+            <h5 class="text-white mb-0">@Context.Session.GetString("AdminName")</h5>
+            <small class="text-white-50">Quản trị viên</small>
+        </div>
+
+        <a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a asp-area="Admin" asp-controller="Sach" asp-action="Index"><i class="fa-solid fa-book"></i> Quản lý sách</a>
+        <a asp-area="Admin" asp-controller="TacGia" asp-action="Index"><i class="fa-solid fa-user-pen"></i> Tác giả</a>
+        <a asp-area="Admin" asp-controller="TheLoai" asp-action="Index"><i class="fa-solid fa-list"></i> Thể loại</a>
+        <a asp-area="Admin" asp-controller="NhaXuatBan" asp-action="Index"><i class="fa-solid fa-building"></i> Nhà xuất bản</a>
+        <a asp-area="Admin" asp-controller="NguoiDung" asp-action="Index"><i class="fa-solid fa-users"></i> Người dùng</a>
+        <a asp-area="Admin" asp-controller="DonHang" asp-action="Index"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a>
+        <a asp-area="Admin" asp-controller="KhuyenMai" asp-action="Index"><i class="fa-solid fa-tags"></i> Khuyến mãi</a>
+        <a asp-area="Admin" asp-controller="DanhGia" asp-action="Index"><i class="fa-solid fa-comment-dots"></i> Bình luận & Đánh giá</a>
+        <a asp-area="Admin" asp-controller="LienHe" asp-action="Index"><i class="fa-solid fa-envelope"></i> Liên hệ</a>
+    </div>
+
+    <!-- Overlay khi mở sidebar mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-3">
+            <div class="container-fluid">
+                <!-- Nút mở sidebar mobile -->
+                <button class="btn btn-outline-secondary d-lg-none me-2" id="toggleSidebar">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">Trang quản trị</a>
+
+                <div class="ms-auto">
+                    <!-- Dropdown option -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="adminOptionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user"></i> @Context.Session.GetString("AdminName")
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminOptionsDropdown">
+                            <li>
+                                <a class="dropdown-item" asp-area="User" asp-controller="Home" asp-action="Index">
+                                    <i class="fa-solid fa-house"></i> Trang người dùng
+                                </a>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" id="toggleThemeOption">
+                                    <i class="fa-solid fa-moon"></i> Đổi theme
+                                </button>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger" asp-area="Admin" asp-controller="AdminAccount" asp-action="Logout">
+                                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất Admin
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Dark / Light Mode
+            if (localStorage.getItem("theme") === "dark") {
+                $("body").addClass("dark");
+                $("#toggleThemeOption i").removeClass("fa-moon").addClass("fa-sun");
+            }
+
+            $("#toggleThemeOption").click(function () {
+                $("body").toggleClass("dark");
+                if ($("body").hasClass("dark")) {
+                    $("#toggleThemeOption i").removeClass("fa-moon").addClass("fa-sun");
+                    localStorage.setItem("theme", "dark");
+                } else {
+                    $("#toggleThemeOption i").removeClass("fa-sun").addClass("fa-moon");
+                    localStorage.setItem("theme", "light");
+                }
+                document.dispatchEvent(new Event("darkModeChanged"));
+            });
+
+            // Toggle Sidebar Mobile
+            $("#toggleSidebar").click(function () {
+                $("#sidebar").toggleClass("show");
+                $("#sidebarOverlay").toggleClass("active");
+                $("body").toggleClass("sidebar-open");
+            });
+
+            // Click overlay để đóng
+            $("#sidebarOverlay").click(function () {
+                $("#sidebar").removeClass("show");
+                $(this).removeClass("active");
+                $("body").removeClass("sidebar-open");
+            });
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

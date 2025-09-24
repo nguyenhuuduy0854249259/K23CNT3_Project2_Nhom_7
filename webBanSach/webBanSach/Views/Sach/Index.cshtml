@@ -1,0 +1,54 @@
+﻿@model IEnumerable<webBanSach.Models.Sach>
+
+@{
+    ViewData["Title"] = "Danh sách Sách";
+}
+
+<h2>Danh sách Sách</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">+ Thêm sách mới</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Mã sách</th>
+            <th>Tên sách</th>
+            <th>Nhà xuất bản</th>
+            <th>Năm XB</th>
+            <th>Giá bán</th>
+            <th>Số lượng</th>
+            <th>Hình ảnh</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaSach</td>
+                <td>@item.TenSach</td>
+                <td>@item.MaNXBNavigation?.TenNXB</td>
+                <td>@item.NamXB</td>
+                <td>@string.Format("{0:N0} đ", item.GiaBan)</td>
+                <td>@item.SoLuong</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.HinhAnh))
+                    {
+                        <img src="~/images/@item.HinhAnh" width="80" />
+                    }
+                    else
+                    {
+                        <span>Không có</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MaSach" class="btn btn-sm btn-warning">Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.MaSach" class="btn btn-sm btn-info">Chi tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MaSach" class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

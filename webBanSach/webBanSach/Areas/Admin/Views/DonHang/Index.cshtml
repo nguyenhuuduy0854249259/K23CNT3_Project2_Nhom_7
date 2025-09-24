@@ -1,0 +1,113 @@
+﻿@model IEnumerable<webBanSach.Models.DonHang>
+@{
+    ViewData["Title"] = "Quản lý Đơn hàng";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3><i class="fa-solid fa-cart-shopping"></i> Quản lý Đơn hàng</h3>
+
+    <form method="get" class="d-flex gap-2">
+        <input type="text" name="searchString" class="form-control" placeholder="Tìm đơn hàng hoặc khách hàng..." value="@Context.Request.Query["searchString"]" />
+        <select name="status" class="form-select">
+            <option value="">-- Tất cả trạng thái --</option>
+            @foreach (var s in ViewBag.StatusList as string[])
+            {
+                <option value="@s" selected="@(Context.Request.Query["status"] == s)">@s</option>
+            }
+        </select>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+
+<table class="table table-striped align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Mã ĐH</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Trạng thái</th>
+            <th class="text-end">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model)
+        {
+            <tr>
+                <td>@d.MaDH</td>
+                <td>@d.MaNDNavigation?.HoTen</td>
+                <td>@d.NgayDat?.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <span class="badge bg-@(d.TrangThai == "Hoàn tất" ? "success" :
+                                           d.TrangThai == "Đang giao" ? "info" :
+                                           d.TrangThai == "Hủy" ? "danger" : "secondary")">
+                        @d.TrangThai
+                    </span>
+                </td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@d.MaDH" class="btn btn-sm btn-info">
+                        <i class="fa fa-eye"></i> Chi tiết
+                    </a>
+
+                    @* Nút Hủy nếu chưa Hoàn tất/Hủy *@
+                    @if (d.TrangThai != "Hoàn tất" && d.TrangThai != "Hủy")
+                    {
+                        <form asp-action="Cancel" asp-route-id="@d.MaDH" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Xác nhận hủy đơn hàng này?');">
+                                <i class="fa fa-times"></i> Hủy
+                            </button>
+                        </form>
+                    }
+
+                    @* Nút Xóa nếu trạng thái Hủy *@
+                    @if (d.TrangThai == "Hủy")
+                    {
+                        <button class="btn btn-danger btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmDeleteModal"
+                                data-id="@d.MaDH">
+                            🗑️
+                        </button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal xác nhận xóa (1 modal dùng chung cho tất cả đơn hàng) -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="deleteForm" method="post">
+                <div class="modal-body">
+                    Bạn có chắc muốn xóa đơn hàng <strong id="deleteOrderId"></strong> không?
+                    <input type="hidden" name="id" id="deleteId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var deleteModal = document.getElementById('confirmDeleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+
+            document.getElementById('deleteOrderId').textContent = id;
+            document.getElementById('deleteId').value = id;
+
+            // POST tới /Admin/DonHang/Delete/{id}
+            document.getElementById('deleteForm').action = '/Admin/DonHang/Delete/' + id;
+        });
+    </script>
+}

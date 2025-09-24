@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Admin Login";
+}
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="//fonts.googleapis.com/css?family=Oleo+Script:400,700&subset=latin-ext" rel="stylesheet">
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <script src="~/js/jquery.vide.min.js"></script>
+</head>
+<body>
+
+    <div data-vide-bg="/video/Ipad">
+        <div class="center-container">
+            <div class="header-w3l">
+                <h1>Classic Login Form</h1>
+            </div>
+
+            <div class="main-content-agile">
+                <div class="sub-main-w3">
+                    <div class="wthree-pro">
+                        <h2>Login Here</h2>
+                    </div>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <p style="color:red; text-align:center;">@ViewBag.Error</p>
+                    }
+
+                    <form asp-action="Login" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="input-with-icon">
+                            <input placeholder="Username or E-mail" name="email" type="email" required>
+                            <span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span><br />
+                        </div>
+
+                        <div class="input-with-icon">
+                            <input placeholder="Password" name="matKhau" type="password" required>
+                            <span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span><br /> <br /><br />
+                        </div>
+
+
+                        <div class="right-w3l">
+                            <input type="submit" value="Login">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>&copy; Web Bán Sách  | Design by <a href="http://w3layouts.com">Admin</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

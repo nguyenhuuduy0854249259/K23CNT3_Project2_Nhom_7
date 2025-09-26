@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace webBanSach.ViewModels   // ✅ Namespace phải đúng
+namespace webBanSach.ViewModels // ✅ Namespace phải đúng
 {
     public class SachViewModel
     {

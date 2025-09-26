@@ -10,6 +10,9 @@ var connectionString = builder.Configuration.GetConnectionString("DBContext");
 builder.Services.AddDbContext<WebBanSachContext>(options =>
     options.UseSqlServer(connectionString));
 
+// --- Đăng ký IHttpContextAccessor để tránh lỗi ---
+builder.Services.AddHttpContextAccessor();
+
 // Thêm MVC
 builder.Services.AddControllersWithViews();
 
@@ -36,7 +39,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// **Bắt buộc phải thêm session trước authorization**
+// **Session phải nằm trước Authorization**
 app.UseSession();
 
 app.UseAuthorization();

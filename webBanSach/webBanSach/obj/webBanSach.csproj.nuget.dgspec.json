@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project2\\webBanSach\\webBanSach\\webBanSach.csproj": {}
+    "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\webBanSach.csproj": {}
   },
   "projects": {
-    "D:\\Project2\\webBanSach\\webBanSach\\webBanSach.csproj": {
+    "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\webBanSach.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project2\\webBanSach\\webBanSach\\webBanSach.csproj",
+        "projectUniqueName": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\webBanSach.csproj",
         "projectName": "webBanSach",
-        "projectPath": "D:\\Project2\\webBanSach\\webBanSach\\webBanSach.csproj",
+        "projectPath": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\webBanSach.csproj",
         "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\Project2\\webBanSach\\webBanSach\\obj\\",
+        "outputPath": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,311 +1,319 @@
 {
   "Files": [
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\webBanSach.bundle.scp.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\webBanSach.bundle.scp.css",
       "PackagePath": "staticwebassets\\webBanSach.bundle.scp.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\css\\admin-theme.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\css\\admin-theme.css",
       "PackagePath": "staticwebassets\\css\\admin-theme.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\css\\site.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\css\\style.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\css\\style.css",
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\favicon.ico",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\admins\\duc.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\admins\\duc.jpg",
       "PackagePath": "staticwebassets\\images\\admins\\duc.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\06e23221-94f9-455a-9907-ef8ad4016001.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\logo.jpg",
+      "PackagePath": "staticwebassets\\images\\logo.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\06e23221-94f9-455a-9907-ef8ad4016001.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\06e23221-94f9-455a-9907-ef8ad4016001.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\32393915-6be9-4409-b4a6-ff6c0e98e5ed.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\32393915-6be9-4409-b4a6-ff6c0e98e5ed.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\32393915-6be9-4409-b4a6-ff6c0e98e5ed.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\35e104ff-c375-4384-852a-3d09d6253764.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\35e104ff-c375-4384-852a-3d09d6253764.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\35e104ff-c375-4384-852a-3d09d6253764.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\5945d238-b1cc-4fcd-909f-7d8d3bc47591.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\5945d238-b1cc-4fcd-909f-7d8d3bc47591.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\5945d238-b1cc-4fcd-909f-7d8d3bc47591.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\7a844eca-27aa-444b-9ae5-d36cd013b2f9.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\7a844eca-27aa-444b-9ae5-d36cd013b2f9.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\7a844eca-27aa-444b-9ae5-d36cd013b2f9.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\ae460f0e-0f88-4813-925e-e2c046f67c19.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\ae460f0e-0f88-4813-925e-e2c046f67c19.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\ae460f0e-0f88-4813-925e-e2c046f67c19.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\anhsv1.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\anhsv1.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\anhsv1.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\b2eca1f5-53ba-4ffe-a4d0-57eb10424360.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\b2eca1f5-53ba-4ffe-a4d0-57eb10424360.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\b2eca1f5-53ba-4ffe-a4d0-57eb10424360.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\chi pheo.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\default.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\default.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\chi pheo.jpg",
       "PackagePath": "staticwebassets\\images\\sach\\chi pheo.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\nhanhandcham.jpg",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\nhanhandcham.jpg",
       "PackagePath": "staticwebassets\\images\\sach\\nhanhandcham.jpg"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\js\\jquery-2.1.4.min.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\js\\jquery-2.1.4.min.js",
       "PackagePath": "staticwebassets\\js\\jquery-2.1.4.min.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\js\\jquery.vide.min.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\js\\jquery.vide.min.js",
       "PackagePath": "staticwebassets\\js\\jquery.vide.min.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\js\\site.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "D:\\Project2\\webBanSach\\webBanSach\\wwwroot\\video\\Ipad.mp4",
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\video\\Ipad.mp4",
       "PackagePath": "staticwebassets\\video\\Ipad.mp4"
     },
     {

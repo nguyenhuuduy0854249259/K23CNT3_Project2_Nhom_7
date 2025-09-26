@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webBanSach.Models;
+using webBanSach.ViewModels;
 
 namespace webBanSach.Controllers
 {
@@ -22,99 +23,111 @@ namespace webBanSach.Controllers
             return View(listSach);
         }
 
-        // GET: Sach/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, string? returnUrl)
         {
-            if (id == null) return NotFound();
+            if (id == null)
+            {
+                return NotFound();
+            }
 
             var sach = await _context.Saches
                 .Include(s => s.MaNXBNavigation)
+                .Include(s => s.Sach_TheLoais).ThenInclude(stl => stl.MaLoaiNavigation)
+                .Include(s => s.Sach_TacGias).ThenInclude(stg => stg.MaTGNavigation)
                 .FirstOrDefaultAsync(m => m.MaSach == id);
 
-            if (sach == null) return NotFound();
-
-            return View(sach);
-        }
-
-        // GET: Sach/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Sach/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaSach,TenSach,MaNXB,NamXB,GiaBan,SoLuong,MoTa,HinhAnh")] Sach sach)
-        {
-            if (ModelState.IsValid)
+            if (sach == null)
             {
-                _context.Add(sach);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
+
+            // tăng lượt xem
+            sach.LuotXem++;
+            _context.Update(sach);
+            await _context.SaveChangesAsync();
+
+            // Lưu đường dẫn gốc để hiển thị nút quay lại
+            ViewBag.ReturnUrl = string.IsNullOrEmpty(returnUrl)
+                ? Url.Action("Index", "Sach")
+                : returnUrl;
+
             return View(sach);
         }
 
-        // GET: Sach/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+
+        // ✅ Tìm sách theo thể loại (N-N)
+        public IActionResult SearchByCategory(string theloai)
         {
-            if (id == null) return NotFound();
-
-            var sach = await _context.Saches.FindAsync(id);
-            if (sach == null) return NotFound();
-
-            return View(sach);
-        }
-
-        // POST: Sach/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaSach,TenSach,MaNXB,NamXB,GiaBan,SoLuong,MoTa,HinhAnh")] Sach sach)
-        {
-            if (id != sach.MaSach) return NotFound();
-
-            if (ModelState.IsValid)
+            if (string.IsNullOrEmpty(theloai))
             {
-                try
+                return RedirectToAction("Index", "Home");
+            }
+
+            var sachTheoLoai = _context.Saches
+                .Where(s => s.Sach_TheLoais.Any(st => st.MaLoaiNavigation.TenLoai == theloai))
+                .Select(s => new SachViewModel
                 {
-                    _context.Update(sach);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SachExists(sach.MaSach)) return NotFound();
-                    else throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(sach);
+                    MaSach = s.MaSach,
+                    TenSach = s.TenSach,
+                    GiaBan = s.GiaBan,
+                    SoLuong = s.SoLuong,
+                    MoTa = s.MoTa,
+                    HinhAnh = s.HinhAnh
+                })
+                .ToList();
+
+            ViewBag.TheLoai = theloai;
+            return View(sachTheoLoai);
         }
 
-        // GET: Sach/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // ✅ Tìm sách theo tác giả (N-N)
+        public IActionResult SearchByAuthor(string tacgia)
         {
-            if (id == null) return NotFound();
-
-            var sach = await _context.Saches
-                .FirstOrDefaultAsync(m => m.MaSach == id);
-            if (sach == null) return NotFound();
-
-            return View(sach);
-        }
-
-        // POST: Sach/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var sach = await _context.Saches.FindAsync(id);
-            if (sach != null)
+            if (string.IsNullOrEmpty(tacgia))
             {
-                _context.Saches.Remove(sach);
-                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction(nameof(Index));
+
+            var sachTheoTacGia = _context.Saches
+                .Where(s => s.Sach_TacGias.Any(st => st.MaTGNavigation.TenTG == tacgia))
+                .Select(s => new SachViewModel
+                {
+                    MaSach = s.MaSach,
+                    TenSach = s.TenSach,
+                    GiaBan = s.GiaBan,
+                    SoLuong = s.SoLuong,
+                    MoTa = s.MoTa,
+                    HinhAnh = s.HinhAnh
+                })
+                .ToList();
+
+            ViewBag.TacGia = tacgia;
+            return View(sachTheoTacGia);
+        }
+
+        // ✅ Tìm sách theo NXB
+        public IActionResult SearchByPublisher(string nxb)
+        {
+            if (string.IsNullOrEmpty(nxb))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var sachTheoNXB = _context.Saches
+                .Where(s => s.MaNXBNavigation.TenNXB == nxb)
+                .Select(s => new SachViewModel
+                {
+                    MaSach = s.MaSach,
+                    TenSach = s.TenSach,
+                    GiaBan = s.GiaBan,
+                    SoLuong = s.SoLuong,
+                    MoTa = s.MoTa,
+                    HinhAnh = s.HinhAnh
+                })
+                .ToList();
+
+            ViewBag.NXB = nxb;
+            return View(sachTheoNXB);
         }
 
         private bool SachExists(int id)

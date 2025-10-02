@@ -1,0 +1,59 @@
+﻿@using webBanSach.ViewModels
+@model CheckoutViewModel
+
+<div class="row">
+    <div class="col-md-8">
+        <h2 class="mb-4">Thanh toán đơn hàng</h2>
+        <form asp-action="Checkout" method="post" class="p-4 border rounded-3 shadow-sm bg-white">
+            <div class="mb-3">
+                <label>Họ tên người nhận:</label>
+                <input asp-for="HoTen" class="form-control rounded-3" readonly />
+            </div>
+            <div class="mb-3">
+                <label>Email:</label>
+                <input asp-for="Email" class="form-control rounded-3" readonly />
+            </div>
+            <div class="mb-3">
+                <label>Địa chỉ giao hàng:</label>
+                <textarea asp-for="DiaChiGiao" class="form-control rounded-3" required></textarea>
+            </div>
+
+            <!-- Phương thức thanh toán -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Phương thức thanh toán</label>
+                <div class="form-check p-2 border rounded-3 bg-light">
+                    <input class="form-check-input" type="radio" id="cod" name="PaymentMethod" value="COD" checked />
+                    <label class="form-check-label" for="cod">
+                        Thanh toán khi nhận hàng
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success rounded-3 px-4">✔ Xác nhận đặt hàng</button>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm rounded-3">
+            <div class="card-header fw-bold rounded-top-3">Chi tiết đơn hàng</div>
+            <div class="card-body">
+                @foreach (var item in Model.GioHangs)
+                {
+                    <div class="d-flex justify-content-between">
+                        <span>@item.MaSachNavigation.TenSach (@item.SoLuong)</span>
+                        <span>@String.Format("{0:N0}đ", item.SoLuong * item.MaSachNavigation.GiaBan)</span>
+                    </div>
+                }
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <span>Phí giao hàng:</span>
+                    <span>Miễn phí</span>
+                </div>
+                <div class="d-flex justify-content-between fw-bold text-danger">
+                    <span>Tổng cộng:</span>
+                    <span>@String.Format("{0:N0} VNĐ", Model.TongTien)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

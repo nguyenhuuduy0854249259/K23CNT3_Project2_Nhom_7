@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\admin-theme.css"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\css\\layoutUser.css",
+      "PackagePath": "staticwebassets\\css\\layoutUser.css"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -65,8 +69,20 @@
       "PackagePath": "staticwebassets\\images\\nguoidung\\default.jpg"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung14_Screenshot 2024-09-10 090142.png",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung14_Screenshot 2024-09-10 090142.png"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\book2.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\book2.jpg"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\chi pheo.jpg",
       "PackagePath": "staticwebassets\\images\\sach\\chi pheo.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\cotinhvn.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\cotinhvn.jpg"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\nhanhandcham.jpg",

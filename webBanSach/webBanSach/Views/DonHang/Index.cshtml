@@ -1,0 +1,48 @@
+﻿@model IEnumerable<webBanSach.Models.DonHang>
+@using webBanSach.Models
+
+<h2 class="mb-4 fw-bold">Đơn hàng của tôi</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show rounded" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row g-3">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6">
+            <div class="card shadow-sm border rounded-3 h-100">
+                <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                    <span class="fw-semibold">Đơn hàng #@item.MaDH</span>
+                    <span class="badge
+                        @(item.TrangThai == OrderStatus.ChoXuLy ? "bg-warning text-dark" :
+                          item.TrangThai == OrderStatus.DangGiao ? "bg-info text-dark" :
+                          item.TrangThai == OrderStatus.HoanTat ? "bg-success" : "bg-danger")">
+                        @item.TrangThai
+                    </span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Ngày đặt:</strong> @item.NgayDat?.ToString("dd/MM/yyyy HH:mm")</p>
+                    <p>
+                        <strong>Tổng tiền:</strong>
+                        <span class="text-danger fw-semibold">@String.Format("{0:N0} VNĐ", item.TongTien)</span>
+                    </p>
+                    <p><strong>Địa chỉ giao hàng:</strong> @item.DiaChiGiao</p>
+                    <a asp-action="Details" asp-route-id="@item.MaDH" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-eye"></i> Chi tiết
+                    </a>
+                </div>
+                <div class="card-footer text-end small fst-italic text-muted">
+                    @(item.TrangThai == OrderStatus.HoanTat ? "✓ Đã hoàn thành" :
+                        item.TrangThai == OrderStatus.ChoXuLy ? "Đang chờ xác nhận..." :
+                        item.TrangThai == OrderStatus.DangGiao ? "Đơn hàng đang được giao" :
+                        "Đơn hàng đã hủy")
+                </div>
+            </div>
+        </div>
+    }
+</div>

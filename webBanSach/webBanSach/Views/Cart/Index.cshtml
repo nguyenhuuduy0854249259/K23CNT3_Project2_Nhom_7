@@ -1,0 +1,95 @@
+﻿@model List<webBanSach.Models.GioHang>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    var userName = HttpContextAccessor.HttpContext?.Session.GetString("UserName");
+    decimal subtotal = 0;
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">🛒 Giỏ hàng của @userName</h2>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success text-center">
+            @TempData["Message"]
+        </div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            <!-- Danh sách sản phẩm -->
+            <div class="col-md-8">
+                @foreach (var item in Model)
+                {
+                    subtotal += item.SoLuong * item.MaSachNavigation.GiaBan;
+                    <div class="card mb-3 shadow-sm">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-md-3">
+                                <img src="~/images/sach/@item.MaSachNavigation.HinhAnh" class="img-fluid rounded-start" style="height:120px; object-fit:cover;" />
+                            </div>
+                            <div class="col-md-5">
+                                <div class="card-body">
+                                    <h6 class="card-title fw-bold">@item.MaSachNavigation.TenSach</h6>
+                                    <p class="text-danger fw-bold">@item.MaSachNavigation.GiaBan.ToString("N0") đ</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex flex-column gap-2 me-2">
+                                    <form asp-action="Update" method="post" class="d-flex gap-2">
+                                        <input type="hidden" name="maSach" value="@item.MaSach" />
+                                        <input type="number" name="soLuong" value="@item.SoLuong" min="1" class="form-control form-control-sm" style="width:70px;" />
+                                        <!-- Nút cập nhật (nếu cần) -->
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                                            <i class="bi bi-arrow-repeat me-1"></i> Cập nhật
+                                        </button>
+                                    </form>
+                                    <form asp-action="Delete" method="post">
+                                        <input type="hidden" name="maSach" value="@item.MaSach" />
+                                        <!-- Nút xóa -->
+                                        <button class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-trash me-1"></i> Xóa
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Tóm tắt đơn hàng -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="mb-3">Tóm tắt đơn hàng</h5>
+                    <p>Tạm tính: <span class="float-end">@subtotal.ToString("N0") VNĐ</span></p>
+                    <p>Phí giao hàng: <span class="float-end">Miễn phí</span></p>
+                    <hr />
+                    <h5>Tổng cộng: <span class="text-danger float-end">@subtotal.ToString("N0") VNĐ</span></h5>
+                    <div class="d-grid mt-3">
+                        <!-- Nút thanh toán -->
+                        <a asp-controller="Cart" asp-action="Checkout" class="btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-credit-card me-2"></i> Thanh toán
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted text-center fs-5">👉 Giỏ hàng trống. Hãy thêm sách vào giỏ!</p>
+    }
+</div>
+
+<style>
+    .card .btn {
+        transition: all 0.2s;
+    }
+
+        .card .btn:hover {
+            opacity: 0.8;
+        }
+</style>

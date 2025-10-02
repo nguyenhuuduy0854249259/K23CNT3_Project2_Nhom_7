@@ -1,38 +1,121 @@
-﻿@model IEnumerable<webBanSach.Models.Sach>
+﻿@model IEnumerable<webBanSach.ViewModels.SachViewModel>
 @{
     ViewData["Title"] = "Danh sách Sách";
 }
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-3 mb-4">
-            <div class="card book-card h-100">
-                <div class="book-img-wrapper">
-                    @if (!string.IsNullOrEmpty(item.HinhAnh))
+<div class="container mt-4">
+    <!-- NAV LỌC & TÌM KIẾM -->
+    <div class="mb-4 p-3 bg-white rounded shadow-sm border">
+        <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+
+            <!-- Form tìm theo tên -->
+            <form asp-action="Index" method="get" class="search-form d-flex">
+                <div class="input-group">
+                    <span class="input-group-text bg-primary text-white">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" name="keyword" value="@ViewBag.Keyword"
+                           class="form-control border-primary"
+                           placeholder="Tìm sách theo tên..." />
+                    <button type="submit" class="btn btn-primary px-4">Tìm</button>
+                </div>
+            </form>
+
+            <!-- Dropdown Thể loại -->
+            <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
+                    📚 Thể loại
+                </button>
+                <ul class="dropdown-menu shadow">
+                    @foreach (var loai in (List<string>)ViewBag.TheLoaiList)
                     {
-                        <img src="~/images/sach/@item.HinhAnh" class="card-img-top" alt="@item.TenSach" />
+                        <li>
+                            <a class="dropdown-item" asp-action="Search" asp-route-filterType="theloai" asp-route-keyword="@loai">
+                                @loai
+                            </a>
+                        </li>
                     }
-                    else
+                </ul>
+            </div>
+
+            <!-- Dropdown Tác giả -->
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
+                    ✍️ Tác giả
+                </button>
+                <ul class="dropdown-menu shadow">
+                    @foreach (var tg in (List<string>)ViewBag.TacGiaList)
                     {
-                        <img src="~/images/no-image.png" class="card-img-top" alt="No image" />
+                        <li>
+                            <a class="dropdown-item" asp-action="Search" asp-route-filterType="tacgia" asp-route-keyword="@tg">
+                                @tg
+                            </a>
+                        </li>
                     }
-                </div>
-                <div class="card-body text-center">
-                    <h6 class="card-title text-truncate fw-bold" title="@item.TenSach">@item.TenSach</h6>
-                    <p class="text-muted small mb-1">NXB: @item.MaNXBNavigation?.TenNXB</p>
-                    <p class="book-price">@string.Format("{0:N0} đ", item.GiaBan)</p>
-                </div>
-                <div class="card-footer d-flex justify-content-center gap-2">
-                    <a asp-action="Details" asp-route-id="@item.MaSach" class="btn btn-sm btn-outline-primary rounded-pill px-3">Chi tiết</a>
-                </div>
+                </ul>
+            </div>
+
+            <!-- Dropdown NXB -->
+            <div class="dropdown">
+                <button class="btn btn-outline-danger dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
+                    🏢 NXB
+                </button>
+                <ul class="dropdown-menu shadow">
+                    @foreach (var nxb in (List<string>)ViewBag.NXBList)
+                    {
+                        <li>
+                            <a class="dropdown-item" asp-action="Search" asp-route-filterType="nxb" asp-route-keyword="@nxb">
+                                @nxb
+                            </a>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
-    }
+    </div>
+
+    <!-- DANH SÁCH SÁCH -->
+    <div class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center text-muted">
+                <p>Không tìm thấy sách phù hợp 😢</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card book-card h-100">
+                        <div class="book-img-wrapper">
+                            <img src="~/images/sach/@(item.HinhAnh ?? "no-image.png")"
+                                 class="card-img-top" alt="@item.TenSach" />
+                        </div>
+                        <div class="card-body text-center">
+                            <h6 class="card-title text-truncate fw-bold" title="@item.TenSach">@item.TenSach</h6>
+                            <p class="text-muted small mb-1">NXB: @item.NXB</p>
+                            @if (item.SoLuong == 0)
+                            {
+                                <p class="text-danger fw-bold">Hết hàng</p>
+                            }
+                            else
+                            {
+                                <p class="book-price">@string.Format("{0:N0} đ", item.GiaBan)</p>
+                            }
+                        </div>
+                        <div class="card-footer d-flex justify-content-center gap-2">
+                            <a asp-action="Details" asp-route-id="@item.MaSach"
+                               class="btn btn-sm btn-outline-primary rounded-pill px-3">Chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 </div>
 
 <style>
-    /* Card sách */
     .book-card {
         border: none;
         border-radius: 12px;
@@ -45,10 +128,8 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
 
-    /* Ảnh sách */
     .book-img-wrapper {
         height: 250px;
-        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -64,26 +145,9 @@
         transform: scale(1.05);
     }
 
-    /* Giá sách */
     .book-price {
         color: #e67e22;
         font-size: 16px;
         font-weight: bold;
-        margin-top: 5px;
     }
-
-    /* Nút */
-    .card-footer {
-        background: #fff;
-        border-top: none;
-    }
-
-        .card-footer .btn {
-            font-size: 13px;
-            transition: 0.2s;
-        }
-
-            .card-footer .btn:hover {
-                opacity: 0.85;
-            }
 </style>

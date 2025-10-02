@@ -1,0 +1,58 @@
+﻿@model webBanSach.Models.DonHang
+@using webBanSach.Models
+
+<h3 class="fw-bold mb-4">Chi tiết đơn hàng #@Model.MaDH</h3>
+
+<div class="card shadow-sm rounded-3 mb-4">
+    <div class="card-header bg-light fw-semibold">
+        🧾 Thông tin đơn hàng
+    </div>
+    <div class="card-body">
+        <p><strong>Người nhận:</strong> @Model.MaNDNavigation.HoTen</p>
+        <p><strong>Số điện thoại:</strong> @Model.MaNDNavigation.SDT</p>
+        <p><strong>Email:</strong> @Model.MaNDNavigation.Email</p>
+        <p><strong>Địa chỉ giao hàng:</strong> @Model.DiaChiGiao</p>
+        <p><strong>Ngày đặt:</strong> @Model.NgayDat?.ToString("dd/MM/yyyy HH:mm")</p>
+        <p>
+            <strong>Trạng thái:</strong>
+            <span class="badge
+                @(Model.TrangThai == OrderStatus.ChoXuLy ? "bg-warning text-dark" :
+                  Model.TrangThai == OrderStatus.DangGiao ? "bg-info text-dark" :
+                  Model.TrangThai == OrderStatus.HoanTat ? "bg-success" : "bg-danger")">
+                @Model.TrangThai
+            </span>
+        </p>
+    </div>
+</div>
+
+<div class="card shadow-sm rounded-3">
+    <div class="card-header bg-light fw-semibold">
+        📚 Sản phẩm trong đơn
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Tên sách</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ct in Model.CT_DonHangs)
+                {
+                    <tr>
+                        <td>@ct.MaSachNavigation.TenSach</td>
+                        <td>@ct.DonGia.ToString("N0") đ</td>
+                        <td>@ct.SoLuong</td>
+                        <td>@ct.ThanhTien?.ToString("N0") đ</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="text-end fw-bold fs-5 mt-3">
+            Tổng cộng: <span class="text-danger">@Model.TongTien?.ToString("N0") VNĐ</span>
+        </div>
+    </div>
+</div>

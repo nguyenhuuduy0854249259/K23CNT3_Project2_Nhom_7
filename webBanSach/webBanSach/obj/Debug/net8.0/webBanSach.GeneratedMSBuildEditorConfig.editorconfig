@@ -162,16 +162,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Account/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/GioHangs/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2lvSGFuZ3NcSW5kZXguY3NodG1s
+[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Cart/Checkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxDaGVja291dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/GioHang/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2lvSGFuZ1xJbmRleC5jc2h0bWw=
+[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Cart/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/DonHang/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/DonHang/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Home/About.cshtml]
@@ -194,16 +206,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FjaFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Sach/SearchByAuthor.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FjaFxTZWFyY2hCeUF1dGhvci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Sach/SearchByCategory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FjaFxTZWFyY2hCeUNhdGVnb3J5LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Sach/SearchByPublisher.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FjaFxTZWFyY2hCeVB1Ymxpc2hlci5jc2h0bWw=
+[D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Sach/SearchResult.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FjaFxTZWFyY2hSZXN1bHQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Project2/K23CNT3_VuTienDuc_Project2/webBanSach/webBanSach/Views/Shared/Error.cshtml]

@@ -2,272 +2,180 @@
     Layout = null;
 }
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject WebBanSachContext _context
+
+@{
+    var theLoais = _context.TheLoais.ToList();
+    var tacGias = _context.TacGias.ToList();
+    var nxbList = _context.NhaXuatBans.ToList();
+}
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - webBanSach</title>
+    <title>@ViewData["Title"] - WebBanSach</title>
+
+    <!-- Bootstrap & Icon -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/webBanSach.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
 
-    <style>
-        /* HEADER */
-        .top-header {
-            background: #fff;
-            padding: 12px 20px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/css/layoutUser.css" rel="stylesheet" />
 
-            .top-header .logo {
-                font-size: 26px;
-                font-weight: bold;
-                color: #28a745;
-            }
-
-        .search-box {
-            flex: 1;
-            margin: 0 20px;
-            display: flex;
-        }
-
-            .search-box input {
-                flex: 1;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-right: none;
-                border-radius: 4px 0 0 4px;
-            }
-
-            .search-box button {
-                border: none;
-                background: #28a745;
-                color: #fff;
-                padding: 0 20px;
-                border-radius: 0 4px 4px 0;
-            }
-
-        .top-header .contact {
-            font-size: 14px;
-            color: #333;
-            white-space: nowrap;
-        }
-
-        .cart a {
-            text-decoration: none;
-            font-weight: 500;
-            color: #333;
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 250px;
-            background: #fff;
-            border: 1px solid #ddd;
-            padding: 0;
-        }
-
-        .sidebar-title {
-            background: #f57c00;
-            color: white;
-            padding: 12px;
-            font-size: 16px;
-            text-align: center;
-            font-weight: bold;
-            margin: 0;
-        }
-
-        .category-list {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-            .category-list li {
-                border-bottom: 1px solid #eee;
-                position: relative; /* để submenu căn theo li */
-            }
-
-                .category-list li a {
-                    display: block;
-                    padding: 10px 15px;
-                    color: #333;
-                    text-decoration: none;
-                    font-size: 15px;
-                    transition: 0.2s;
-                }
-
-                    .category-list li a:hover {
-                        background: #f5f5f5;
-                        color: #f57c00;
-                    }
-
-                /* Submenu bay sang phải */
-                .category-list li ul.submenu {
-                    display: none;
-                    position: absolute;
-                    top: 0;
-                    left: 100%;
-                    min-width: 200px;
-                    background: #fff;
-                    border: 1px solid #ddd;
-                    z-index: 1000;
-                }
-
-                    .category-list li ul.submenu li a {
-                        padding: 10px 15px;
-                        font-size: 14px;
-                        white-space: nowrap;
-                    }
-
-                .category-list li:hover > ul.submenu {
-                    display: block;
-                }
-
-        .category-search {
-            padding: 10px;
-            border-top: 1px solid #eee;
-        }
-
-        /* MAIN CONTENT */
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            background: #fafafa;
-        }
-
-        /* FOOTER */
-        footer {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-top: 1px solid #ddd;
-        }
-    </style>
+   
 </head>
 <body>
     <!-- HEADER -->
-    <header class="top-header">
-        <div class="logo d-flex align-items-center gap-2">
-            <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center gap-2 text-decoration-none">
-                <img src="~/images/logo.jpg" width="50" height="50" alt="Logo WebBanSach" class="rounded-circle" />
-                <span class="fw-bold text-dark">BookStore</span>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1050; min-width: 300px;">
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #0d6efd;">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-white d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                <img src="~/images/logo.jpg" alt="logo" height="40px" width="40px" class="me-2" />
+                WebBanSach
             </a>
-        </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="search-box">
-            <input type="text" placeholder="Tìm kiếm sản phẩm..." />
-            <button><i class="bi bi-search"></i></button>
-        </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Menu trái -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Trang chủ</a></li>
 
-        <div class="contact me-3">
-            <i class="bi bi-telephone-fill text-success"></i> Tư vấn: 028.73008182
-        </div>
+                    <!-- Dropdown Sách -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Sách</a>
 
-        <div class="cart me-3">
-            <a asp-area="" asp-controller="GioHangs" asp-action="Index">
-                <i class="bi bi-cart-fill"></i> Giỏ hàng
-                <span class="badge bg-danger">@ViewBag.CartCount ?? 0</span>
-            </a>
-        </div>
+                        <ul class="dropdown-menu p-3" style="min-width: 250px;">
+                            <!-- Link Trang chủ sách -->
+                            <li>
+                                <a class="dropdown-item text-primary fw-bold" asp-controller="Sach" asp-action="Index">
+                                    Trang chủ sách
+                                </a>
+                            </li>
+                            <li>
 
-        <!-- Đăng nhập / Đăng xuất -->
-        <div class="d-flex align-items-center">
-            @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
-            {
-                var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
-                var avatar = HttpContextAccessor.HttpContext.Session.GetString("UserAvatar")
-                ?? "/images/nguoidung/default.jpg";
-                var loaiNguoiDung = HttpContextAccessor.HttpContext.Session.GetString("LoaiNguoiDung");
+                                <h6 class="dropdown-header">Thể loại</h6>
+                                @foreach (var tl in theLoais)
+                                {
+                                    <a class="dropdown-item"
+                                       asp-controller="Sach" asp-action="Search"
+                                       asp-route-filterType="theloai" asp-route-keyword="@tl.TenLoai">
+                                        @tl.TenLoai
+                                    </a>
+                                }
+                            </li>
+                            <li>
+                                <h6 class="dropdown-header">Tác giả</h6>
+                                @foreach (var tg in tacGias)
+                                {
+                                    <a class="dropdown-item"
+                                       asp-controller="Sach" asp-action="Search"
+                                       asp-route-filterType="tacgia" asp-route-keyword="@tg.TenTG">
+                                        @tg.TenTG
+                                    </a>
+                                }
+                            </li>
+                            <li>
+                                <h6 class="dropdown-header">Nhà xuất bản</h6>
+                                @foreach (var nxb in nxbList)
+                                {
+                                    <a class="dropdown-item"
+                                       asp-controller="Sach" asp-action="Search"
+                                       asp-route-filterType="nxb" asp-route-keyword="@nxb.TenNXB">
+                                        @nxb.TenNXB
+                                    </a>
+                                }
+                            </li>
+                        </ul>
+                    </li>
 
-                <div class="d-flex align-items-center me-3">
-                    <img src="@avatar" alt="avatar" width="35" height="35"
-                         class="rounded-circle border me-2" />
-                    <span class="fw-bold text-success">Xin chào, @userName</span>
-                </div>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">Giới thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Contact">Liên hệ</a></li>
+                </ul>
 
-                <a asp-area="" asp-controller="Account" asp-action="Logout"
-                   class="btn btn-sm btn-outline-danger">
-                    Đăng xuất
-                </a>
-            }
-            else
-            {
-                <a asp-area="" asp-controller="Account" asp-action="Login"
-                   class="btn btn-sm btn-outline-primary me-2">Đăng nhập</a>
-                <a asp-area="" asp-controller="Account" asp-action="Register"
-                   class="btn btn-sm btn-success">Đăng ký</a>
-            }
-        </div>
+                <!-- Menu phải -->
+                <ul class="navbar-nav">
+                    <!-- Giỏ hàng icon only -->
+                    <li class="nav-item me-3">
+                        @{
+                            var userId = HttpContextAccessor.HttpContext?.Session.GetInt32("MaND");
+                            var cartCount = HttpContextAccessor.HttpContext?.Session.GetInt32("CartCount") ?? 0;
+                        }
 
-    </header>
+                        @if (userId != null)
+                        {
+                            <a class="nav-link position-relative" asp-controller="Cart" asp-action="Index">
+                                <i class="bi bi-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    @cartCount
+                                </span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="nav-link position-relative" asp-controller="Account" asp-action="Login">
+                                <i class="bi bi-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    0
+                                </span>
+                            </a>
+                        }
+                    </li>
 
-    <!-- BODY -->
-    <div class="container-fluid d-flex mt-3">
-        <!-- SIDEBAR -->
-        <nav class="sidebar">
-            <h5 class="sidebar-title">Danh mục sản phẩm</h5>
-            <ul class="category-list">
-                <li>
-                    <a href="#">Sách Truyện <span class="float-end">▶</span></a>
-                    <ul class="submenu">
-                        <li><a asp-controller="Sach" asp-action="SearchByCategory" asp-route-theloai="Tiểu thuyết">Tiểu thuyết</a></li>
-                        <li><a asp-controller="Sach" asp-action="SearchByCategory" asp-route-theloai="Khoa học">Khoa học</a></li>
-                        <li><a asp-controller="Sach" asp-action="SearchByCategory" asp-route-theloai="Giáo khoa">Giáo khoa</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Sách theo tác giả <span class="float-end">▶</span></a>
-                    <ul class="submenu">
-                        <li><a asp-controller="Sach" asp-action="SearchByAuthor" asp-route-tacgia="Dale Carnegie">Dale Carnegie</a></li>
-                        <li><a asp-controller="Sach" asp-action="SearchByAuthor" asp-route-tacgia="Nguyễn Nhật Ánh">Nguyễn Nhật Ánh</a></li>
-                        <li><a asp-controller="Sach" asp-action="SearchByAuthor" asp-route-tacgia="NXB Văn Học">NXB Văn Học</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Sách theo NXB <span class="float-end">▶</span></a>
-                    <ul class="submenu">
-                        <li><a asp-controller="Sach" asp-action="SearchByPublisher" asp-route-nxb="NXB Trẻ">NXB Trẻ</a></li>
-                        <li><a asp-controller="Sach" asp-action="SearchByPublisher" asp-route-nxb="NXB Kim Đồng">NXB Kim Đồng</a></li>
-                        <li><a asp-controller="Sach" asp-action="SearchByPublisher" asp-route-nxb="NXB Văn Học">NXB Văn Học</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Sách Sale theo chủ đề</a></li>
-                <li><a href="#">Văn phòng phẩm (sắp có)</a></li>
-                <li><a href="#">Quà tặng (sắp có)</a></li>
-                <li><a href="#">Đồ chơi (sắp có)</a></li>
-                <li><a href="#">Blog sách hay (sắp có)</a></li>
-            </ul>
 
-            <!-- Search in category -->
-            <div class="category-search">
-                <input type="text" class="form-control" placeholder="🔍 Tìm trong danh mục..." />
+
+                    <!-- User -->
+                    @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext?.Session.GetString("UserName")))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                                @{
+                                    var avatar = HttpContextAccessor.HttpContext.Session.GetString("UserAvatar") ?? "/images/nguoidung/default.jpg";
+                                }
+                                <img src="@avatar" alt="avatar" class="rounded-circle me-2" style="width:32px;height:32px;object-fit:cover;" />
+                                @HttpContextAccessor.HttpContext.Session.GetString("UserName")
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">Thông tin cá nhân</a></li>
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login">Đăng nhập</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Register">Đăng ký</a></li>
+                    }
+                </ul>
             </div>
-        </nav>
-
-        <!-- MAIN CONTENT -->
-        <div class="main-content">
-            @RenderBody()
         </div>
-    </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container mt-4">
+        @RenderBody()
+    </main>
 
     <!-- FOOTER -->
     <footer class="bg-light text-dark mt-5 pt-4 pb-3 border-top">
         <div class="container">
             <div class="row">
-                <!-- Logo & thông tin công ty -->
                 <div class="col-md-4 mb-3">
                     <h5 class="fw-bold">📚 WebBanSach</h5>
                     <p>Địa chỉ: 123 Nguyễn Văn Cừ, Hà Nội</p>
                     <p>Giấy phép KD: 0101234567</p>
                 </div>
-
-                <!-- Dịch vụ -->
                 <div class="col-md-4 mb-3">
                     <h6 class="fw-bold">Dịch vụ</h6>
                     <ul class="list-unstyled">
@@ -276,27 +184,19 @@
                         <li><a href="#" class="text-decoration-none text-dark">Điều khoản sử dụng</a></li>
                     </ul>
                 </div>
-
-                <!-- Liên hệ -->
                 <div class="col-md-4 mb-3">
                     <h6 class="fw-bold">Liên hệ</h6>
                     <p>📞 0123 456 789</p>
                     <p>✉️ support@webbansach.com</p>
-                    <div>
-                        <a href="#"><i class="bi bi-facebook fs-4 me-2"></i></a>
-                        <a href="#"><i class="bi bi-instagram fs-4 me-2"></i></a>
-                        <a href="#"><i class="bi bi-youtube fs-4"></i></a>
-                    </div>
                 </div>
             </div>
-
             <div class="text-center small text-muted mt-3">
                 © 2025 - WebBanSach. All rights reserved.
             </div>
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Script -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

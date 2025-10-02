@@ -23,6 +23,7 @@ namespace webBanSach.Controllers
         // ? Trang ch?
         public async Task<IActionResult> Index()
         {
+
             // L?y danh sách sách n?i b?t
             var noiBat = await _context.Saches
                 .Where(s => s.LuotXem >= 5)
@@ -71,6 +72,10 @@ namespace webBanSach.Controllers
                 SachNoiBat = noiBat,
                 SachBanChay = banChay
             };
+       
+              
+
+           
 
             return View(vm);
         }

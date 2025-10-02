@@ -1,0 +1,23 @@
+﻿/* HEADER */
+.navbar {
+    background: #f57c00;
+}
+
+    .navbar .nav-link,
+    .navbar .navbar-brand {
+        color: #fff !important;
+        font-weight: 500;
+    }
+
+        .navbar .nav-link:hover {
+            color: #ffd180 !important;
+        }
+
+    .navbar .bi {
+        font-size: 1.2rem;
+    }
+
+/* MAIN CONTENT */
+main.container {
+    min-height: calc(100vh - 200px); /* giữ khoảng cách để footer luôn dưới */
+}

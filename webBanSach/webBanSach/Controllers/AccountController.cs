@@ -112,5 +112,86 @@ namespace webBanSach.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
+
+        // ===================== PROFILE =====================
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            int? maND = HttpContext.Session.GetInt32("MaND");
+            if (maND == null) return RedirectToAction("Login");
+
+            var user = _context.NguoiDungs.Find(maND);
+            if (user == null) return RedirectToAction("Login");
+
+            var vm = new ProfileVM
+            {
+                MaND = user.MaND,
+                HoTen = user.HoTen,
+                Email = user.Email,
+                SDT = user.SDT,
+                DiaChi = user.DiaChi,
+                HinhAnh = user.HinhAnh
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Profile(ProfileVM model, IFormFile? avatarFile)
+        {
+            int? maND = HttpContext.Session.GetInt32("MaND");
+            if (maND == null) return RedirectToAction("Login");
+
+            var user = _context.NguoiDungs.Find(maND);
+            if (user == null) return RedirectToAction("Login");
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // ✅ Cập nhật thông tin
+            user.HoTen = model.HoTen;
+            user.SDT = model.SDT;
+            user.DiaChi = model.DiaChi;
+
+            // ✅ Đổi avatar nếu có upload
+            if (avatarFile != null && avatarFile.Length > 0)
+            {
+                string fileName = $"nguoidung{user.MaND}_{Path.GetFileName(avatarFile.FileName)}";
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/nguoidung", fileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    avatarFile.CopyTo(stream);
+                }
+                user.HinhAnh = fileName;
+
+                // Cập nhật Session Avatar
+                HttpContext.Session.SetString("UserAvatar", "/images/nguoidung/" + fileName);
+            }
+
+            // ✅ Đổi mật khẩu nếu nhập
+            if (!string.IsNullOrEmpty(model.MatKhauCu) && !string.IsNullOrEmpty(model.MatKhauMoi))
+            {
+                if (!BCrypt.Net.BCrypt.Verify(model.MatKhauCu, user.MatKhau))
+                {
+                    ViewBag.Error = "Mật khẩu cũ không đúng!";
+                    return View(model);
+                }
+
+                user.MatKhau = BCrypt.Net.BCrypt.HashPassword(model.MatKhauMoi);
+            }
+
+            _context.Update(user);
+            _context.SaveChanges();
+
+            // Cập nhật Session tên
+            HttpContext.Session.SetString("UserName", user.HoTen);
+
+            ViewBag.Success = "Cập nhật thông tin thành công!";
+            return View(model);
+        }
+
     }
 }

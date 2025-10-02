@@ -1,0 +1,66 @@
+﻿@model webBanSach.ViewModels.ProfileVM
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+}
+
+<div class="container mt-4">
+    <h3>👤 Thông tin cá nhân</h3>
+
+    @if (ViewBag.Success != null)
+    {
+        <div class="alert alert-success">@ViewBag.Success</div>
+    }
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    <form asp-action="Profile" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="@(string.IsNullOrEmpty(Model.HinhAnh) ? "/images/nguoidung/default.jpg" : "/images/nguoidung/" + Model.HinhAnh)"
+                     class="rounded-circle border" style="width:150px;height:150px;object-fit:cover;" />
+                <div class="mt-2">
+                    <input type="file" name="avatarFile" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label class="form-label">Họ tên</label>
+                    <input asp-for="HoTen" class="form-control" />
+                    <span asp-validation-for="HoTen" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Số điện thoại</label>
+                    <input asp-for="SDT" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Địa chỉ</label>
+                    <input asp-for="DiaChi" class="form-control" />
+                </div>
+
+                <hr />
+                <h5>🔑 Đổi mật khẩu</h5>
+                <div class="mb-3">
+                    <label class="form-label">Mật khẩu cũ</label>
+                    <input asp-for="MatKhauCu" type="password" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mật khẩu mới</label>
+                    <input asp-for="MatKhauMoi" type="password" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Xác nhận mật khẩu</label>
+                    <input asp-for="XacNhanMatKhau" type="password" class="form-control" />
+                    <span asp-validation-for="XacNhanMatKhau" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">💾 Lưu thay đổi</button>
+            </div>
+        </div>
+    </form>
+</div>

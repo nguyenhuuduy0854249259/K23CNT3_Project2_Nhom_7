@@ -1,4 +1,4 @@
-﻿@model IEnumerable<webBanSach.Models.DonHang>
+﻿@model IEnumerable<webBanSach.ViewModels.DonHangViewModel>
 @using webBanSach.Models
 
 <h2 class="mb-4 fw-bold">Đơn hàng của tôi</h2>
@@ -12,37 +12,68 @@
 }
 
 <div class="row g-3">
-    @foreach (var item in Model)
+    @if (!Model.Any())
     {
-        <div class="col-md-6">
-            <div class="card shadow-sm border rounded-3 h-100">
-                <div class="card-header d-flex justify-content-between align-items-center bg-light">
-                    <span class="fw-semibold">Đơn hàng #@item.MaDH</span>
-                    <span class="badge
-                        @(item.TrangThai == OrderStatus.ChoXuLy ? "bg-warning text-dark" :
-                          item.TrangThai == OrderStatus.DangGiao ? "bg-info text-dark" :
-                          item.TrangThai == OrderStatus.HoanTat ? "bg-success" : "bg-danger")">
-                        @item.TrangThai
-                    </span>
-                </div>
-                <div class="card-body">
-                    <p><strong>Ngày đặt:</strong> @item.NgayDat?.ToString("dd/MM/yyyy HH:mm")</p>
-                    <p>
-                        <strong>Tổng tiền:</strong>
-                        <span class="text-danger fw-semibold">@String.Format("{0:N0} VNĐ", item.TongTien)</span>
-                    </p>
-                    <p><strong>Địa chỉ giao hàng:</strong> @item.DiaChiGiao</p>
-                    <a asp-action="Details" asp-route-id="@item.MaDH" class="btn btn-outline-primary btn-sm">
-                        <i class="bi bi-eye"></i> Chi tiết
-                    </a>
-                </div>
-                <div class="card-footer text-end small fst-italic text-muted">
-                    @(item.TrangThai == OrderStatus.HoanTat ? "✓ Đã hoàn thành" :
-                        item.TrangThai == OrderStatus.ChoXuLy ? "Đang chờ xác nhận..." :
-                        item.TrangThai == OrderStatus.DangGiao ? "Đơn hàng đang được giao" :
-                        "Đơn hàng đã hủy")
-                </div>
+        <div class="col-12">
+            <div class="alert alert-info rounded shadow-sm">
+                Bạn chưa có đơn hàng nào.
             </div>
         </div>
+    }
+    else
+    {
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6">
+                <div class="card shadow-sm border rounded-3 h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                        <span class="fw-semibold">Đơn hàng #@item.MaDH</span>
+                        <span class="badge
+                            @(item.TrangThai == "Chờ xử lý" ? "bg-warning text-dark" :
+                              item.TrangThai == "Đang giao" ? "bg-info text-dark" :
+                              item.TrangThai == "Hoàn tất" ? "bg-success" : "bg-danger")">
+                            @item.TrangThai
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Ngày đặt:</strong> @item.NgayDat.ToString("dd/MM/yyyy HH:mm")</p>
+
+                        @* Hiển thị tổng tiền + tổng tiền sau giảm *@
+                        @if (item.GiamGia > 0)
+                        {
+                            <p>
+                                <strong>Tổng tiền:</strong><br />
+                                <span style="text-decoration:line-through; color:gray;">
+                                    @item.TongTien.ToString("N0") VNĐ
+                                </span><br />
+                                <span style="color:red; font-weight:bold;">
+                                    @item.TongTienSauGiam.ToString("N0") VNĐ
+                                </span>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                <strong>Tổng tiền:</strong>
+                                <span class="text-danger fw-semibold">
+                                    @item.TongTien.ToString("N0") VNĐ
+                                </span>
+                            </p>
+                        }
+
+                        <p><strong>Địa chỉ giao hàng:</strong> @item.DiaChiGiao</p>
+                        <a asp-action="Details" asp-route-id="@item.MaDH" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-eye"></i> Chi tiết
+                        </a>
+                    </div>
+                    <div class="card-footer text-end small fst-italic text-muted">
+                        @(item.TrangThai == "Hoàn tất" ? "✓ Đã hoàn thành" :
+                            item.TrangThai == "Chờ xử lý" ? "Đang chờ xác nhận..." :
+                            item.TrangThai == "Đang giao" ? "Đơn hàng đang được giao" :
+                            "Đơn hàng đã hủy")
+                    </div>
+                </div>
+            </div>
+        }
     }
 </div>

@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<webBanSach.ViewModels.SachViewModel>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Danh sách Sách";
+    var userId = HttpContextAccessor.HttpContext?.Session.GetInt32("MaND");
 }
 
 <div class="container mt-4">
+
     <!-- NAV LỌC & TÌM KIẾM -->
     <div class="mb-4 p-3 bg-white rounded shadow-sm border">
         <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
@@ -75,7 +78,7 @@
     </div>
 
     <!-- DANH SÁCH SÁCH -->
-    <div class="row">
+    <div class="row g-4 justify-content-center">
         @if (!Model.Any())
         {
             <div class="col-12 text-center text-muted">
@@ -86,27 +89,58 @@
         {
             @foreach (var item in Model)
             {
-                <div class="col-md-3 mb-4">
-                    <div class="card book-card h-100">
-                        <div class="book-img-wrapper">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6 d-flex justify-content-center">
+                    <div class="card book-card border-0 shadow-sm h-100">
+                        <div class="book-img-wrapper position-relative">
                             <img src="~/images/sach/@(item.HinhAnh ?? "no-image.png")"
-                                 class="card-img-top" alt="@item.TenSach" />
+                                 class="card-img-top rounded-3"
+                                 style="height:300px; object-fit:cover;" alt="@item.TenSach" />
+
+                            <div class="overlay d-flex flex-column justify-content-center align-items-center gap-2">
+                                <a asp-action="Details" asp-route-id="@item.MaSach"
+                                   class="btn btn-outline-light rounded-pill px-3 py-2 shadow-sm w-75">
+                                    <i class="bi bi-eye"></i> Xem chi tiết
+                                </a>
+
+                                @if (item.SoLuong > 0)
+                                {
+                                    @if (userId != null)
+                                    {
+                                        <form asp-controller="Cart" asp-action="CheckoutNow" method="post" class="w-100 d-flex justify-content-center">
+                                            <input type="hidden" name="maSach" value="@item.MaSach" />
+                                            <button type="submit" class="btn btn-primary rounded-pill px-3 py-2 shadow-sm w-75">
+                                                <i class="bi bi-bag-check"></i> Mua ngay
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Account/Login" class="btn btn-primary rounded-pill px-3 py-2 shadow-sm w-75">
+                                            <i class="bi bi-bag-check"></i> Mua ngay
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Hết hàng</span>
+                                }
+                            </div>
                         </div>
-                        <div class="card-body text-center">
-                            <h6 class="card-title text-truncate fw-bold" title="@item.TenSach">@item.TenSach</h6>
-                            <p class="text-muted small mb-1">NXB: @item.NXB</p>
-                            @if (item.SoLuong == 0)
-                            {
-                                <p class="text-danger fw-bold">Hết hàng</p>
-                            }
-                            else
-                            {
-                                <p class="book-price">@string.Format("{0:N0} đ", item.GiaBan)</p>
-                            }
-                        </div>
-                        <div class="card-footer d-flex justify-content-center gap-2">
-                            <a asp-action="Details" asp-route-id="@item.MaSach"
-                               class="btn btn-sm btn-outline-primary rounded-pill px-3">Chi tiết</a>
+                        <div class="card-body text-center d-flex flex-column justify-content-between">
+                            <div>
+                                <h6 class="fw-bold text-truncate">@item.TenSach</h6>
+                                <small class="text-muted">✍ @item.TacGias</small>
+                            </div>
+                            <div class="mt-2">
+                                @if (item.SoLuong > 0)
+                                {
+                                    <p class="fw-bold text-danger mb-0">@item.GiaBan.ToString("n0") ₫</p>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Hết hàng</span>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,37 +151,51 @@
 
 <style>
     .book-card {
-        border: none;
-        border-radius: 12px;
-        overflow: hidden;
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 
         .book-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
         }
 
     .book-img-wrapper {
-        height: 250px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #fafafa;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
     }
 
         .book-img-wrapper img {
-            max-height: 100%;
             transition: transform 0.3s ease;
+            width: 100%;
         }
 
     .book-card:hover img {
         transform: scale(1.05);
     }
 
-    .book-price {
-        color: #e67e22;
-        font-size: 16px;
-        font-weight: bold;
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.65);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .book-img-wrapper:hover .overlay {
+        opacity: 1;
+    }
+
+    .book-card .btn {
+        font-size: 0.85rem;
     }
 </style>

@@ -26,7 +26,7 @@
         <tr>
             <th>Sách</th>
             <th>Số lượng</th>
-            <th>Giá</th>
+            <th>Đơn giá</th>
             <th>Tổng</th>
         </tr>
     </thead>
@@ -37,18 +37,19 @@
                 <td>@ct.MaSachNavigation?.TenSach</td>
                 <td>@ct.SoLuong</td>
                 <td>@ct.DonGia.ToString("N0") đ</td>
-                <td>@(ct.SoLuong * ct.DonGia).ToString("N0") đ</td>
+                <td>@((ct.SoLuong * ct.DonGia).ToString("N0")) đ</td>
+
             </tr>
         }
     </tbody>
 </table>
 
 <div class="d-flex gap-2 mt-3">
-
     <!-- Form cập nhật trạng thái, chỉ hiện nếu chưa Hoàn tất/Hủy -->
-    @if (Model.TrangThai != "Hoàn tất" && Model.TrangThai != "Hủy")
+    @if (Model.TrangThai != webBanSach.Models.OrderStatus.HoanTat
+    && Model.TrangThai != webBanSach.Models.OrderStatus.Huy)
     {
-        <form asp-action="UpdateStatus" method="post" class="d-flex gap-2">
+        <form asp-area="Admin" asp-controller="DonHang" asp-action="UpdateStatus" method="post" class="d-flex gap-2">
             <input type="hidden" name="id" value="@Model.MaDH" />
             <input type="hidden" name="returnTo" value="Details" />
             <select name="trangThai" class="form-select">
@@ -62,19 +63,20 @@
     }
 
     <!-- Nút Hủy, chỉ hiện nếu chưa Hủy/Hoàn tất -->
-    @if (Model.TrangThai != "Hủy" && Model.TrangThai != "Hoàn tất")
+    @if (Model.TrangThai != webBanSach.Models.OrderStatus.Huy
+    && Model.TrangThai != webBanSach.Models.OrderStatus.HoanTat)
     {
-        <form asp-action="Cancel" asp-route-id="@Model.MaDH" method="post">
+        <form asp-area="Admin" asp-controller="DonHang" asp-action="Cancel" asp-route-id="@Model.MaDH" method="post">
             <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?');">
                 <i class="fa fa-times"></i> Hủy đơn hàng
             </button>
         </form>
     }
 
-    <!-- Nút xóa nếu trạng thái Hủy -->
-    @if (Model.TrangThai == "Hủy")
+    <!-- Nút Xóa nếu trạng thái Hủy -->
+    @if (Model.TrangThai == webBanSach.Models.OrderStatus.Huy)
     {
-        <form asp-action="Delete" asp-route-id="@Model.MaDH" method="post">
+        <form asp-area="Admin" asp-controller="DonHang" asp-action="Delete" asp-route-id="@Model.MaDH" method="post">
             <button type="submit" class="btn btn-danger" onclick="return confirm('Xóa đơn hàng Hủy này?');">
                 <i class="fa fa-trash"></i> Xóa
             </button>
@@ -82,5 +84,5 @@
     }
 
     <!-- Nút Quay lại -->
-    <a asp-action="Index" class="btn btn-secondary ms-auto">⬅ Quay lại danh sách</a>
+    <a asp-area="Admin" asp-controller="DonHang" asp-action="Index" class="btn btn-secondary ms-auto">⬅ Quay lại danh sách</a>
 </div>

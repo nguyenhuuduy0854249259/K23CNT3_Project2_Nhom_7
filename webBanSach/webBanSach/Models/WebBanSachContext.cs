@@ -103,6 +103,9 @@ public partial class WebBanSachContext : DbContext
             entity.HasKey(e => e.MaKM).HasName("PK__KhuyenMa__2725CF15CFA52012");
 
             entity.Property(e => e.TrangThai).HasDefaultValue(true);
+     
+            entity.Property(e => e.PhanTramGiam).HasPrecision(5, 2);
+            entity.Property(e => e.GiamToiDa).HasPrecision(18, 2);
         });
 
         modelBuilder.Entity<LienHe>(entity =>

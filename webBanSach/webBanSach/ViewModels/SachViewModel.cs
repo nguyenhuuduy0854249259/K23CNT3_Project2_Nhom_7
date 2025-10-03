@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using webBanSach.Models;
 
 namespace webBanSach.ViewModels
 {
@@ -33,6 +34,19 @@ namespace webBanSach.ViewModels
 
         [Display(Name = "Ảnh bìa")]
         public string? HinhAnh { get; set; }
+
+        // ===== Thêm lượt xem =====
+        [Display(Name = "Lượt xem")]
+        public int LuotXem { get; set; }
+
+        // Danh sách đánh giá
+        public List<DanhGia>? DanhGias { get; set; }
+        // Trong SachViewModel
+        [Range(1, 5, ErrorMessage = "Điểm đánh giá từ 1 đến 5")]
+        public int? DiemMoi { get; set; }
+
+        [Display(Name = "Nhận xét")]
+        public string? BinhLuanMoi { get; set; }
 
         // Dùng khi upload ảnh
         public IFormFile? HinhAnhFile { get; set; }

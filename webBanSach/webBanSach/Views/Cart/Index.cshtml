@@ -20,15 +20,15 @@
     @if (Model != null && Model.Any())
     {
         <div class="row">
-            <!-- Danh sách sản phẩm -->
             <div class="col-md-8">
                 @foreach (var item in Model)
                 {
                     subtotal += item.SoLuong * item.MaSachNavigation.GiaBan;
-                    <div class="card mb-3 shadow-sm">
+                    <div class="card mb-3 shadow-sm cart-item" data-max="@item.MaSachNavigation.SoLuong" data-id="@item.MaSach">
                         <div class="row g-0 align-items-center">
                             <div class="col-md-3">
-                                <img src="~/images/sach/@item.MaSachNavigation.HinhAnh" class="img-fluid rounded-start" style="height:120px; object-fit:cover;" />
+                                <img src="~/images/sach/@item.MaSachNavigation.HinhAnh"
+                                     class="img-fluid rounded-start" style="height:120px; object-fit:cover;" />
                             </div>
                             <div class="col-md-5">
                                 <div class="card-body">
@@ -38,18 +38,21 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="d-flex flex-column gap-2 me-2">
-                                    <form asp-action="Update" method="post" class="d-flex gap-2">
+                                    <form asp-action="UpdateQuantity" asp-controller="Cart" method="post" class="d-flex">
+                                        @Html.AntiForgeryToken()
                                         <input type="hidden" name="maSach" value="@item.MaSach" />
-                                        <input type="number" name="soLuong" value="@item.SoLuong" min="1" class="form-control form-control-sm" style="width:70px;" />
-                                        <!-- Nút cập nhật (nếu cần) -->
-                                        <button type="submit" class="btn btn-outline-primary btn-sm">
-                                            <i class="bi bi-arrow-repeat me-1"></i> Cập nhật
+                                        <input type="number" name="soLuong" class="form-control form-control-sm quantity-input"
+                                               value="@item.SoLuong" min="1" max="@item.MaSachNavigation.SoLuong" style="width:70px;" />
+                                        <button type="submit" class="btn btn-outline-success btn-sm ms-2">
+                                            <i class="bi bi-arrow-repeat"></i> Cập nhật
                                         </button>
+                                        <small class="text-danger quantity-error" style="display:none;">Số lượng không đủ tồn kho!</small>
                                     </form>
-                                    <form asp-action="Delete" method="post">
+
+                                    <form asp-action="Delete" asp-controller="Cart" method="post" class="mt-2">
+                                        @Html.AntiForgeryToken()
                                         <input type="hidden" name="maSach" value="@item.MaSach" />
-                                        <!-- Nút xóa -->
-                                        <button class="btn btn-outline-danger btn-sm">
+                                        <button class="btn btn-outline-danger btn-sm w-100">
                                             <i class="bi bi-trash me-1"></i> Xóa
                                         </button>
                                     </form>
@@ -60,17 +63,19 @@
                 }
             </div>
 
-            <!-- Tóm tắt đơn hàng -->
             <div class="col-md-4">
                 <div class="card shadow-sm p-3">
                     <h5 class="mb-3">Tóm tắt đơn hàng</h5>
                     <p>Tạm tính: <span class="float-end">@subtotal.ToString("N0") VNĐ</span></p>
                     <p>Phí giao hàng: <span class="float-end">Miễn phí</span></p>
                     <hr />
-                    <h5>Tổng cộng: <span class="text-danger float-end">@subtotal.ToString("N0") VNĐ</span></h5>
+                    <h5>
+                        Tổng cộng:
+                        <span class="text-danger float-end fw-bold">@subtotal.ToString("N0") VNĐ</span>
+                    </h5>
                     <div class="d-grid mt-3">
-                        <!-- Nút thanh toán -->
-                        <a asp-controller="Cart" asp-action="Checkout" class="btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center">
+                        <a asp-controller="Cart" asp-action="Checkout"
+                           class="btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center">
                             <i class="bi bi-credit-card me-2"></i> Thanh toán
                         </a>
                     </div>
@@ -84,12 +89,22 @@
     }
 </div>
 
-<style>
-    .card .btn {
-        transition: all 0.2s;
-    }
+@section Scripts {
+    <script>
+        document.querySelectorAll(".quantity-input").forEach(input => {
+            input.addEventListener("change", function () {
+                const row = this.closest(".cart-item");
+                const max = parseInt(row.getAttribute("data-max"));
+                const errorText = row.querySelector(".quantity-error");
+                let qty = parseInt(this.value);
 
-        .card .btn:hover {
-            opacity: 0.8;
-        }
-</style>
+                if (qty > max) {
+                    errorText.style.display = "inline";
+                    this.value = max;
+                } else {
+                    errorText.style.display = "none";
+                }
+            });
+        });
+    </script>
+}

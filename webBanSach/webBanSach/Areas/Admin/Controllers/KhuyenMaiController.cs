@@ -32,30 +32,43 @@ namespace webBanSach.Areas.Admin.Controllers
         {
             if (id == null) return NotFound();
 
-            var km = await _context.KhuyenMais.FirstOrDefaultAsync(k => k.MaKM == id);
+            var km = await _context.KhuyenMais
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(k => k.MaKM == id);
             if (km == null) return NotFound();
 
             return View(km);
         }
 
         // GET: Admin/KhuyenMai/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         // POST: Admin/KhuyenMai/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(KhuyenMai km)
         {
-            if (ModelState.IsValid)
+            // Xử lý null theo LoaiGiam
+            if (km.LoaiGiam == "PhanTram")
+                km.SoTienGiam = null;
+            else if (km.LoaiGiam == "TienMat")
+                km.PhanTramGiam = null;
+
+            if (!ModelState.IsValid)
+                return View(km);
+
+            try
             {
                 _context.Add(km);
                 await _context.SaveChangesAsync();
+                TempData["Success"] = "Thêm khuyến mãi thành công!";
                 return RedirectToAction(nameof(Index));
             }
-            return View(km);
+            catch (DbUpdateException ex)
+            {
+                ModelState.AddModelError("", "Tạo mới thất bại. " + ex.Message);
+                return View(km);
+            }
         }
 
         // GET: Admin/KhuyenMai/Edit/5
@@ -76,28 +89,58 @@ namespace webBanSach.Areas.Admin.Controllers
         {
             if (id != km.MaKM) return NotFound();
 
-            if (ModelState.IsValid)
+            // Xử lý null theo LoaiGiam
+            if (km.LoaiGiam == "PhanTram")
+                km.SoTienGiam = null;
+            else if (km.LoaiGiam == "TienMat")
+                km.PhanTramGiam = null;
+
+            if (!ModelState.IsValid)
+                return View(km);
+
+            try
             {
                 _context.Update(km);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                TempData["Success"] = "Cập nhật khuyến mãi thành công!";
             }
-            return View(km);
+            catch (DbUpdateException ex)
+            {
+                ModelState.AddModelError("", "Cập nhật thất bại. " + ex.Message);
+                return View(km);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Admin/KhuyenMai/Delete/5
+        // POST: Admin/KhuyenMai/DeleteConfirmed/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lh = await _context.KhuyenMais.FindAsync(id);
-            if (lh != null)
+            var km = await _context.KhuyenMais.FindAsync(id);
+            if (km != null)
             {
-                _context.KhuyenMais.Remove(lh);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.KhuyenMais.Remove(km);
+                    await _context.SaveChangesAsync();
+                    TempData["Success"] = $"Xóa khuyến mãi '{km.MaCode}' thành công!";
+                }
+                catch (DbUpdateException ex)
+                {
+                    TempData["Error"] = $"Xóa thất bại. {ex.Message}";
+                }
             }
+            else
+            {
+                TempData["Error"] = "Khuyến mãi không tồn tại.";
+            }
+
             return RedirectToAction(nameof(Index));
         }
+
 
         // POST: Admin/KhuyenMai/Toggle/5
         [HttpPost]
@@ -107,8 +150,7 @@ namespace webBanSach.Areas.Admin.Controllers
             var km = await _context.KhuyenMais.FindAsync(id);
             if (km != null)
             {
-                km.TrangThai = !(km.TrangThai ?? false);
-                _context.Update(km);
+                km.TrangThai = !km.TrangThai;
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));

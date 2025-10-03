@@ -8,16 +8,28 @@
 <div class="card shadow-sm p-4">
     <dl class="row">
         <dt class="col-sm-3">Mã Code</dt>
-        <dd class="col-sm-9">@Model.MaCode</dd>
+        <dd class="col-sm-9"><strong>@Model.MaCode</strong></dd>
 
         <dt class="col-sm-3">Mô tả</dt>
-        <dd class="col-sm-9">@Model.MoTa</dd>
+        <dd class="col-sm-9">@(!string.IsNullOrEmpty(Model.MoTa) ? Model.MoTa : "-")</dd>
+
+        <dt class="col-sm-3">Loại giảm</dt>
+        <dd class="col-sm-9">@Model.LoaiGiam</dd>
 
         <dt class="col-sm-3">% Giảm</dt>
-        <dd class="col-sm-9">@Model.PhanTramGiam %</dd>
+        <dd class="col-sm-9">
+            @(Model.PhanTramGiam.HasValue ? Model.PhanTramGiam.Value + "%" : "-")
+        </dd>
+
+        <dt class="col-sm-3">Giảm trực tiếp</dt>
+        <dd class="col-sm-9">
+            @(Model.SoTienGiam.HasValue ? Model.SoTienGiam.Value.ToString("N0") + " đ" : "-")
+        </dd>
 
         <dt class="col-sm-3">Giảm tối đa</dt>
-        <dd class="col-sm-9">@Model.GiamToiDa?.ToString("N0") đ</dd>
+        <dd class="col-sm-9">
+            @(Model.GiamToiDa.HasValue ? Model.GiamToiDa.Value.ToString("N0") + " đ" : "-")
+        </dd>
 
         <dt class="col-sm-3">Ngày bắt đầu</dt>
         <dd class="col-sm-9">@Model.NgayBatDau.ToString("dd/MM/yyyy")</dd>
@@ -27,7 +39,7 @@
 
         <dt class="col-sm-3">Trạng thái</dt>
         <dd class="col-sm-9">
-            @if (Model.TrangThai == true)
+            @if (Model.TrangThai)
             {
                 <span class="badge bg-success">Đang áp dụng</span>
             }

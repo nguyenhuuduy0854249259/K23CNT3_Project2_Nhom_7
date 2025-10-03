@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Printing;
 using webBanSach.Models;
 
 namespace webBanSach.Areas.Admin.Controllers
@@ -8,13 +9,14 @@ namespace webBanSach.Areas.Admin.Controllers
     public class DonHangController : Controller
     {
         private readonly WebBanSachContext _context;
+        private const int PageSize = 10; // Số bản ghi mỗi trang
         public DonHangController(WebBanSachContext context)
         {
             _context = context;
         }
 
         // GET: Admin/DonHang
-        public async Task<IActionResult> Index(string? searchString, string? status)
+        public async Task<IActionResult> Index(string searchString, string status, int page = 1)
         {
             var query = _context.DonHangs
                         .Include(d => d.MaNDNavigation)
@@ -31,9 +33,22 @@ namespace webBanSach.Areas.Admin.Controllers
                 query = query.Where(d => d.TrangThai == status);
             }
 
-            var list = await query.OrderByDescending(d => d.NgayDat).ToListAsync();
+            query = query.OrderByDescending(d => d.NgayDat);
+
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)PageSize);
+            var items = await query
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
+
             ViewBag.StatusList = OrderStatus.All;
-            return View(list);
+            ViewBag.CurrentSearch = searchString;
+            ViewBag.CurrentStatus = status;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(items);
         }
 
         // GET: Admin/DonHang/Details/5
@@ -48,6 +63,7 @@ namespace webBanSach.Areas.Admin.Controllers
                 .FirstOrDefaultAsync(d => d.MaDH == id);
 
             if (don == null) return NotFound();
+
             ViewBag.StatusList = OrderStatus.All;
             return View(don);
         }
@@ -60,7 +76,7 @@ namespace webBanSach.Areas.Admin.Controllers
             var don = await _context.DonHangs.FindAsync(id);
             if (don == null) return NotFound();
 
-            // Validate nghiệp vụ: không đổi trạng thái nếu đã hoàn tất / hủy
+            // Không cho đổi trạng thái nếu đã Hoàn tất hoặc Hủy
             if (don.TrangThai == OrderStatus.HoanTat || don.TrangThai == OrderStatus.Huy)
             {
                 TempData["Error"] = "Đơn hàng đã hoàn tất hoặc bị hủy, không thể thay đổi!";
@@ -68,12 +84,14 @@ namespace webBanSach.Areas.Admin.Controllers
             }
 
             don.TrangThai = trangThai;
-         
             _context.Update(don);
             await _context.SaveChangesAsync();
 
+            TempData["Success"] = $"Đơn hàng {id} đã được cập nhật trạng thái.";
+
             if (returnTo == "Details")
                 return RedirectToAction("Details", new { id });
+
             return RedirectToAction("Index");
         }
 
@@ -92,25 +110,39 @@ namespace webBanSach.Areas.Admin.Controllers
             }
 
             don.TrangThai = OrderStatus.Huy;
- 
             _context.Update(don);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            TempData["Success"] = $"Đơn hàng {id} đã bị hủy.";
+            return RedirectToAction("Details", new { id });
         }
 
         // POST: Admin/DonHang/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var don = await _context.DonHangs.FindAsync(id);
-            if (don != null && don.TrangThai == "Hủy") // chỉ xóa đơn Hủy
+            var don = await _context.DonHangs
+                        .Include(d => d.CT_DonHangs)
+                        .FirstOrDefaultAsync(d => d.MaDH == id);
+
+            if (don != null && don.TrangThai == OrderStatus.Huy)
             {
+                // Xóa chi tiết trước để tránh FK
+                _context.CT_DonHangs.RemoveRange(don.CT_DonHangs);
+
+                // Xóa đơn hàng
                 _context.DonHangs.Remove(don);
                 await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
 
+                TempData["Success"] = $"Đơn hàng {id} đã được xóa.";
+            }
+            else
+            {
+                TempData["Error"] = $"Đơn hàng {id} không thể xóa (chỉ xóa đơn Hủy).";
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

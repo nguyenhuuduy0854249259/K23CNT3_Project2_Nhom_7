@@ -1,17 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using webBanSach.Models;
+﻿using webBanSach.Models;
 
-namespace webBanSach.ViewModels
+public class CheckoutViewModel
 {
-    public class CheckoutViewModel
-    {
-        public string HoTen { get; set; }
-        public string Email { get; set; }
-        public string DiaChiGiao { get; set; }
-
-        // Thông tin giỏ hàng
-        public List<GioHang> GioHangs { get; set; }
-        public decimal TongTien { get; set; }
-    }
-
+    public string HoTen { get; set; } = "";
+    public string Email { get; set; } = "";
+    public string DiaChiGiao { get; set; } = "";
+    public List<GioHang> GioHangs { get; set; } = new List<GioHang>();
+    public string? MaCode { get; set; }
+    public decimal TongTien { get; set; }
+    public decimal TongTienSauGiam { get; set; }
+    public decimal? GiamGia { get; set; }
 }

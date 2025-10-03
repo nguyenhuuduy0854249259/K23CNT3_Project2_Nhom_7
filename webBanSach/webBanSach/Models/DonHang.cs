@@ -18,8 +18,13 @@ public partial class DonHang
     [Column(TypeName = "datetime")]
     public DateTime? NgayDat { get; set; }
 
-    [Column(TypeName = "decimal(18, 2)")]
+    // Tổng tiền gốc (do trigger trong SQL cập nhật)
+    [Column(TypeName = "decimal(18,2)")]
     public decimal? TongTien { get; set; }
+
+    // Tổng tiền sau giảm (do code C# tính khi checkout)
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal? TongTienSauGiam { get; set; }
 
     [StringLength(50)]
     public string? TrangThai { get; set; }

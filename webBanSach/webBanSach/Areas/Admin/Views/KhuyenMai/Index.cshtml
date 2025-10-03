@@ -5,6 +5,17 @@
 
 <h2 class="mb-3">@ViewData["Title"]</h2>
 
+<!-- Thông báo -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<!-- Form tìm kiếm + Thêm -->
 <form method="get" class="mb-3">
     <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="Tìm theo mã code, mô tả..." value="@Context.Request.Query["search"]" />
@@ -13,12 +24,14 @@
     </div>
 </form>
 
+<!-- Bảng danh sách -->
 <table class="table table-hover align-middle shadow-sm">
     <thead class="table-dark">
         <tr>
             <th>Mã Code</th>
             <th>Mô tả</th>
             <th>% Giảm</th>
+            <th>Giảm trực tiếp</th>
             <th>Giảm tối đa</th>
             <th>Thời gian</th>
             <th>Trạng thái</th>
@@ -30,12 +43,13 @@
         {
             <tr>
                 <td><strong>@km.MaCode</strong></td>
-                <td>@km.MoTa</td>
-                <td>@km.PhanTramGiam %</td>
-                <td>@(km.GiamToiDa?.ToString("N0")) đ</td>
+                <td>@(!string.IsNullOrEmpty(km.MoTa) ? km.MoTa : "-")</td>
+                <td>@(km.PhanTramGiam.HasValue ? km.PhanTramGiam + "%" : "-")</td>
+                <td>@(km.SoTienGiam.HasValue ? km.SoTienGiam.Value.ToString("N0") + " đ" : "-")</td>
+                <td>@(km.GiamToiDa.HasValue ? km.GiamToiDa.Value.ToString("N0") + " đ" : "-")</td>
                 <td>@km.NgayBatDau.ToString("dd/MM/yyyy") - @km.NgayKetThuc.ToString("dd/MM/yyyy")</td>
                 <td>
-                    @if (km.TrangThai == true)
+                    @if (km.TrangThai)
                     {
                         <span class="badge bg-success">Đang áp dụng</span>
                     }
@@ -51,10 +65,9 @@
                     <form asp-action="Toggle" method="post" class="d-inline">
                         <input type="hidden" name="id" value="@km.MaKM" />
                         <button type="submit" class="btn btn-sm btn-secondary">
-                            @(km.TrangThai == true ? "Ẩn" : "Hiện")
+                            @(km.TrangThai ? "Ẩn" : "Hiện")
                         </button>
                     </form>
-
 
                     <button class="btn btn-danger btn-sm"
                             data-bs-toggle="modal"
@@ -63,13 +76,12 @@
                             data-code="@km.MaCode">
                         🗑️
                     </button>
-
-
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
 <!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -79,6 +91,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
             </div>
             <form id="deleteForm" method="post">
+                @Html.AntiForgeryToken()
                 <div class="modal-body">
                     Bạn có chắc chắn muốn xóa khuyến mãi <strong id="deleteItemName"></strong>?
                     <input type="hidden" name="id" id="deleteItemId" />
@@ -98,12 +111,10 @@
         deleteModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
             var id = button.getAttribute('data-id');
-            var code = button.getAttribute('data-code'); // ví dụ: mã khuyến mãi
+            var code = button.getAttribute('data-code');
 
             document.getElementById('deleteItemName').textContent = code;
             document.getElementById('deleteItemId').value = id;
-
-            // Gọi đúng action DeleteConfirmed
             document.getElementById('deleteForm').action = '/Admin/KhuyenMai/DeleteConfirmed/' + id;
         });
     </script>

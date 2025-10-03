@@ -69,51 +69,72 @@ namespace webBanSach.Controllers
                 .Include(s => s.MaNXBNavigation)
                 .Include(s => s.Sach_TheLoais).ThenInclude(stl => stl.MaLoaiNavigation)
                 .Include(s => s.Sach_TacGias).ThenInclude(stg => stg.MaTGNavigation)
+                .Include(s => s.DanhGias).ThenInclude(d => d.MaNDNavigation)
                 .FirstOrDefaultAsync(s => s.MaSach == id);
 
             if (sach == null) return NotFound();
 
             sach.LuotXem++;
-            _context.Update(sach);
             await _context.SaveChangesAsync();
+
+            var vm = new SachViewModel
+            {
+                MaSach = sach.MaSach,
+                TenSach = sach.TenSach,
+                MaNXB = sach.MaNXB,
+                NXB = sach.MaNXBNavigation?.TenNXB,
+                NamXB = sach.NamXB,
+                GiaBan = sach.GiaBan,
+                SoLuong = sach.SoLuong,
+                MoTa = sach.MoTa,
+                HinhAnh = sach.HinhAnh,
+                LuotXem = sach.LuotXem,
+                TheLoaiNames = sach.Sach_TheLoais?.Select(st => st.MaLoaiNavigation.TenLoai),
+                TacGiaNames = sach.Sach_TacGias?.Select(st => st.MaTGNavigation.TenTG),
+                DanhGias = sach.DanhGias?.OrderByDescending(d => d.NgayDG).ToList()
+            };
 
             ViewBag.ReturnUrl = string.IsNullOrEmpty(returnUrl)
                 ? Url.Action("Index", "Sach")
                 : returnUrl;
 
-            return View(sach);
-        }
+            // Tính trung bình sao
+            ViewBag.AvgRating = sach.DanhGias != null && sach.DanhGias.Any()
+                ? sach.DanhGias.Average(d => d.Diem)
+                : 0;
 
+            return View(vm);
+        }
         // ========================
-        // Search theo filter (theloai, tacgia, nxb)
+        // Tìm kiếm theo filter
+        // filterType: "theloai", "tacgia", "nxb"
+        // keyword: giá trị tìm kiếm
         // ========================
         public async Task<IActionResult> Search(string filterType, string keyword)
         {
-            if (string.IsNullOrEmpty(filterType) || string.IsNullOrEmpty(keyword))
-                return RedirectToAction("Index");
-
             var query = _context.Saches
                 .Include(s => s.MaNXBNavigation)
                 .Include(s => s.Sach_TheLoais).ThenInclude(stl => stl.MaLoaiNavigation)
                 .Include(s => s.Sach_TacGias).ThenInclude(stg => stg.MaTGNavigation)
                 .AsQueryable();
 
-            switch (filterType.ToLower())
+            if (!string.IsNullOrEmpty(filterType) && !string.IsNullOrEmpty(keyword))
             {
-                case "theloai":
-                    query = query.Where(s => s.Sach_TheLoais.Any(st => st.MaLoaiNavigation.TenLoai == keyword));
-                    break;
-
-                case "tacgia":
-                    query = query.Where(s => s.Sach_TacGias.Any(st => st.MaTGNavigation.TenTG == keyword));
-                    break;
-
-                case "nxb":
-                    query = query.Where(s => s.MaNXBNavigation.TenNXB == keyword);
-                    break;
+                switch (filterType.ToLower())
+                {
+                    case "theloai":
+                        query = query.Where(s => s.Sach_TheLoais.Any(st => st.MaLoaiNavigation.TenLoai.Contains(keyword)));
+                        break;
+                    case "tacgia":
+                        query = query.Where(s => s.Sach_TacGias.Any(st => st.MaTGNavigation.TenTG.Contains(keyword)));
+                        break;
+                    case "nxb":
+                        query = query.Where(s => s.MaNXBNavigation.TenNXB.Contains(keyword));
+                        break;
+                }
             }
 
-            var result = await query
+            var listSach = await query
                 .Select(s => new SachViewModel
                 {
                     MaSach = s.MaSach,
@@ -128,15 +149,16 @@ namespace webBanSach.Controllers
                 })
                 .ToListAsync();
 
-            ViewBag.FilterType = filterType;
-            ViewBag.Keyword = keyword;
-
-            // Load dropdown để filter lại
+            // Load dropdown
             ViewBag.TheLoaiList = await _context.TheLoais.Select(t => t.TenLoai).ToListAsync();
             ViewBag.TacGiaList = await _context.TacGias.Select(t => t.TenTG).ToListAsync();
             ViewBag.NXBList = await _context.NhaXuatBans.Select(n => n.TenNXB).ToListAsync();
 
-            return View("SearchResult", result);
+            ViewBag.Keyword = keyword;
+
+            return View("Index", listSach);
         }
+
     }
+
 }

@@ -1,21 +1,35 @@
 ﻿@model IEnumerable<webBanSach.Models.DonHang>
+@using webBanSach.Models
 @{
     ViewData["Title"] = "Quản lý Đơn hàng";
+    string[] statuses = OrderStatus.All;
+    string currentSearch = ViewBag.CurrentSearch as string ?? "";
+    string currentStatus = ViewBag.CurrentStatus as string ?? "";
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3><i class="fa-solid fa-cart-shopping"></i> Quản lý Đơn hàng</h3>
+    <h3><i class="fa-solid fa-cart-shopping"></i> @ViewData["Title"]</h3>
 
     <form method="get" class="d-flex gap-2">
-        <input type="text" name="searchString" class="form-control" placeholder="Tìm đơn hàng hoặc khách hàng..." value="@Context.Request.Query["searchString"]" />
+        <input type="text" name="searchString" class="form-control" placeholder="Tìm đơn hàng hoặc khách hàng..." value="@currentSearch" />
         <select name="status" class="form-select">
             <option value="">-- Tất cả trạng thái --</option>
-            @foreach (var s in ViewBag.StatusList as string[])
+            @foreach (var s in statuses)
             {
-                <option value="@s" selected="@(Context.Request.Query["status"] == s)">@s</option>
+                if (s == currentStatus)
+                {
+                    <option selected value="@s">@s</option>
+                }
+                else
+                {
+                    <option value="@s">@s</option>
+                }
             }
         </select>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+
+        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Tìm</button>
     </form>
 </div>
 
@@ -37,9 +51,9 @@
                 <td>@d.MaNDNavigation?.HoTen</td>
                 <td>@d.NgayDat?.ToString("dd/MM/yyyy")</td>
                 <td>
-                    <span class="badge bg-@(d.TrangThai == "Hoàn tất" ? "success" :
-                                           d.TrangThai == "Đang giao" ? "info" :
-                                           d.TrangThai == "Hủy" ? "danger" : "secondary")">
+                    <span class="badge bg-@(d.TrangThai == OrderStatus.HoanTat ? "success" :
+                                           d.TrangThai == OrderStatus.DangGiao ? "info" :
+                                           d.TrangThai == OrderStatus.Huy ? "danger" : "secondary")">
                         @d.TrangThai
                     </span>
                 </td>
@@ -48,18 +62,17 @@
                         <i class="fa fa-eye"></i> Chi tiết
                     </a>
 
-                    @* Nút Hủy nếu chưa Hoàn tất/Hủy *@
-                    @if (d.TrangThai != "Hoàn tất" && d.TrangThai != "Hủy")
+                    @if (d.TrangThai != OrderStatus.HoanTat && d.TrangThai != OrderStatus.Huy)
                     {
                         <form asp-action="Cancel" asp-route-id="@d.MaDH" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Xác nhận hủy đơn hàng này?');">
                                 <i class="fa fa-times"></i> Hủy
                             </button>
                         </form>
                     }
 
-                    @* Nút Xóa nếu trạng thái Hủy *@
-                    @if (d.TrangThai == "Hủy")
+                    @if (d.TrangThai == OrderStatus.Huy)
                     {
                         <button class="btn btn-danger btn-sm"
                                 data-bs-toggle="modal"
@@ -74,7 +87,28 @@
     </tbody>
 </table>
 
-<!-- Modal xác nhận xóa (1 modal dùng chung cho tất cả đơn hàng) -->
+<!-- Phân trang -->
+@if (totalPages > 1)
+{
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="?searchString=@currentSearch&status=@currentStatus&page=@(currentPage-1)">« Trước</a>
+            </li>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="?searchString=@currentSearch&status=@currentStatus&page=@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                <a class="page-link" href="?searchString=@currentSearch&status=@currentStatus&page=@(currentPage+1)">Sau »</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+<!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -83,6 +117,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form id="deleteForm" method="post">
+                @Html.AntiForgeryToken()
                 <div class="modal-body">
                     Bạn có chắc muốn xóa đơn hàng <strong id="deleteOrderId"></strong> không?
                     <input type="hidden" name="id" id="deleteId" />
@@ -106,7 +141,6 @@
             document.getElementById('deleteOrderId').textContent = id;
             document.getElementById('deleteId').value = id;
 
-            // POST tới /Admin/DonHang/Delete/{id}
             document.getElementById('deleteForm').action = '/Admin/DonHang/Delete/' + id;
         });
     </script>

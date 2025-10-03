@@ -2,20 +2,25 @@
 @model CheckoutViewModel
 
 <div class="row">
+    <!-- Form thông tin đặt hàng -->
     <div class="col-md-8">
         <h2 class="mb-4">Thanh toán đơn hàng</h2>
+
         <form asp-action="Checkout" method="post" class="p-4 border rounded-3 shadow-sm bg-white">
             <div class="mb-3">
-                <label>Họ tên người nhận:</label>
+                <label class="form-label">Họ tên người nhận:</label>
                 <input asp-for="HoTen" class="form-control rounded-3" readonly />
             </div>
+
             <div class="mb-3">
-                <label>Email:</label>
+                <label class="form-label">Email:</label>
                 <input asp-for="Email" class="form-control rounded-3" readonly />
             </div>
+
             <div class="mb-3">
-                <label>Địa chỉ giao hàng:</label>
-                <textarea asp-for="DiaChiGiao" class="form-control rounded-3" required></textarea>
+                <label asp-for="DiaChiGiao"></label>
+                <input asp-for="DiaChiGiao" class="form-control" />
+                <span asp-validation-for="DiaChiGiao" class="text-danger"></span>
             </div>
 
             <!-- Phương thức thanh toán -->
@@ -23,35 +28,84 @@
                 <label class="form-label fw-bold">Phương thức thanh toán</label>
                 <div class="form-check p-2 border rounded-3 bg-light">
                     <input class="form-check-input" type="radio" id="cod" name="PaymentMethod" value="COD" checked />
-                    <label class="form-check-label" for="cod">
-                        Thanh toán khi nhận hàng
-                    </label>
+                    <label class="form-check-label" for="cod">Thanh toán khi nhận hàng</label>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-success rounded-3 px-4">✔ Xác nhận đặt hàng</button>
+            <button type="submit" class="btn btn-success rounded-3 px-4">
+                ✔ Xác nhận đặt hàng
+            </button>
         </form>
     </div>
 
+    <!-- Thông tin giỏ hàng -->
     <div class="col-md-4">
         <div class="card shadow-sm rounded-3">
             <div class="card-header fw-bold rounded-top-3">Chi tiết đơn hàng</div>
             <div class="card-body">
                 @foreach (var item in Model.GioHangs)
                 {
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mb-1">
                         <span>@item.MaSachNavigation.TenSach (@item.SoLuong)</span>
-                        <span>@String.Format("{0:N0}đ", item.SoLuong * item.MaSachNavigation.GiaBan)</span>
+                        <span>@String.Format("{0:N0} VNĐ", item.SoLuong * item.MaSachNavigation.GiaBan)</span>
                     </div>
                 }
+
                 <hr />
-                <div class="d-flex justify-content-between">
+
+                <!-- Áp mã khuyến mãi -->
+                <form asp-action="ApplyCoupon" method="post" class="mb-3 d-flex">
+                    <input type="text" name="maCode" value="@Model.MaCode"
+                           class="form-control rounded-start-3"
+                           placeholder="Nhập mã giảm giá..." autocomplete="off" />
+                    <button type="submit" class="btn btn-outline-primary rounded-end-3">Áp dụng</button>
+                </form>
+
+                @if (!string.IsNullOrEmpty(Model.MaCode))
+                {
+                    if (Model.GiamGia.HasValue && Model.GiamGia > 0)
+                    {
+                        <small class="text-success d-block mt-2">
+                            ✅ Đã áp dụng mã <b>@Model.MaCode</b>, giảm @String.Format("{0:N0} VNĐ", Model.GiamGia)
+                        </small>
+                    }
+                    else
+                    {
+                        <small class="text-danger d-block mt-2">
+                            ❌ Mã khuyến mãi không hợp lệ!
+                        </small>
+                    }
+                }
+
+                <div class="d-flex justify-content-between mt-2">
                     <span>Phí giao hàng:</span>
                     <span>Miễn phí</span>
                 </div>
-                <div class="d-flex justify-content-between fw-bold text-danger">
-                    <span>Tổng cộng:</span>
-                    <span>@String.Format("{0:N0} VNĐ", Model.TongTien)</span>
+
+                <!-- Tổng cộng -->
+                <div class="mt-3">
+                    @if (Model.GiamGia.HasValue && Model.GiamGia > 0)
+                    {
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold">Tổng tiền cũ:</span>
+                            <span class="text-muted text-decoration-line-through">
+                                @String.Format("{0:N0} VNĐ", Model.TongTien)
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <span class="fw-bold text-danger">Tổng tiền sau giảm:</span>
+                            <span class="text-danger fw-bold">
+                                @String.Format("{0:N0} VNĐ", Model.TongTienSauGiam)
+                            </span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-between fw-bold text-danger">
+                            <span>Tổng tiền:</span>
+                            <span>@String.Format("{0:N0} VNĐ", Model.TongTien)</span>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

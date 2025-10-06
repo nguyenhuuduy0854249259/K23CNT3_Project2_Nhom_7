@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<webBanSach.ViewModels.SachViewModel>
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = "Danh sách Sách";
     var userId = HttpContextAccessor.HttpContext?.Session.GetInt32("MaND");
@@ -7,33 +8,37 @@
 
 <div class="container mt-4">
 
-    <!-- NAV LỌC & TÌM KIẾM -->
-    <div class="mb-4 p-3 bg-white rounded shadow-sm border">
+    <!-- THANH TÌM KIẾM & LỌC -->
+    <div class="filter-bar bg-white p-3 rounded-4 shadow-sm border mb-4">
         <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
 
-            <!-- Form tìm theo tên -->
-            <form asp-action="Index" method="get" class="search-form d-flex">
-                <div class="input-group">
-                    <span class="input-group-text bg-primary text-white">
-                        <i class="bi bi-search"></i>
-                    </span>
-                    <input type="text" name="keyword" value="@ViewBag.Keyword"
-                           class="form-control border-primary"
-                           placeholder="Tìm sách theo tên..." />
-                    <button type="submit" class="btn btn-primary px-4">Tìm</button>
-                </div>
+            <!-- Ô tìm kiếm -->
+            <form asp-action="Index" method="get"
+                  class="d-flex align-items-center search-pill bg-light px-3 py-2 rounded-pill shadow-sm"
+                  style="min-width: 280px;">
+                <i class="bi bi-search text-primary me-2 fs-5"></i>
+                <input type="text" name="keyword" value="@ViewBag.Keyword"
+                       class="form-control border-0 bg-transparent shadow-none"
+                       placeholder="Tìm sách, tác giả, thể loại..." />
+                <button type="submit" class="btn btn-primary btn-sm ms-2 rounded-pill px-3">
+                    Tìm
+                </button>
             </form>
 
             <!-- Dropdown Thể loại -->
             <div class="dropdown">
-                <button class="btn btn-outline-primary dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
-                    📚 Thể loại
+                <button class="btn btn-outline-primary rounded-pill px-4 d-flex align-items-center gap-2"
+                        type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-book"></i> Thể loại
                 </button>
-                <ul class="dropdown-menu shadow">
+                <ul class="dropdown-menu shadow-sm animate__animated animate__fadeIn">
                     @foreach (var loai in (List<string>)ViewBag.TheLoaiList)
                     {
                         <li>
-                            <a class="dropdown-item" asp-action="Search" asp-route-filterType="theloai" asp-route-keyword="@loai">
+                            <a class="dropdown-item"
+                               asp-action="Search"
+                               asp-route-filterType="theloai"
+                               asp-route-keyword="@loai">
                                 @loai
                             </a>
                         </li>
@@ -43,14 +48,18 @@
 
             <!-- Dropdown Tác giả -->
             <div class="dropdown">
-                <button class="btn btn-outline-success dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
-                    ✍️ Tác giả
+                <button class="btn btn-outline-success rounded-pill px-4 d-flex align-items-center gap-2"
+                        type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-lines-fill"></i> Tác giả
                 </button>
-                <ul class="dropdown-menu shadow">
+                <ul class="dropdown-menu shadow-sm animate__animated animate__fadeIn">
                     @foreach (var tg in (List<string>)ViewBag.TacGiaList)
                     {
                         <li>
-                            <a class="dropdown-item" asp-action="Search" asp-route-filterType="tacgia" asp-route-keyword="@tg">
+                            <a class="dropdown-item"
+                               asp-action="Search"
+                               asp-route-filterType="tacgia"
+                               asp-route-keyword="@tg">
                                 @tg
                             </a>
                         </li>
@@ -60,14 +69,18 @@
 
             <!-- Dropdown NXB -->
             <div class="dropdown">
-                <button class="btn btn-outline-danger dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
-                    🏢 NXB
+                <button class="btn btn-outline-danger rounded-pill px-4 d-flex align-items-center gap-2"
+                        type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-building"></i> NXB
                 </button>
-                <ul class="dropdown-menu shadow">
+                <ul class="dropdown-menu shadow-sm animate__animated animate__fadeIn">
                     @foreach (var nxb in (List<string>)ViewBag.NXBList)
                     {
                         <li>
-                            <a class="dropdown-item" asp-action="Search" asp-route-filterType="nxb" asp-route-keyword="@nxb">
+                            <a class="dropdown-item"
+                               asp-action="Search"
+                               asp-route-filterType="nxb"
+                               asp-route-keyword="@nxb">
                                 @nxb
                             </a>
                         </li>
@@ -94,7 +107,8 @@
                         <div class="book-img-wrapper position-relative">
                             <img src="~/images/sach/@(item.HinhAnh ?? "no-image.png")"
                                  class="card-img-top rounded-3"
-                                 style="height:300px; object-fit:cover;" alt="@item.TenSach" />
+                                 style="height:300px; object-fit:cover;"
+                                 alt="@item.TenSach" />
 
                             <div class="overlay d-flex flex-column justify-content-center align-items-center gap-2">
                                 <a asp-action="Details" asp-route-id="@item.MaSach"
@@ -106,16 +120,19 @@
                                 {
                                     @if (userId != null)
                                     {
-                                        <form asp-controller="Cart" asp-action="CheckoutNow" method="post" class="w-100 d-flex justify-content-center">
+                                        <form asp-controller="Cart" asp-action="CheckoutNow" method="post"
+                                              class="w-100 d-flex justify-content-center">
                                             <input type="hidden" name="maSach" value="@item.MaSach" />
-                                            <button type="submit" class="btn btn-primary rounded-pill px-3 py-2 shadow-sm w-75">
+                                            <button type="submit"
+                                                    class="btn btn-primary rounded-pill px-3 py-2 shadow-sm w-75">
                                                 <i class="bi bi-bag-check"></i> Mua ngay
                                             </button>
                                         </form>
                                     }
                                     else
                                     {
-                                        <a href="/Account/Login" class="btn btn-primary rounded-pill px-3 py-2 shadow-sm w-75">
+                                        <a href="/Account/Login"
+                                           class="btn btn-primary rounded-pill px-3 py-2 shadow-sm w-75">
                                             <i class="bi bi-bag-check"></i> Mua ngay
                                         </a>
                                     }
@@ -149,7 +166,26 @@
     </div>
 </div>
 
+<!-- ==================== STYLE ==================== -->
 <style>
+    /* Form lọc và tìm kiếm */
+    .filter-bar {
+        transition: all 0.3s ease;
+    }
+
+    .search-pill input:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .dropdown-menu {
+        border-radius: 12px;
+        padding: 0.5rem 0;
+        font-size: 0.95rem;
+        animation-duration: 0.2s;
+    }
+
+    /* Book card */
     .book-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         display: flex;
@@ -157,10 +193,10 @@
         width: 100%;
     }
 
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-        }
+    .book-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }
 
     .book-img-wrapper {
         position: relative;
@@ -168,10 +204,10 @@
         border-radius: 12px;
     }
 
-        .book-img-wrapper img {
-            transition: transform 0.3s ease;
-            width: 100%;
-        }
+    .book-img-wrapper img {
+        transition: transform 0.3s ease;
+        width: 100%;
+    }
 
     .book-card:hover img {
         transform: scale(1.05);
@@ -198,4 +234,7 @@
     .book-card .btn {
         font-size: 0.85rem;
     }
+
+   
 </style>
+

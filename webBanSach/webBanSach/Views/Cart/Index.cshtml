@@ -10,12 +10,7 @@
 <div class="container mt-5">
     <h2 class="mb-4 text-primary">🛒 Giỏ hàng của @userName</h2>
 
-    @if (TempData["Message"] != null)
-    {
-        <div class="alert alert-success text-center">
-            @TempData["Message"]
-        </div>
-    }
+ 
 
     @if (Model != null && Model.Any())
     {

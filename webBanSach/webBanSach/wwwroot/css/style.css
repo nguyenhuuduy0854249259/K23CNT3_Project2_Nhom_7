@@ -594,49 +594,30 @@ body {
 		}
 }
 
-@media(max-width: 375px) {
-	.footer {
-		padding: 3.2em 0 1.6em;
-	}
+.footer-section {
+	background: linear-gradient(180deg, #fdfdfd 0%, #f5f6fa 100%);
 }
 
-@media(max-width: 320px) {
-	.header-w3l h1 {
-		font-size: 1.45em;
+	.footer-section h5 {
+		font-weight: 700;
 	}
 
-	.wthree-pro h2 {
-		font-size: 1em;
+	.footer-section p {
+		font-size: 0.95rem;
+		color: #555;
 	}
 
-	.sub-main-w3 input[type="email"], .sub-main-w3 input[type="password"] {
-		font-size: 0.9em;
+.social-link {
+	transition: transform 0.3s ease, color 0.3s ease;
+}
+
+	.social-link:hover {
+		transform: translateY(-4px);
+		color: var(--bs-primary);
 	}
 
-	.main-content-agile {
-		margin: 2.5em 0em 1em;
-	}
-
-	.sub-w3l h6 a {
-		font-size: 0.9em;
-	}
-
-	.sub-main-w3 input[type="submit"] {
-		padding: 7px 0px;
-		width: 42%;
-	}
-
-	.right-w3l {
-		margin-top: 2em;
-	}
-
-	.footer p {
-		font-size: 0.85em;
-		letter-spacing: 1px;
-	}
-
-	.footer {
-		padding: 2.2em 0 1.4em;
+@media (max-width: 768px) {
+	.footer-section .col-md-4 {
+		text-align: center;
 	}
 }
-/*--//responsive--*/

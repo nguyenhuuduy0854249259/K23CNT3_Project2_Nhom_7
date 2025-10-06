@@ -97,6 +97,10 @@
       "PackagePath": "staticwebassets\\js\\jquery.vide.min.js"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\js\\search.js",
+      "PackagePath": "staticwebassets\\js\\search.js"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

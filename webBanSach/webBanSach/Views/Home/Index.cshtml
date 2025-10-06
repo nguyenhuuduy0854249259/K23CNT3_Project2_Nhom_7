@@ -8,119 +8,73 @@
 
 <div class="container mt-5">
 
-    <!-- PHẦN CHÀO MỪNG -->
-    <div class="text-center mb-5 p-4 rounded" style="background: linear-gradient(to right, #6a11cb, #2575fc); color: white;">
-        <h1 class="display-4 fw-bold">📚 Welcome to Cửa hàng sách!</h1>
-        <p class="lead">Khám phá kho tàng tri thức với hàng ngàn đầu sách hấp dẫn.</p>
-        <div class="mt-4">
-            <a href="/Sach/Index" class="btn btn-light btn-lg me-2">
-                <i class="bi bi-book"></i> Xem sách
-            </a>
-            <a href="/Home/About" class="btn btn-outline-light btn-lg">
-                <i class="bi bi-info-circle"></i> Giới thiệu
-            </a>
-        </div>
-    </div>
-
-    @if (TempData["Message"] != null)
-    {
-        <div class="alert alert-success text-center">
-            @TempData["Message"]
-        </div>
-    }
-
     <!-- BANNER -->
-    <div class="card shadow-lg border-0 rounded-3 mb-5 overflow-hidden">
-        <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://img.freepik.com/free-photo/stack-books_144627-20260.jpg"
-                         class="d-block w-100" style="height: 350px; object-fit: cover;" />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://img.freepik.com/free-photo/books-on-wooden-table_144627-20123.jpg"
-                         class="d-block w-100" style="height: 350px; object-fit: cover;" />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://img.freepik.com/free-photo/open-book-with-glasses_144627-20232.jpg"
-                         class="d-block w-100" style="height: 350px; object-fit: cover;" />
-                </div>
+    <div id="bookCarousel" class="carousel slide mb-4 shadow rounded overflow-hidden" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://img.freepik.com/free-photo/stack-books_144627-20260.jpg"
+                     class="d-block w-100" style="height: 350px; object-fit: cover;">
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/free-photo/books-on-wooden-table_144627-20123.jpg"
+                     class="d-block w-100" style="height: 350px; object-fit: cover;">
+            </div>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/free-photo/open-book-with-glasses_144627-20232.jpg"
+                     class="d-block w-100" style="height: 350px; object-fit: cover;">
+            </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
     </div>
 
-    <style>
-        /* Card sách */
-        .book-card {
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+    <!-- NÚT XEM SÁCH -->
+    <div class="text-center mb-5">
+        <a href="/Sach/Index" class="btn btn-primary btn-lg rounded-pill shadow-sm px-5 py-2 fw-semibold">
+            <i class="bi bi-book me-2"></i> Khám phá sách ngay
+        </a>
+    </div>
 
-            .book-card:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-            }
-
-            .book-card img {
-                height: 220px;
-                object-fit: cover;
-            }
-
-        .btn-buy {
-            background-color: #28a745;
-            color: white;
-            transition: background-color 0.2s;
-        }
-
-            .btn-buy:hover {
-                background-color: #218838;
-                color: white;
-            }
-
-        .btn-detail {
-            border-color: #0d6efd;
-            color: #0d6efd;
-            transition: all 0.2s;
-        }
-
-            .btn-detail:hover {
-                background-color: #0d6efd;
-                color: white;
-            }
-    </style>
-
-    <!-- SÁCH NỔI BẬT -->
+    <!-- === SÁCH NỔI BẬT === -->
     <section class="mb-5">
-        <h3 class="mb-4 text-warning">🔥 Sách nổi bật</h3>
+        <div class="d-flex align-items-center mb-4">
+            <h3 class="fw-bold text-warning mb-0">🔥 Sách nổi bật</h3>
+            <div class="flex-grow-1 ms-3 border-bottom border-warning"></div>
+        </div>
+
         <div class="row g-4">
-            @if (Model.SachNoiBat != null && Model.SachNoiBat.Any())
+            @if (Model.SachNoiBat?.Any() == true)
             {
                 foreach (var sach in Model.SachNoiBat)
                 {
-                    <div class="col-md-3 col-sm-6 mb-3">
-                        <div class="card book-card shadow-sm border-0 h-100">
-                            <img src="~/images/sach/@sach.HinhAnh" class="card-img-top" />
-                            <div class="card-body text-center d-flex flex-column">
-                                <h6 class="fw-bold">@sach.TenSach</h6>
-                                <p class="text-danger fw-bold">@sach.GiaBan.ToString("N0") đ</p>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex justify-content-center">
+                        <div class="card book-card border-0 shadow-lg hover-card">
+                            <div class="position-relative">
+                                <img src="~/images/sach/@sach.HinhAnh" alt="@sach.TenSach" class="card-img-top">
+                                <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2 px-3 py-2 rounded-pill fw-semibold">Hot</span>
+                            </div>
+                            <div class="card-body text-center d-flex flex-column justify-content-between">
+                                <h6 class="fw-bold text-dark text-truncate">@sach.TenSach</h6>
+                                <p class="text-danger fw-bold mb-3">@sach.GiaBan.ToString("N0") ₫</p>
+
                                 <div class="d-grid gap-2 mt-auto">
-                                    <a href="/Sach/Details/@sach.MaSach" class="btn btn-detail btn-sm">Xem chi tiết</a>
+                                    <a href="/Sach/Details/@sach.MaSach" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-eye me-1"></i> Chi tiết
+                                    </a>
 
                                     @if (!string.IsNullOrEmpty(userName))
                                     {
-                                        @if (sach.SoLuong > 0)
+                                        if (sach.SoLuong > 0)
                                         {
                                             <form asp-controller="Cart" asp-action="Add" method="post" class="d-inline">
                                                 <input type="hidden" name="maSach" value="@sach.MaSach" />
-                                                <button type="submit" class="btn btn-buy btn-sm w-100">Thêm vào giỏ</button>
+                                                <button type="submit" class="btn btn-primary btn-sm w-100">
+                                                    <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ
+                                                </button>
                                             </form>
                                         }
                                         else
@@ -130,7 +84,9 @@
                                     }
                                     else
                                     {
-                                        <a href="/Account/Login" class="btn btn-buy btn-sm w-100">Thêm vào giỏ</a>
+                                        <a href="/Account/Login" class="btn btn-primary btn-sm w-100">
+                                            <i class="bi bi-box-arrow-in-right me-1"></i> Thêm vào giỏ
+                                        </a>
                                     }
                                 </div>
                             </div>
@@ -145,33 +101,42 @@
         </div>
     </section>
 
-    <!-- SÁCH BÁN CHẠY -->
+    <!-- === SÁCH BÁN CHẠY === -->
     <section class="mb-5">
-        <h3 class="mb-4 text-success">⭐ Sách bán chạy</h3>
+        <div class="d-flex align-items-center mb-4">
+            <h3 class="fw-bold text-success mb-0">⭐ Sách bán chạy</h3>
+            <div class="flex-grow-1 ms-3 border-bottom border-success"></div>
+        </div>
+
         <div class="row g-4">
-            @if (Model.SachBanChay != null && Model.SachBanChay.Any())
+            @if (Model.SachBanChay?.Any() == true)
             {
                 foreach (var sach in Model.SachBanChay)
                 {
-                    <div class="col-md-3 col-sm-6 mb-3">
-                        <div class="card book-card shadow-sm border-0 h-100">
-                            <img src="~/images/sach/@sach.HinhAnh" class="card-img-top" />
-                            <div class="card-body text-center d-flex flex-column">
-                                <h6 class="fw-bold">@sach.TenSach</h6>
-                                <p class="text-danger fw-bold">@sach.GiaBan.ToString("N0") đ</p>
-                                <span class="badge bg-success mb-2">
-                                    Đã bán: @(ViewBag.DaBan is Dictionary<int, int> dict && dict.ContainsKey(sach.MaSach) ? dict[sach.MaSach] : 0)
-                                </span>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex justify-content-center">
+                        <div class="card book-card border-0 shadow-lg hover-card">
+                            <div class="position-relative">
+                                <img src="~/images/sach/@sach.HinhAnh" alt="@sach.TenSach" class="card-img-top">
+                                <span class="badge bg-success position-absolute top-0 start-0 m-2 px-3 py-2 rounded-pill fw-semibold">Best Seller</span>
+                            </div>
+                            <div class="card-body text-center d-flex flex-column justify-content-between">
+                                <h6 class="fw-bold text-dark text-truncate">@sach.TenSach</h6>
+                                <p class="text-danger fw-bold mb-3">@sach.GiaBan.ToString("N0") ₫</p>
+
                                 <div class="d-grid gap-2 mt-auto">
-                                    <a href="/Sach/Details/@sach.MaSach" class="btn btn-detail btn-sm">Xem chi tiết</a>
+                                    <a href="/Sach/Details/@sach.MaSach" class="btn btn-outline-success btn-sm">
+                                        <i class="bi bi-eye me-1"></i> Chi tiết
+                                    </a>
 
                                     @if (!string.IsNullOrEmpty(userName))
                                     {
-                                        @if (sach.SoLuong > 0)
+                                        if (sach.SoLuong > 0)
                                         {
                                             <form asp-controller="Cart" asp-action="Add" method="post" class="d-inline">
                                                 <input type="hidden" name="maSach" value="@sach.MaSach" />
-                                                <button type="submit" class="btn btn-buy btn-sm w-100">Thêm vào giỏ</button>
+                                                <button type="submit" class="btn btn-success btn-sm w-100">
+                                                    <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ
+                                                </button>
                                             </form>
                                         }
                                         else
@@ -181,7 +146,9 @@
                                     }
                                     else
                                     {
-                                        <a href="/Account/Login" class="btn btn-buy btn-sm w-100">Thêm vào giỏ</a>
+                                        <a href="/Account/Login" class="btn btn-success btn-sm w-100">
+                                            <i class="bi bi-box-arrow-in-right me-1"></i> Thêm vào giỏ
+                                        </a>
                                     }
                                 </div>
                             </div>
@@ -195,5 +162,41 @@
             }
         </div>
     </section>
-
 </div>
+
+<style>
+    .book-card {
+        width: 100%;
+        border-radius: 14px;
+        overflow: hidden;
+        transition: all 0.35s ease;
+        background-color: #fff;
+    }
+
+    .hover-card:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+    }
+
+    .book-card img {
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .book-card h6 {
+        font-size: 1rem;
+        min-height: 40px;
+        line-height: 1.4;
+    }
+
+    .book-card .btn {
+        border-radius: 8px;
+        transition: 0.25s ease;
+    }
+
+    .book-card .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+
+</style>

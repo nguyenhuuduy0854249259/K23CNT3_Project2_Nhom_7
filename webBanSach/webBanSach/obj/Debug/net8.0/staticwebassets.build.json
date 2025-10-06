@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0Y9GO3YWGbu1BqOG7clTxe2hqjRPIeb5XuV7/VBLF/E=",
+  "Hash": "NRYF8PM1/tTGwe1TDLbUdkerYwOCJI/JEMLd4LJt0r0=",
   "Source": "webBanSach",
   "BasePath": "_content/webBanSach",
   "Mode": "Default",
@@ -490,6 +490,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\jquery-2.1.4.min.js"
+    },
+    {
+      "Identity": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\js\\search.js",
+      "SourceId": "webBanSach",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\",
+      "BasePath": "_content/webBanSach",
+      "RelativePath": "js/search.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\search.js"
     },
     {
       "Identity": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\js\\site.js",

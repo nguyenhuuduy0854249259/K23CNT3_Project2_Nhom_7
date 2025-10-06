@@ -158,6 +158,26 @@ namespace webBanSach.Controllers
 
             return View("Index", listSach);
         }
+        [HttpGet]
+        public IActionResult SearchSuggestions(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+                return Json(new List<object>());
+
+            var suggestions = _context.Saches
+                .Where(s => s.TenSach.Contains(keyword))
+                .Select(s => new
+                {
+                    maSach = s.MaSach,
+                    tenSach = s.TenSach,
+                    giaBan = s.GiaBan,
+                    hinhAnh = s.HinhAnh
+                })
+                .Take(8)
+                .ToList();
+
+            return Json(suggestions);
+        }
 
     }
 

@@ -23,236 +23,98 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
 
+
+
+
+    <!-- Font Awesome (nếu bạn dùng các class "fas fa-..." trong view) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- CSS tổng -->
-    <link rel="stylesheet" href="~/css/layoutUser.css" />
-
-    <style>
-        /* Nút login / register */
-        .btn-login-custom,
-        .btn-register-custom {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .btn-login-custom {
-            color: #0d6efd;
-            background-color: #fff;
-            border: 2px solid #0d6efd;
-        }
-
-            .btn-login-custom:hover {
-                background-color: #0d6efd;
-                color: #fff;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
-            }
-
-        .btn-register-custom {
-            color: #fff;
-            background-color: #198754;
-            border: 2px solid #198754;
-        }
-
-            .btn-register-custom:hover {
-                background-color: #157347;
-                border-color: #157347;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 10px rgba(25, 135, 84, 0.3);
-            }
-
-        /* Dropdown người dùng */
-        .user-dropdown {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            color: #333 !important;
-            transition: all 0.3s ease;
-        }
-
-            .user-dropdown:hover {
-                color: #0d6efd !important;
-                transform: translateY(-1px);
-            }
-
-        .dropdown-menu {
-            border-radius: 12px;
-            border: 1px solid #eee;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            padding: 8px;
-            min-width: 220px;
-            background-color: #fff;
-        }
-
-            .dropdown-menu .dropdown-item {
-                border-radius: 8px;
-                padding: 10px 15px;
-                font-weight: 500;
-                color: #333;
-                display: flex;
-                align-items: center;
-                transition: all 0.25s ease;
-            }
-
-                .dropdown-menu .dropdown-item i {
-                    font-size: 1.1rem;
-                    color: #0d6efd;
-                    margin-right: 8px;
-                    transition: all 0.25s ease;
-                }
-
-                .dropdown-menu .dropdown-item:hover {
-                    background-color: #f0f6ff;
-                    color: #0d6efd;
-                    transform: translateX(3px);
-                }
-
-                    .dropdown-menu .dropdown-item:hover i {
-                        color: #0a58ca;
-                    }
-
-                .dropdown-menu .dropdown-item.text-danger {
-                    color: #dc3545 !important;
-                }
-
-                    .dropdown-menu .dropdown-item.text-danger:hover {
-                        background-color: #ffe6e9;
-                        color: #b02a37 !important;
-                    }
-
-        /* Gợi ý tìm kiếm */
-        #searchSuggestions ul {
-            margin: 0;
-            padding: 0;
-        }
-
-        #searchSuggestions li {
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-            #searchSuggestions li:hover {
-                background-color: #f8f9fa;
-            }
-        /* Giữ các mục menu trên cùng 1 dòng */
-        .navbar-nav .nav-link {
-            white-space: nowrap; /* Không cho xuống dòng */
-            display: inline-block; /* Hiển thị ngang */
-        }
-
-        /* Đảm bảo menu không bị co lại */
-        .navbar-nav {
-            flex-wrap: nowrap !important;
-        }
-
-            /* Giãn đều khoảng cách giữa các mục menu */
-            .navbar-nav .nav-item {
-                margin-right: 15px;
-            }
-
-    </style>
-
+    <link rel="stylesheet" href="~/css/layoutUser.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg main-navbar rounded-pill shadow-sm mt-3 mx-auto px-4 py-2" style="max-width: 95%;">
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar navbar-expand-lg main-navbar rounded-pill shadow-sm mt-3 mx-auto px-4 py-2" style="max-width:95%;">
         <div class="container-fluid d-flex align-items-center justify-content-between">
-            <!-- Logo -->
+            <!-- LOGO -->
             <a class="navbar-brand fw-bold d-flex align-items-center text-danger" asp-controller="Home" asp-action="Index">
-                <img src="~/images/logo.jpg" alt="logo" height="40" width="40"
-                     class="me-2 rounded-circle border border-danger-subtle p-1" />
-                WebBanSach
+                <img src="~/images/logo.jpg" alt="logo" height="40" width="40" class="me-2 rounded-circle border border-danger-subtle p-1" />
+                Sach-DVD
             </a>
 
-            <!-- Toggle mobile -->
+            <!-- TOGGLE MOBILE -->
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+                <i class="bi bi-list fs-2 text-primary"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Menu trái -->
+                <!-- MENU TRÁI -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link fw-semibold" asp-controller="Home" asp-action="Index">Trang chủ</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" asp-controller="Home" asp-action="Index">Trang chủ</a></li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle fw-semibold" href="#" data-bs-toggle="dropdown">Sách</a>
-                        <ul class="dropdown-menu p-3 shadow rounded-3" style="min-width: 250px;">
+                        <ul class="dropdown-menu p-3 shadow rounded-3" style="min-width:250px;">
                             <li><a class="dropdown-item fw-bold text-primary" asp-controller="Sach" asp-action="Index">Trang chủ sách</a></li>
                             <li><h6 class="dropdown-header">Thể loại</h6></li>
                             @foreach (var tl in theLoais)
                             {
-                                <a class="dropdown-item" asp-controller="Sach" asp-action="Search"
-                                   asp-route-filterType="theloai" asp-route-keyword="@tl.TenLoai">@tl.TenLoai</a>
+                                <a class="dropdown-item" asp-controller="Sach" asp-action="Search" asp-route-filterType="theloai" asp-route-keyword="@tl.TenLoai">@tl.TenLoai</a>
                             }
                             <li><h6 class="dropdown-header">Tác giả</h6></li>
                             @foreach (var tg in tacGias)
                             {
-                                <a class="dropdown-item" asp-controller="Sach" asp-action="Search"
-                                   asp-route-filterType="tacgia" asp-route-keyword="@tg.TenTG">@tg.TenTG</a>
+                                <a class="dropdown-item" asp-controller="Sach" asp-action="Search" asp-route-filterType="tacgia" asp-route-keyword="@tg.TenTG">@tg.TenTG</a>
                             }
                             <li><h6 class="dropdown-header">Nhà xuất bản</h6></li>
                             @foreach (var nxb in nxbList)
                             {
-                                <a class="dropdown-item" asp-controller="Sach" asp-action="Search"
-                                   asp-route-filterType="nxb" asp-route-keyword="@nxb.TenNXB">@nxb.TenNXB</a>
+                                <a class="dropdown-item" asp-controller="Sach" asp-action="Search" asp-route-filterType="nxb" asp-route-keyword="@nxb.TenNXB">@nxb.TenNXB</a>
                             }
                         </ul>
                     </li>
 
                     @if (isLoggedIn)
                     {
-                        <li class="nav-item">
-                            <a class="nav-link fw-semibold text-success" asp-controller="DonHang" asp-action="Index">Đơn hàng</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link fw-semibold text-success" asp-controller="DonHang" asp-action="Index">Đơn hàng</a></li>
                     }
 
                     <li class="nav-item"><a class="nav-link fw-semibold" asp-controller="Home" asp-action="About">Giới thiệu</a></li>
-                    <li class="nav-item"><a class="nav-link fw-semibold" asp-controller="Home" asp-action="Contact">Liên hệ</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" asp-controller="LienHe" asp-action="Index">Liên hệ</a></li>
                 </ul>
 
-                <!-- Ô tìm kiếm -->
-                <form id="searchForm" asp-controller="Sach" asp-action="Search" method="get"
-                      class="d-flex align-items-center search-pill bg-light px-3 py-1 rounded-pill shadow-sm mx-3 position-relative"
-                      style="width: 45%;">
-                    <input type="text" id="searchInput" name="keyword" class="form-control border-0 bg-transparent shadow-none"
-                           placeholder="Tìm kiếm sách, tác giả, thể loại..." autocomplete="off" />
-                    <button type="submit" class="btn btn-light rounded-circle shadow-sm ms-2">
-                        <i class="bi bi-search text-primary"></i>
-                    </button>
+                <!-- Ô TÌM KIẾM: để suggestions bên ngoài form, trong cùng wrapper -->
+                <div class="search-wrapper mx-3" style="width:45%; position:relative;">
+                    <form id="searchForm" class="d-flex align-items-center position-relative mx-3" role="search">
+                        <div class="search-pill d-flex align-items-center px-3 py-1 w-100">
+                            <input id="searchInput" type="text" class="form-control border-0 bg-transparent"
+                                   placeholder="Tìm kiếm sách, tác giả, thể loại..." autocomplete="off" />
+                            <button type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                        <div id="searchSuggestions"></div>
+                    </form>
 
-                    <div id="searchSuggestions"
-                         class="position-absolute bg-white border rounded shadow-sm mt-5"
-                         style="top:100%; left:0; width:100%; z-index:1000; display:none;">
-                    </div>
-                </form>
 
-                <!-- Giỏ hàng -->
+                    <!-- GỢI Ý (BÊN DƯỚI FORM): sẽ được fill bởi /js/search.js -->
+                    <div id="searchSuggestions" class="search-suggestions d-none"></div>
+                </div>
+
+                <!-- GIỎ HÀNG -->
                 <div class="cart-icon position-relative me-3">
                     <a asp-controller="Cart" asp-action="Index" class="text-decoration-none text-dark position-relative">
                         <i class="bi bi-cart3 fs-4"></i>
                         @if (cartCount > 0)
                         {
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                @cartCount
-                            </span>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@cartCount</span>
                         }
                     </a>
                 </div>
 
-                <!-- Người dùng -->
-                <ul class="navbar-nav align-items-center nav-auth">
+                <!-- NGƯỜI DÙNG -->
+                <ul class="navbar-nav align-items-center nav-auth d-flex" style="gap:6px;">
                     @if (isLoggedIn)
                     {
                         <li class="nav-item dropdown">
@@ -261,12 +123,9 @@
                                     var avatar = HttpContextAccessor.HttpContext.Session.GetString("UserAvatar") ?? "/images/nguoidung/default.jpg";
                                     var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName") ?? "Người dùng";
                                 }
-                                <img src="@avatar" alt="avatar"
-                                     class="rounded-circle me-2 border shadow-sm"
-                                     style="width:35px;height:35px;object-fit:cover;" />
+                                <img src="@avatar" alt="avatar" class="rounded-circle border shadow-sm" style="width:35px;height:35px;object-fit:cover;" />
                                 @userName
                             </a>
-
                             <ul class="dropdown-menu dropdown-menu-end shadow-sm rounded-3">
                                 <li><a class="dropdown-item py-2" asp-controller="Account" asp-action="ProfileInfo"><i class="bi bi-person me-2"></i>Thông tin cá nhân</a></li>
                                 <li><a class="dropdown-item py-2" asp-controller="Account" asp-action="ChangePassword"><i class="bi bi-key me-2"></i>Đổi mật khẩu</a></li>
@@ -278,7 +137,7 @@
                     else
                     {
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary btn-login-custom me-2" asp-controller="Account" asp-action="Login">
+                            <a class="btn btn-outline-primary btn-login-custom" asp-controller="Account" asp-action="Login">
                                 <i class="bi bi-box-arrow-in-right me-1"></i>Đăng nhập
                             </a>
                         </li>
@@ -289,34 +148,35 @@
                         </li>
                     }
                 </ul>
+
             </div>
         </div>
     </nav>
 
-    <!-- Thông báo -->
+    <!-- THÔNG BÁO TEMP DATA -->
     @if (TempData["Message"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show text-center rounded-pill shadow-sm mx-auto mt-3" style="max-width: 500px;">
+        <div class="alert alert-success alert-dismissible fade show text-center rounded-pill shadow-sm mx-auto mt-3" style="max-width:500px;" id="tempMessage">
             @TempData["Message"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
-    <!-- Nội dung -->
+    <!-- NỘI DUNG -->
     <main class="container mt-4">
         @RenderBody()
     </main>
 
-    <!-- ==================== FOOTER ==================== -->
+    <!-- FOOTER -->
     <footer class="footer-section mt-5 pt-5 pb-4 border-top border-3 border-primary bg-light">
         <div class="container">
             <div class="row gy-4 text-center text-md-start">
-
-                <!-- Cột logo và mô tả -->
+                <!-- Logo và mô tả -->
                 <div class="col-md-4">
                     <h5 class="fw-bold mb-3 text-dark d-flex align-items-center justify-content-center justify-content-md-start">
-                        <img src="~/images/logo.jpg" alt="logo" height="45" width="45"
-                             class="me-2 rounded-circle border border-2 border-primary p-1 bg-white shadow-sm" />
+                        <img src="~/images/logo.jpg" alt="logo"
+                             height="50" width="50"
+                             class="me-2 rounded-circle border border-2 border-primary p-1 bg-white shadow-sm logo-animate" />
                         Nhà Sách DVD
                     </h5>
                     <p class="text-secondary mb-0">
@@ -325,45 +185,59 @@
                     </p>
                 </div>
 
-                <!-- Cột liên hệ -->
+                <!-- Liên hệ -->
                 <div class="col-md-4">
-                    <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-telephone text-primary me-2"></i>Liên hệ</h5>
+                    <h5 class="fw-bold mb-3 text-dark">
+                        <i class="bi bi-telephone text-primary me-2"></i>Liên hệ
+                    </h5>
                     <p class="mb-2"><i class="bi bi-geo-alt text-danger me-2"></i>28A, Lê Trọng Tấn, Hà Đông, Hà Nội</p>
                     <p class="mb-2"><i class="bi bi-phone text-success me-2"></i>0987 654 321</p>
                     <p class="mb-2"><i class="bi bi-envelope text-warning me-2"></i>sach24@nhasachdvd.vn</p>
                     <p class="mb-0">
                         <i class="bi bi-globe text-primary me-2"></i>
-                        <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-primary">
-                            www.nhasachdvd.vn
-                        </a>
+                        <a asp-controller="Home" asp-action="Index" class="footer-link">www.nhasachdvd.vn</a>
                     </p>
                 </div>
 
-                <!-- Cột mạng xã hội -->
+                <!-- Kết nối -->
                 <div class="col-md-4">
-                    <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-share text-primary me-2"></i>Kết nối với chúng tôi</h5>
+                    <h5 class="fw-bold mb-3 text-dark">
+                        <i class="bi bi-share text-primary me-2"></i>Kết nối với chúng tôi
+                    </h5>
                     <div class="d-flex justify-content-center justify-content-md-start gap-3 fs-4">
-                        <a href="#" class="social-link text-primary"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="social-link text-danger"><i class="bi bi-youtube"></i></a>
-                        <a href="#" class="social-link text-info"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="social-link text-warning"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-link facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-link youtube"><i class="bi bi-youtube"></i></a>
+                        <a href="#" class="social-link twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-link instagram"><i class="bi bi-instagram"></i></a>
                     </div>
                 </div>
             </div>
 
             <hr class="my-4" />
             <div class="text-center small text-muted">
-                &copy; 2025 - <span class="fw-semibold text-dark">Nhà Sách DVD</span> | Thiết kế bởi
-                <span class="fw-semibold text-primary">D, V, D</span>
+                &copy; 2025 - <span class="fw-semibold text-dark">Nhà Sách DVD</span> |
+                Thiết kế bởi <span class="fw-semibold text-primary">D, V, D</span>
             </div>
         </div>
     </footer>
-    </footer>
 
-    <!-- Script -->
+    <!-- SCRIPT -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/search.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        // Ẩn alert TempData sau 2s
+        $(document).ready(function () {
+            var messageDiv = $('#tempMessage');
+            if (messageDiv.length) {
+                setTimeout(function () {
+                    var bsAlert = bootstrap.Alert.getOrCreateInstance(messageDiv[0]);
+                    bsAlert.close();
+                }, 2000);
+            }
+        });
+    </script>
 </body>
 </html>

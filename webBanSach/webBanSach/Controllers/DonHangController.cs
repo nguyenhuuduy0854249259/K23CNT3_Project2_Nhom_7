@@ -42,6 +42,7 @@ namespace webBanSach.Controllers
                 MaDH = d.MaDH,
                 HoTen = d.MaNDNavigation?.HoTen ?? "Không xác định",
                 Email = d.MaNDNavigation?.Email ?? "",
+                SDT = d.MaNDNavigation?.SDT ?? "",
                 DiaChiGiao = d.DiaChiGiao ?? "",
                 ChiTiet = d.CT_DonHangs?.ToList() ?? new List<CT_DonHang>(),
                 MaCode = d.MaKMNavigation?.MaCode,
@@ -55,9 +56,7 @@ namespace webBanSach.Controllers
             return View(vmList);
         }
 
-        // ================================
-        // Hiển thị chi tiết đơn hàng
-        // ================================
+
         // ================================
         // Hiển thị chi tiết đơn hàng
         // ================================

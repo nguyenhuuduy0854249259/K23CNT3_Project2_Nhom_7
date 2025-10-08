@@ -213,6 +213,44 @@ namespace webBanSach.Controllers
             return View();
         }
 
+        // ===================== QUÊN MẬT KHẨU (ĐƠN GIẢN) =====================
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ForgotPassword(string email, string newPassword, string confirmPassword)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(newPassword))
+            {
+                ViewBag.Error = "⚠️ Vui lòng nhập đầy đủ thông tin.";
+                return View();
+            }
+
+            var user = _context.NguoiDungs.FirstOrDefault(u => u.Email == email && u.LoaiNguoiDung == "User");
+            if (user == null)
+            {
+                ViewBag.Error = "❌ Không tìm thấy tài khoản với email này.";
+                return View();
+            }
+
+            if (newPassword != confirmPassword)
+            {
+                ViewBag.Error = "⚠️ Mật khẩu xác nhận không khớp.";
+                return View();
+            }
+
+            // ✅ Cập nhật mật khẩu mới
+            user.MatKhau = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            _context.Update(user);
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "✅ Đặt lại mật khẩu thành công. Vui lòng đăng nhập.";
+            return RedirectToAction("Login");
+        }
 
     }
 }

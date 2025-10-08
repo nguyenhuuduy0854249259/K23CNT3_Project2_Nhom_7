@@ -3,55 +3,106 @@
     ViewData["Title"] = "Chi tiết Khuyến mãi";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">
+                <i class="fa-solid fa-ticket me-2"></i>@ViewData["Title"]
+            </h4>
+            <a asp-action="Index" class="btn btn-light btn-sm">
+                <i class="fa-solid fa-arrow-left"></i> Quay lại
+            </a>
+        </div>
 
-<div class="card shadow-sm p-4">
-    <dl class="row">
-        <dt class="col-sm-3">Mã Code</dt>
-        <dd class="col-sm-9"><strong>@Model.MaCode</strong></dd>
+        <div class="card-body px-4 py-3">
+            <dl class="row mb-0">
+                <dt class="col-md-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-barcode me-1 text-primary"></i> Mã khuyến mãi
+                </dt>
+                <dd class="col-md-9"><strong>@Model.MaCode</strong></dd>
 
-        <dt class="col-sm-3">Mô tả</dt>
-        <dd class="col-sm-9">@(!string.IsNullOrEmpty(Model.MoTa) ? Model.MoTa : "-")</dd>
+                <dt class="col-md-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-info-circle me-1 text-primary"></i> Mô tả
+                </dt>
+                <dd class="col-md-9">@(!string.IsNullOrEmpty(Model.MoTa) ? Model.MoTa : "<i>Không có</i>")</dd>
 
-        <dt class="col-sm-3">Loại giảm</dt>
-        <dd class="col-sm-9">@Model.LoaiGiam</dd>
+                <dt class="col-md-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-tags me-1 text-primary"></i> Loại giảm
+                </dt>
+                <dd class="col-md-9">
+                    @if (Model.LoaiGiam == "PhanTram")
+                    {
+                        <span class="badge bg-success"><i class="fa-solid fa-percent me-1"></i> Phần trăm</span>
+                    }
+                    else if (Model.LoaiGiam == "TienMat")
+                    {
+                        <span class="badge bg-warning text-dark"><i class="fa-solid fa-money-bill-wave me-1"></i> Tiền mặt</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Không xác định</span>
+                    }
+                </dd>
 
-        <dt class="col-sm-3">% Giảm</dt>
-        <dd class="col-sm-9">
-            @(Model.PhanTramGiam.HasValue ? Model.PhanTramGiam.Value + "%" : "-")
-        </dd>
+                <dt class="col-md-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-star me-1 text-primary"></i> % Giảm
+                </dt>
+                <dd class="col-md-9">
+                    @(Model.PhanTramGiam.HasValue ? Model.PhanTramGiam.Value + "%" : "-")
+                </dd>
 
-        <dt class="col-sm-3">Giảm trực tiếp</dt>
-        <dd class="col-sm-9">
-            @(Model.SoTienGiam.HasValue ? Model.SoTienGiam.Value.ToString("N0") + " đ" : "-")
-        </dd>
+                <dt class="col-md-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-coins me-1 text-primary"></i> Giảm trực tiếp
+                </dt>
+                <dd class="col-md-9">
+                    @(Model.SoTienGiam.HasValue ? Model.SoTienGiam.Value.ToString("N0") + " ₫" : "-")
+                </dd>
 
-        <dt class="col-sm-3">Giảm tối đa</dt>
-        <dd class="col-sm-9">
-            @(Model.GiamToiDa.HasValue ? Model.GiamToiDa.Value.ToString("N0") + " đ" : "-")
-        </dd>
+                <dt class="col-md-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-bullseye me-1 text-primary"></i> Giảm tối đa
+                </dt>
+                <dd class="col-md-9">
+                    @(Model.GiamToiDa.HasValue ? Model.GiamToiDa.Value.ToString("N0") + " ₫" : "-")
+                </dd>
 
-        <dt class="col-sm-3">Ngày bắt đầu</dt>
-        <dd class="col-sm-9">@Model.NgayBatDau.ToString("dd/MM/yyyy")</dd>
+                <dt class="col-md-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-calendar-day me-1 text-primary"></i> Ngày bắt đầu
+                </dt>
+                <dd class="col-md-9">@Model.NgayBatDau.ToString("dd/MM/yyyy")</dd>
 
-        <dt class="col-sm-3">Ngày kết thúc</dt>
-        <dd class="col-sm-9">@Model.NgayKetThuc.ToString("dd/MM/yyyy")</dd>
+                <dt class="col-md-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-calendar-check me-1 text-primary"></i> Ngày kết thúc
+                </dt>
+                <dd class="col-md-9">@Model.NgayKetThuc.ToString("dd/MM/yyyy")</dd>
 
-        <dt class="col-sm-3">Trạng thái</dt>
-        <dd class="col-sm-9">
-            @if (Model.TrangThai)
-            {
-                <span class="badge bg-success">Đang áp dụng</span>
-            }
-            else
-            {
-                <span class="badge bg-secondary">Ngừng</span>
-            }
-        </dd>
-    </dl>
+                <dt class="col-md-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-toggle-on me-1 text-primary"></i> Trạng thái
+                </dt>
+                <dd class="col-md-9">
+                    @if (Model.TrangThai)
+                    {
+                        <span class="badge bg-success"><i class="fa-solid fa-circle-check me-1"></i> Đang áp dụng</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary"><i class="fa-solid fa-circle-xmark me-1"></i> Ngừng</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+
+        <div class="card-footer text-end bg-light">
+            <a asp-action="Edit" asp-route-id="@Model.MaKM" class="btn btn-warning me-2">
+                <i class="fa-solid fa-pen-to-square"></i> Sửa
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fa-solid fa-list"></i> Danh sách
+            </a>
+        </div>
+    </div>
 </div>
 
-<div class="mt-3">
-    <a asp-action="Edit" asp-route-id="@Model.MaKM" class="btn btn-warning">✏️ Sửa</a>
-    <a asp-action="Index" class="btn btn-secondary">⬅ Quay lại</a>
-</div>
+@section Scripts {
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+}

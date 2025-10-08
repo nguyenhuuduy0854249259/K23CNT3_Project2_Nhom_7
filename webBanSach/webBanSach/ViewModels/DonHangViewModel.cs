@@ -10,34 +10,38 @@ namespace webBanSach.ViewModels
         public int MaDH { get; set; }
         public string HoTen { get; set; } = "";
         public string Email { get; set; } = "";
+        public string SDT { get; set; } = ""; // ✅ Thêm SDT đầy đủ
         public string DiaChiGiao { get; set; } = "";
         public List<CT_DonHang> ChiTiet { get; set; } = new List<CT_DonHang>();
         public string? MaCode { get; set; }
-        public string SDT { get; set; }
-        // Non-nullable, dùng 0 nếu null
+
         public decimal TongTien { get; set; }
         public decimal TongTienSauGiam { get; set; }
-        public decimal GiamGia { get; set; } // Tổng tiền giảm: TongTien - TongTienSauGiam
+        public decimal GiamGia { get; set; } // = TongTien - TongTienSauGiam
 
         public string TrangThai { get; set; } = "";
         public DateTime NgayDat { get; set; }
 
-        // ✅ Constructor không tham số
+        // ✅ Constructor mặc định
         public DonHangViewModel() { }
 
-        // ✅ Constructor mapping từ DonHang entity
+        // ✅ Constructor mapping từ entity DonHang
         public DonHangViewModel(DonHang donHang)
         {
             MaDH = donHang.MaDH;
-            HoTen = donHang.MaNDNavigation.HoTen;
-            Email = donHang.MaNDNavigation.Email;
+            HoTen = donHang.MaNDNavigation?.HoTen ?? "Không xác định";
+            Email = donHang.MaNDNavigation?.Email ?? "";
+            SDT = donHang.MaNDNavigation?.SDT ?? "";  // ✅ Ánh xạ SĐT từ người dùng
             DiaChiGiao = donHang.DiaChiGiao ?? "";
-            ChiTiet = donHang.CT_DonHangs.ToList();
+
+            ChiTiet = donHang.CT_DonHangs?.ToList() ?? new List<CT_DonHang>();
             MaCode = donHang.MaKMNavigation?.MaCode;
+
             TongTien = donHang.TongTien ?? 0m;
             TongTienSauGiam = donHang.TongTienSauGiam ?? donHang.TongTien ?? 0m;
             GiamGia = TongTien - TongTienSauGiam;
-            TrangThai = donHang.TrangThai ?? "";
+
+            TrangThai = donHang.TrangThai ?? "Chờ xử lý";
             NgayDat = donHang.NgayDat ?? DateTime.Now;
         }
     }

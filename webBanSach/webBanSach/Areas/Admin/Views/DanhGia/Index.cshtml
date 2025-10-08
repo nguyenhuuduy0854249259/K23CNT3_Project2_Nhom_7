@@ -3,75 +3,112 @@
     ViewData["Title"] = "Quản lý Bình luận & Đánh giá";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h3><i class="fa-solid fa-comment-dots"></i> Quản lý Bình luận & Đánh giá</h3>
+<!-- Tiêu đề & Thanh tìm kiếm -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold text-primary">
+        <i class="fa-solid fa-comment-dots me-2"></i> Quản lý Bình luận & Đánh giá
+    </h3>
 
-    <form method="get" class="d-flex">
-        <input type="text" name="search" class="form-control me-2" placeholder="Tìm theo user hoặc sách..." value="@Context.Request.Query["search"]" />
-        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+    <form method="get" class="d-flex" style="max-width: 320px;">
+        <input type="text" name="search" class="form-control form-control-sm me-2"
+               placeholder="🔍 Tìm theo người dùng hoặc sách..."
+               value="@Context.Request.Query["search"]" />
+        <button type="submit" class="btn btn-sm btn-primary">
+            <i class="fa fa-search"></i>
+        </button>
     </form>
 </div>
 
-<table class="table table-striped align-middle">
-    <thead class="table-dark">
-        <tr>
-            <th>Người dùng</th>
-            <th>Sách</th>
-            <th>Ngày</th>
-            <th>Đánh giá</th>
-            <th>Bình luận</th>
-            <th class="text-end">Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var dg in Model)
-        {
-            <tr>
-                <td>@dg.MaNDNavigation?.HoTen</td>
-                <td>@dg.MaSachNavigation?.TenSach</td>
-                <td>@dg.NgayDG?.ToString("dd/MM/yyyy")</td>
-                <td>
-                    @for (int i = 1; i <= 5; i++)
-                    {
-                        if (i <= dg.Diem)
-                        {
-                            <i class="fa-solid fa-star text-warning"></i>
-                        }
-                        else
-                        {
-                            <i class="fa-regular fa-star text-muted"></i>
-                        }
-                    }
-                </td>
-                <td>@dg.BinhLuan</td>
-                <td class="text-end">
-                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@dg.MaDG">
-                        <i class="fa-solid fa-trash"></i> Xóa
-                    </button>
+<!-- Bảng danh sách -->
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info text-center shadow-sm">
+        <i class="fa-solid fa-circle-info me-2"></i> Hiện chưa có đánh giá hoặc bình luận nào.
+    </div>
+}
+else
+{
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th>Người dùng</th>
+                    <th>Sách</th>
+                    <th>Ngày đánh giá</th>
+                    <th>Điểm</th>
+                    <th>Bình luận</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dg in Model)
+                {
+                    <tr>
+                        <td><i class="fa-regular fa-user text-secondary me-1"></i>@dg.MaNDNavigation?.HoTen</td>
+                        <td><i class="fa-solid fa-book text-info me-1"></i>@dg.MaSachNavigation?.TenSach</td>
+                        <td class="text-center text-muted">@dg.NgayDG?.ToString("dd/MM/yyyy")</td>
 
-                    <!-- Modal Xóa -->
-                    <div class="modal fade" id="deleteModal-@dg.MaDG" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header bg-danger text-white">
-                                    <h5 class="modal-title">Xác nhận xóa</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Bạn có chắc chắn muốn xóa bình luận của <b>@dg.MaNDNavigation?.HoTen</b> về sách <b>@dg.MaSachNavigation?.TenSach</b>?
-                                </div>
-                                <div class="modal-footer">
-                                    <form asp-action="DeleteConfirmed" method="post">
-                                        <input type="hidden" name="id" value="@dg.MaDG" />
-                                        <button type="submit" class="btn btn-danger">Xóa</button>
-                                    </form>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <td class="text-center">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= dg.Diem)
+                                {
+                                    <i class="fa-solid fa-star text-warning"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa-regular fa-star text-secondary"></i>
+                                }
+                            }
+                        </td>
+
+                        <td>@(string.IsNullOrEmpty(dg.BinhLuan) ? "<i class='text-muted'>Không có bình luận</i>" : dg.BinhLuan)</td>
+
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-outline-danger"
+                                    data-bs-toggle="modal" data-bs-target="#deleteModal-@dg.MaDG">
+                                <i class="fa-solid fa-trash"></i> Xóa
+                            </button>
+
+                            <!-- Modal xác nhận xóa -->
+                            <div class="modal fade" id="deleteModal-@dg.MaDG" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content border-0 shadow-lg rounded-3">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title"><i class="fa-solid fa-triangle-exclamation me-2"></i>Xác nhận xóa</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                Bạn có chắc muốn xóa bình luận của
+                                                <b>@dg.MaNDNavigation?.HoTen</b> về sách
+                                                <b>@dg.MaSachNavigation?.TenSach</b> không?
+                                            </p>
+                                            <p class="text-muted small mb-0">
+                                                Hành động này không thể hoàn tác.
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form asp-action="DeleteConfirmed" method="post">
+                                                <input type="hidden" name="id" value="@dg.MaDG" />
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                </button>
+                                            </form>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                <i class="fa-solid fa-xmark"></i> Hủy
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />

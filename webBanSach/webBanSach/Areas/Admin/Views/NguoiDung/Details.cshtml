@@ -1,76 +1,119 @@
 ﻿@model webBanSach.Models.NguoiDung
+
 @{
     ViewData["Title"] = "Chi tiết Người Dùng";
 }
 
-<div class="card shadow-lg border-0">
-    <div class="card-header bg-dark text-white">
-        <h4 class="mb-0">Thông tin chi tiết người dùng</h4>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <!-- Avatar -->
-            <div class="col-md-4 text-center mb-3">
-                @if (!string.IsNullOrEmpty(Model.HinhAnh))
-                {
-                    <img src="~/images/nguoidung/@Model.HinhAnh"
-                         class="img-fluid rounded-circle border shadow-sm"
-                         style="width:200px; height:200px; object-fit:cover;" />
-                }
-                else
-                {
-                    <img src="https://via.placeholder.com/200"
-                         class="img-fluid rounded-circle border shadow-sm" />
-                }
+<div class="container mt-4">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <!-- Header -->
+        <div class="card-header bg-gradient bg-primary text-white py-3 px-4 d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="bi bi-person-vcard"></i> Thông tin chi tiết người dùng</h4>
+            <a asp-action="Index" class="btn btn-light btn-sm"><i class="bi bi-arrow-left"></i> Quay lại</a>
+        </div>
 
-                <h5 class="mt-3">@Model.HoTen</h5>
-                <p class="text-muted">@Model.Email</p>
-            </div>
-
-            <!-- Thông tin -->
-            <div class="col-md-8">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <strong>Số điện thoại:</strong> @Model.SDT
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Địa chỉ:</strong> @Model.DiaChi
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Loại người dùng:</strong>
-                        @if (Model.LoaiNguoiDung == "Admin")
+        <!-- Body -->
+        <div class="card-body p-4">
+            <div class="row g-4 align-items-center">
+                <!-- Ảnh đại diện -->
+                <div class="col-md-4 text-center">
+                    <div class="position-relative d-inline-block">
+                        @if (!string.IsNullOrEmpty(Model.HinhAnh))
                         {
-                            <span class="badge bg-danger">Admin</span>
-                        }
-                        else if (Model.LoaiNguoiDung == "User")
-                        {
-                            <span class="badge bg-primary">User</span>
+                            <img src="~/images/nguoidung/@Model.HinhAnh"
+                                 class="rounded-circle border border-3 border-primary shadow"
+                                 style="width:200px; height:200px; object-fit:cover; transition: transform 0.3s ease;"
+                                 onmouseover="this.style.transform='scale(1.05)';"
+                                 onmouseout="this.style.transform='scale(1)';" />
                         }
                         else
                         {
-                            <span class="badge bg-secondary">@Model.LoaiNguoiDung</span>
+                            <img src="https://via.placeholder.com/200"
+                                 class="rounded-circle border border-3 border-secondary shadow"
+                                 style="width:200px; height:200px; object-fit:cover;" />
                         }
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Trạng thái:</strong>
-                        @if (Model.TrangThai == "HoatDong")
-                        {
-                            <span class="badge bg-success">Hoạt động</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-secondary">Khóa</span>
-                        }
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Ngày tạo:</strong> @Model.NgayTao?.ToString("dd/MM/yyyy")
-                    </li>
-                </ul>
+
+                        <div class="position-absolute bottom-0 end-0 bg-white rounded-circle p-2 shadow-sm">
+                            @if (Model.LoaiNguoiDung == "Admin")
+                            {
+                                <i class="bi bi-shield-lock-fill text-danger fs-4"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-person-circle text-primary fs-4"></i>
+                            }
+                        </div>
+                    </div>
+
+                    <h4 class="mt-3 fw-bold text-dark">@Model.HoTen</h4>
+                    <p class="text-muted mb-1"><i class="bi bi-envelope"></i> @Model.Email</p>
+
+                    @if (Model.TrangThai == "Hoạt động")
+                    {
+                        <span class="badge bg-success px-3 py-2 rounded-pill"><i class="bi bi-check-circle"></i> Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary px-3 py-2 rounded-pill"><i class="bi bi-lock-fill"></i> Khóa</span>
+                    }
+                </div>
+
+                <!-- Thông tin chi tiết -->
+                <div class="col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-borderless align-middle">
+                            <tbody class="fs-6">
+                                <tr>
+                                    <th width="35%" class="text-muted">📞 Số điện thoại:</th>
+                                    <td>@Model.SDT</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">🏠 Địa chỉ:</th>
+                                    <td>@Model.DiaChi</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">🧩 Loại người dùng:</th>
+                                    <td>
+                                        @if (Model.LoaiNguoiDung == "Admin")
+                                        {
+                                            <span class="badge bg-danger px-3 py-2"><i class="bi bi-shield-fill"></i> Admin</span>
+                                        }
+                                        else if (Model.LoaiNguoiDung == "User")
+                                        {
+                                            <span class="badge bg-primary px-3 py-2"><i class="bi bi-person-fill"></i> User</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary px-3 py-2">@Model.LoaiNguoiDung</span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">📅 Ngày tạo:</th>
+                                    <td>@Model.NgayTao?.ToString("dd/MM/yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">🔑 Mã người dùng:</th>
+                                    <td>@Model.MaND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card-footer text-end">
-        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
-        <a asp-action="Edit" asp-route-id="@Model.MaND" class="btn btn-warning">Sửa</a>
+
+        <!-- Footer -->
+        <div class="card-footer bg-light d-flex justify-content-end gap-2 py-3">
+            <a asp-action="Edit" asp-route-id="@Model.MaND" class="btn btn-warning">
+                <i class="bi bi-pencil-square"></i> Chỉnh sửa
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Quay lại
+            </a>
+        </div>
     </div>
 </div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">

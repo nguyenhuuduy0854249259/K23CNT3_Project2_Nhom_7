@@ -61,6 +61,10 @@
       "PackagePath": "staticwebassets\\images\\nguoidung\\anhsv1.jpg"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\b1dfd684-e282-4311-94bf-e9070021586a.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\b1dfd684-e282-4311-94bf-e9070021586a.jpg"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\b2eca1f5-53ba-4ffe-a4d0-57eb10424360.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\b2eca1f5-53ba-4ffe-a4d0-57eb10424360.jpg"
     },
@@ -73,6 +77,22 @@
       "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung14_Screenshot 2024-09-10 090142.png"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung14_anhsv1.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung14_anhsv1.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung17_book2.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung17_book2.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung18_book2.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung18_book2.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung19_book1.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung19_book1.jpg"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\book2.jpg",
       "PackagePath": "staticwebassets\\images\\sach\\book2.jpg"
     },
@@ -81,8 +101,8 @@
       "PackagePath": "staticwebassets\\images\\sach\\chi pheo.jpg"
     },
     {
-      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\cotinhvn.jpg",
-      "PackagePath": "staticwebassets\\images\\sach\\cotinhvn.jpg"
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\date_a_live1.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\date_a_live1.jpg"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\nhanhandcham.jpg",

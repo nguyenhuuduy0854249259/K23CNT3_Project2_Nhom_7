@@ -3,65 +3,84 @@
     ViewData["Title"] = "Chi tiết Nhà Xuất Bản";
 }
 
-<div class="row">
-    <!-- Thông tin NXB -->
-    <div class="col-md-8">
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-light fw-bold">🏢 Thông tin Nhà Xuất Bản</div>
-            <div class="card-body">
-                <p><strong>Mã NXB:</strong> #@Model.MaNXB</p>
-                <p><strong>Tên NXB:</strong> @Model.TenNXB</p>
-                <p><strong>Địa chỉ:</strong> @Model.DiaChi</p>
-                <p><strong>Điện thoại:</strong> @Model.SDT</p>
-                <p><strong>Email:</strong> @Model.Email</p>
-            </div>
-        </div>
-
-        @if (Model.Saches != null && Model.Saches.Any())
-        {
-            <div class="card shadow-sm">
-                <div class="card-header bg-light fw-bold">📚 Danh sách sách thuộc NXB này</div>
-                <div class="card-body p-0">
-                    <table class="table table-bordered mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Mã sách</th>
-                                <th>Tên sách</th>
-                                <th>Giá</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var sach in Model.Saches)
-                            {
-                                <tr>
-                                    <td>@sach.MaSach</td>
-                                    <td>@sach.TenSach</td>
-                                    <td>@string.Format("{0:N0} VNĐ", sach.GiaBan)</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+<div class="container mt-4">
+    <div class="row g-4">
+        <!-- Cột thông tin -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-dark text-white d-flex align-items-center">
+                    <i class="bi bi-building me-2"></i>
+                    <h5 class="mb-0">Thông tin Nhà Xuất Bản</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Mã NXB:</strong> <span class="badge bg-secondary">#@Model.MaNXB</span></p>
+                    <p><strong>Tên NXB:</strong> @Model.TenNXB</p>
+                    <p><strong>Địa chỉ:</strong> @Model.DiaChi</p>
+                    <p><strong>Điện thoại:</strong> <span class="text-primary">@Model.SDT</span></p>
+                    <p><strong>Email:</strong> <a href="mailto:@Model.Email" class="text-decoration-none">@Model.Email</a></p>
                 </div>
             </div>
-        }
-    </div>
 
-    <!-- Thao tác -->
-    <div class="col-md-4">
-        <div class="card shadow-sm mb-3">
-            <div class="card-header bg-light fw-bold">⚙️ Thao tác</div>
-            <div class="card-body">
-                <a asp-action="Edit" asp-route-id="@Model.MaNXB" class="btn btn-warning w-100 mb-2">✏️ Chỉnh sửa NXB</a>
+            <!-- Danh sách sách -->
+            @if (Model.Saches != null && Model.Saches.Any())
+            {
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white d-flex align-items-center">
+                        <i class="bi bi-book me-2"></i>
+                        <h5 class="mb-0">Danh sách sách thuộc NXB này</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-striped mb-0 align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width:90px;">Mã sách</th>
+                                    <th>Tên sách</th>
+                                    <th>Giá bán</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var sach in Model.Saches)
+                                {
+                                    <tr>
+                                        <td><span class="badge bg-secondary">@sach.MaSach</span></td>
+                                        <td>@sach.TenSach</td>
+                                        <td><strong>@string.Format("{0:N0} ₫", sach.GiaBan)</strong></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info mt-3">
+                    <i class="bi bi-info-circle"></i> NXB này chưa có sách nào.
+                </div>
+            }
+        </div>
 
-                <button type="button" class="btn btn-danger w-100 mb-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#confirmDeleteModal"
-                        data-id="@Model.MaNXB"
-                        data-name="@Model.TenNXB">
-                    🗑️ Xóa NXB
-                </button>
-
-                <a asp-action="Index" class="btn btn-info w-100">🔙 Quay lại danh sách</a>
+        <!-- Cột thao tác -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-light fw-semibold">
+                    ⚙️ Thao tác
+                </div>
+                <div class="card-body">
+                    <a asp-action="Edit" asp-route-id="@Model.MaNXB" class="btn btn-warning w-100 mb-2">
+                        <i class="bi bi-pencil-square"></i> Chỉnh sửa
+                    </a>
+                    <button type="button" class="btn btn-danger w-100 mb-2"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal"
+                            data-id="@Model.MaNXB"
+                            data-name="@Model.TenNXB">
+                        <i class="bi bi-trash"></i> Xóa NXB
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-arrow-left"></i> Quay lại danh sách
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -70,19 +89,23 @@
 <!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill"></i> Xác nhận xóa</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                Bạn có chắc chắn muốn xóa NXB <strong id="deleteItemName"></strong>?
+                Bạn có chắc chắn muốn xóa NXB <strong id="deleteItemName"></strong> không?
             </div>
             <div class="modal-footer">
                 <form id="deleteForm" method="post">
                     <input type="hidden" name="id" id="deleteItemId" />
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Hủy
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Xóa
+                    </button>
                 </form>
             </div>
         </div>
@@ -91,16 +114,17 @@
 
 @section Scripts {
     <script>
-        var deleteModal = document.getElementById('confirmDeleteModal');
-        deleteModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var id = button.getAttribute('data-id');
-            var name = button.getAttribute('data-name');
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('confirmDeleteModal');
+            modal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
 
-            document.getElementById('deleteItemName').textContent = name;
-            document.getElementById('deleteItemId').value = id;
-
-            document.getElementById('deleteForm').action = '/Admin/NhaXuatBan/Delete/' + id;
+                document.getElementById('deleteItemName').textContent = name;
+                document.getElementById('deleteItemId').value = id;
+                document.getElementById('deleteForm').action = '/Admin/NhaXuatBan/Delete/' + id;
+            });
         });
     </script>
 }

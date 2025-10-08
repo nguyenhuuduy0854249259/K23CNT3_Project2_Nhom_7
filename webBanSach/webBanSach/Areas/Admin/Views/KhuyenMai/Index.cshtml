@@ -3,102 +3,140 @@
     ViewData["Title"] = "Quản lý Khuyến mãi";
 }
 
-<h2 class="mb-3">@ViewData["Title"]</h2>
+<!-- Title -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold text-primary">
+        <i class="fa-solid fa-tags me-2"></i> @ViewData["Title"]
+    </h3>
 
-<!-- Thông báo -->
+    <a asp-action="Create" class="btn btn-success shadow-sm">
+        <i class="fa-solid fa-plus"></i> Thêm khuyến mãi
+    </a>
+</div>
+
+<!-- Alerts -->
 @if (TempData["Success"] != null)
 {
-    <div class="alert alert-success">@TempData["Success"]</div>
+    <div class="alert alert-success"><i class="fa-solid fa-circle-check me-2"></i>@TempData["Success"]</div>
 }
 @if (TempData["Error"] != null)
 {
-    <div class="alert alert-danger">@TempData["Error"]</div>
+    <div class="alert alert-danger"><i class="fa-solid fa-circle-xmark me-2"></i>@TempData["Error"]</div>
 }
 
-<!-- Form tìm kiếm + Thêm -->
-<form method="get" class="mb-3">
-    <div class="input-group">
-        <input type="text" name="search" class="form-control" placeholder="Tìm theo mã code, mô tả..." value="@Context.Request.Query["search"]" />
-        <button type="submit" class="btn btn-primary">🔍 Tìm</button>
-        <a asp-action="Create" class="btn btn-success ms-2">➕ Thêm Khuyến mãi</a>
+<!-- Search -->
+<form method="get" class="mb-4">
+    <div class="input-group shadow-sm" style="max-width: 500px;">
+        <input type="text" name="search" class="form-control" placeholder="🔍 Tìm theo mã code hoặc mô tả..."
+               value="@Context.Request.Query["search"]" />
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Tìm</button>
     </div>
 </form>
 
-<!-- Bảng danh sách -->
-<table class="table table-hover align-middle shadow-sm">
-    <thead class="table-dark">
-        <tr>
-            <th>Mã Code</th>
-            <th>Mô tả</th>
-            <th>% Giảm</th>
-            <th>Giảm trực tiếp</th>
-            <th>Giảm tối đa</th>
-            <th>Thời gian</th>
-            <th>Trạng thái</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var km in Model)
-        {
-            <tr>
-                <td><strong>@km.MaCode</strong></td>
-                <td>@(!string.IsNullOrEmpty(km.MoTa) ? km.MoTa : "-")</td>
-                <td>@(km.PhanTramGiam.HasValue ? km.PhanTramGiam + "%" : "-")</td>
-                <td>@(km.SoTienGiam.HasValue ? km.SoTienGiam.Value.ToString("N0") + " đ" : "-")</td>
-                <td>@(km.GiamToiDa.HasValue ? km.GiamToiDa.Value.ToString("N0") + " đ" : "-")</td>
-                <td>@km.NgayBatDau.ToString("dd/MM/yyyy") - @km.NgayKetThuc.ToString("dd/MM/yyyy")</td>
-                <td>
-                    @if (km.TrangThai)
-                    {
-                        <span class="badge bg-success">Đang áp dụng</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">Ngừng</span>
-                    }
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@km.MaKM" class="btn btn-info btn-sm">👁️</a>
-                    <a asp-action="Edit" asp-route-id="@km.MaKM" class="btn btn-warning btn-sm">✏️</a>
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info text-center shadow-sm">
+        <i class="fa-solid fa-circle-info me-2"></i> Hiện chưa có khuyến mãi nào.
+    </div>
+}
+else
+{
+    <!-- Bảng danh sách -->
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th><i class="fa-solid fa-hashtag"></i> Mã Code</th>
+                    <th><i class="fa-solid fa-align-left"></i> Mô tả</th>
+                    <th><i class="fa-solid fa-percent"></i> % Giảm</th>
+                    <th><i class="fa-solid fa-money-bill-wave"></i> Giảm trực tiếp</th>
+                    <th><i class="fa-solid fa-coins"></i> Giảm tối đa</th>
+                    <th><i class="fa-solid fa-calendar-days"></i> Thời gian</th>
+                    <th><i class="fa-solid fa-toggle-on"></i> Trạng thái</th>
+                    <th><i class="fa-solid fa-gear"></i> Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var km in Model)
+                {
+                    <tr class="text-center">
+                        <td><span class="fw-bold text-primary">@km.MaCode</span></td>
+                        <td>@(string.IsNullOrEmpty(km.MoTa) ? "<i class='text-muted'>Không có</i>" : km.MoTa)</td>
+                        <td>@(km.PhanTramGiam.HasValue ? km.PhanTramGiam + "%" : "-")</td>
+                        <td>@(km.SoTienGiam.HasValue ? km.SoTienGiam.Value.ToString("N0") + " đ" : "-")</td>
+                        <td>@(km.GiamToiDa.HasValue ? km.GiamToiDa.Value.ToString("N0") + " đ" : "-")</td>
+                        <td>@km.NgayBatDau.ToString("dd/MM/yyyy") - @km.NgayKetThuc.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @if (km.TrangThai)
+                            {
+                                <span class="badge bg-success px-3 py-2">
+                                    <i class="fa-solid fa-circle-check me-1"></i> Đang áp dụng
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary px-3 py-2">
+                                    <i class="fa-solid fa-ban me-1"></i> Ngừng
+                                </span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a asp-action="Details" asp-route-id="@km.MaKM" class="btn btn-sm btn-info text-white">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@km.MaKM" class="btn btn-sm btn-warning">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
 
-                    <form asp-action="Toggle" method="post" class="d-inline">
-                        <input type="hidden" name="id" value="@km.MaKM" />
-                        <button type="submit" class="btn btn-sm btn-secondary">
-                            @(km.TrangThai ? "Ẩn" : "Hiện")
-                        </button>
-                    </form>
+                                <form asp-action="Toggle" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@km.MaKM" />
+                                    <button type="submit" class="btn btn-sm btn-secondary">
+                                        <i class="fa-solid @(km.TrangThai ? "fa-eye-slash" : "fa-eye")"></i>
+                                    </button>
+                                </form>
 
-                    <button class="btn btn-danger btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal"
-                            data-id="@km.MaKM"
-                            data-code="@km.MaCode">
-                        🗑️
-                    </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                                <button class="btn btn-sm btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#confirmDeleteModal"
+                                        data-id="@km.MaKM"
+                                        data-code="@km.MaCode">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
 
-<!-- Modal xác nhận xóa -->
+<!-- Modal Xác nhận Xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content border-0 shadow-lg rounded-3">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                <h5 class="modal-title"><i class="fa-solid fa-triangle-exclamation me-2"></i>Xác nhận xóa</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form id="deleteForm" method="post">
                 @Html.AntiForgeryToken()
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa khuyến mãi <strong id="deleteItemName"></strong>?
+                    <p>
+                        Bạn có chắc chắn muốn xóa khuyến mãi
+                        <strong class="text-danger" id="deleteItemName"></strong>?
+                    </p>
+                    <p class="text-muted small mb-0">Hành động này không thể hoàn tác.</p>
                     <input type="hidden" name="id" id="deleteItemId" />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark"></i> Hủy
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa-solid fa-trash-can"></i> Xóa
+                    </button>
                 </div>
             </form>
         </div>
@@ -119,3 +157,6 @@
         });
     </script>
 }
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />

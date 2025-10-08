@@ -1,88 +1,158 @@
 ﻿@model webBanSach.Models.DonHang
 @{
     ViewData["Title"] = "Chi tiết Đơn hàng";
+    var trangThai = Model.TrangThai;
+    var badgeClass = trangThai == webBanSach.Models.OrderStatus.HoanTat ? "success"
+                    : trangThai == webBanSach.Models.OrderStatus.DangGiao ? "info"
+                    : trangThai == webBanSach.Models.OrderStatus.Huy ? "danger" : "secondary";
 }
 
-<h3><i class="fa-solid fa-file-invoice"></i> Chi tiết Đơn hàng #@Model.MaDH</h3>
+<div class="container mt-4">
+    <!-- Tiêu đề -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+        <h3 class="fw-bold text-success mb-3 mb-md-0">
+            <i class="fa-solid fa-file-invoice me-2"></i>Chi tiết Đơn hàng #@Model.MaDH
+        </h3>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <p><b>Khách hàng:</b> @Model.MaNDNavigation?.HoTen</p>
-        <p><b>Ngày đặt:</b> @Model.NgayDat?.ToString("dd/MM/yyyy")</p>
-        <p>
-            <b>Trạng thái:</b>
-            <span class="badge bg-@(Model.TrangThai == "Hoàn tất" ? "success" :
-                                    Model.TrangThai == "Đang giao" ? "info" :
-                                    Model.TrangThai == "Hủy" ? "danger" : "secondary")">
-                @Model.TrangThai
-            </span>
-        </p>
+        <a asp-area="Admin" asp-controller="DonHang" asp-action="Index"
+           class="btn btn-outline-secondary">
+            <i class="fa fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
+
+    <!-- Thông tin khách hàng & trạng thái -->
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-success text-white">
+                    <i class="fa fa-user"></i> Thông tin khách hàng
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><strong>👤 Họ tên:</strong> @Model.MaNDNavigation?.HoTen</p>
+                    <p class="mb-2"><strong>📧 Email:</strong> @Model.MaNDNavigation?.Email</p>
+                    <p class="mb-2"><strong>📞 Số điện thoại:</strong> @Model.MaNDNavigation?.SDT</p>
+                    <p class="mb-0"><strong>📦 Ngày đặt:</strong> @Model.NgayDat?.ToString("dd/MM/yyyy")</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-primary text-white">
+                    <i class="fa fa-info-circle"></i> Trạng thái đơn hàng
+                </div>
+                <div class="card-body">
+                    <p class="fs-5 mb-3">
+                        <span class="badge bg-@badgeClass px-3 py-2">@Model.TrangThai</span>
+                    </p>
+
+                    <!-- Form cập nhật trạng thái -->
+                    @if (Model.TrangThai != webBanSach.Models.OrderStatus.HoanTat
+                    && Model.TrangThai != webBanSach.Models.OrderStatus.Huy)
+                    {
+                        <form asp-area="Admin" asp-controller="DonHang" asp-action="UpdateStatus"
+                              method="post" class="d-flex gap-2">
+                            <input type="hidden" name="id" value="@Model.MaDH" />
+                            <input type="hidden" name="returnTo" value="Details" />
+                            <select name="trangThai" class="form-select">
+                                @foreach (var s in ViewBag.StatusList as string[])
+                                {
+                                    <option value="@s" selected="@(s == Model.TrangThai)">@s</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-rotate"></i> Cập nhật
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Trạng thái đơn hàng đã hoàn tất hoặc bị hủy.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách sản phẩm -->
+    <div class="card shadow-sm border-0 mt-4">
+        <div class="card-header bg-light fw-semibold">
+            <i class="fa fa-book me-2 text-success"></i>Danh sách sản phẩm
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0 align-middle text-center">
+                <thead class="table-success">
+                    <tr>
+                        <th>#</th>
+                        <th>Tên sách</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Tổng cộng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.CT_DonHangs == null || !Model.CT_DonHangs.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-muted py-4">Không có sản phẩm nào trong đơn hàng.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        int i = 1;
+                        decimal tong = 0;
+                        foreach (var ct in Model.CT_DonHangs)
+                        {
+                            var thanhTien = ct.SoLuong * ct.DonGia;
+                            tong += thanhTien;
+
+                            <tr>
+                                <td>@(i++)</td>
+                                <td class="text-start">@ct.MaSachNavigation?.TenSach</td>
+                                <td>@ct.SoLuong</td>
+                                <td>@ct.DonGia.ToString("N0") đ</td>
+                                <td>@thanhTien.ToString("N0") đ</td>
+                            </tr>
+                        }
+
+                        <tr class="fw-bold table-light">
+                            <td colspan="4" class="text-end pe-3">Tổng cộng:</td>
+                            <td>@tong.ToString("N0") đ</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Hành động -->
+    <div class="d-flex flex-wrap gap-2 mt-4">
+        @if (Model.TrangThai != webBanSach.Models.OrderStatus.HoanTat
+        && Model.TrangThai != webBanSach.Models.OrderStatus.Huy)
+        {
+            <form asp-area="Admin" asp-controller="DonHang" asp-action="Cancel"
+                  asp-route-id="@Model.MaDH" method="post">
+                <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?');">
+                    <i class="fa fa-times"></i> Hủy đơn hàng
+                </button>
+            </form>
+        }
+
+        @if (Model.TrangThai == webBanSach.Models.OrderStatus.Huy)
+        {
+            <form asp-area="Admin" asp-controller="DonHang" asp-action="Delete"
+                  asp-route-id="@Model.MaDH" method="post">
+                <button type="submit" class="btn btn-outline-danger"
+                        onclick="return confirm('Xóa đơn hàng này vĩnh viễn?');">
+                    <i class="fa fa-trash"></i> Xóa
+                </button>
+            </form>
+        }
     </div>
 </div>
 
-<h5>Danh sách sản phẩm</h5>
-<table class="table table-bordered">
-    <thead class="table-light">
-        <tr>
-            <th>Sách</th>
-            <th>Số lượng</th>
-            <th>Đơn giá</th>
-            <th>Tổng</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var ct in Model.CT_DonHangs)
-        {
-            <tr>
-                <td>@ct.MaSachNavigation?.TenSach</td>
-                <td>@ct.SoLuong</td>
-                <td>@ct.DonGia.ToString("N0") đ</td>
-                <td>@((ct.SoLuong * ct.DonGia).ToString("N0")) đ</td>
-
-            </tr>
-        }
-    </tbody>
-</table>
-
-<div class="d-flex gap-2 mt-3">
-    <!-- Form cập nhật trạng thái, chỉ hiện nếu chưa Hoàn tất/Hủy -->
-    @if (Model.TrangThai != webBanSach.Models.OrderStatus.HoanTat
-    && Model.TrangThai != webBanSach.Models.OrderStatus.Huy)
-    {
-        <form asp-area="Admin" asp-controller="DonHang" asp-action="UpdateStatus" method="post" class="d-flex gap-2">
-            <input type="hidden" name="id" value="@Model.MaDH" />
-            <input type="hidden" name="returnTo" value="Details" />
-            <select name="trangThai" class="form-select">
-                @foreach (var s in ViewBag.StatusList as string[])
-                {
-                    <option value="@s" selected="@(s == Model.TrangThai)">@s</option>
-                }
-            </select>
-            <button type="submit" class="btn btn-primary">Cập nhật</button>
-        </form>
-    }
-
-    <!-- Nút Hủy, chỉ hiện nếu chưa Hủy/Hoàn tất -->
-    @if (Model.TrangThai != webBanSach.Models.OrderStatus.Huy
-    && Model.TrangThai != webBanSach.Models.OrderStatus.HoanTat)
-    {
-        <form asp-area="Admin" asp-controller="DonHang" asp-action="Cancel" asp-route-id="@Model.MaDH" method="post">
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?');">
-                <i class="fa fa-times"></i> Hủy đơn hàng
-            </button>
-        </form>
-    }
-
-    <!-- Nút Xóa nếu trạng thái Hủy -->
-    @if (Model.TrangThai == webBanSach.Models.OrderStatus.Huy)
-    {
-        <form asp-area="Admin" asp-controller="DonHang" asp-action="Delete" asp-route-id="@Model.MaDH" method="post">
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Xóa đơn hàng Hủy này?');">
-                <i class="fa fa-trash"></i> Xóa
-            </button>
-        </form>
-    }
-
-    <!-- Nút Quay lại -->
-    <a asp-area="Admin" asp-controller="DonHang" asp-action="Index" class="btn btn-secondary ms-auto">⬅ Quay lại danh sách</a>
-</div>
+@section Scripts {
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+}

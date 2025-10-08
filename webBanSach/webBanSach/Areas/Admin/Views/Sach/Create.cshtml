@@ -1,88 +1,128 @@
 ﻿@model webBanSach.ViewModels.SachViewModel
 
 @{
-    ViewData["Title"] = "Thêm sách mới";
+    ViewData["Title"] = "➕ Thêm sách mới";
 }
 
-<div class="row">
-    <div class="col-md-8">
-        <form asp-action="Create" enctype="multipart/form-data" method="post">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-success bg-opacity-10 fw-bold">
+                        📚 Thông tin sách mới
+                    </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-light fw-bold">
-                    ➕ Thêm sách mới
-                </div>
-                <div class="card-body">
-                    <!-- Tên sách + NXB -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label asp-for="TenSach" class="form-label">Tên sách</label>
-                            <input asp-for="TenSach" class="form-control" />
-                            <span asp-validation-for="TenSach" class="text-danger"></span>
+                    <div class="card-body">
+                        <!-- Tên sách + NXB -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="TenSach" class="form-label fw-semibold">Tên sách</label>
+                                <input asp-for="TenSach" class="form-control" placeholder="Nhập tên sách..." />
+                                <span asp-validation-for="TenSach" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Nhà xuất bản</label>
+                                <select asp-for="MaNXB" class="form-select" asp-items="Model.NhaXuatBans">
+                                    <option value="">-- Chọn NXB --</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Nhà xuất bản</label>
-                            <select asp-for="MaNXB" class="form-select" asp-items="Model.NhaXuatBans">
-                                <option value="">-- Chọn NXB --</option>
+
+                        <!-- Giá + Số lượng -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="GiaBan" class="form-label fw-semibold">Giá bán (VNĐ)</label>
+                                <input asp-for="GiaBan" class="form-control" placeholder="Nhập giá bán..." />
+                                <span asp-validation-for="GiaBan" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="SoLuong" class="form-label fw-semibold">Số lượng</label>
+                                <input asp-for="SoLuong" class="form-control" placeholder="Nhập số lượng..." />
+                            </div>
+                        </div>
+
+                        <!-- Năm XB -->
+                        <div class="mb-3">
+                            <label asp-for="NamXB" class="form-label fw-semibold">Năm xuất bản</label>
+                            <input asp-for="NamXB" class="form-control" placeholder="VD: 2024" />
+                        </div>
+
+                        <!-- Ảnh -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Ảnh bìa sách</label>
+                            <input asp-for="HinhAnhFile" type="file" class="form-control" accept="image/*" id="imgInput" />
+                            <div class="mt-2 text-center">
+                                <img id="previewImg" src="~/images/placeholder.png" alt="Xem trước ảnh"
+                                     class="rounded border" style="max-height:180px; display:none; object-fit:cover;" />
+                            </div>
+                        </div>
+
+                        <!-- Mô tả -->
+                        <div class="mb-3">
+                            <label asp-for="MoTa" class="form-label fw-semibold">Mô tả sách</label>
+                            <textarea asp-for="MoTa" class="form-control" rows="4"
+                                      placeholder="Nhập mô tả ngắn gọn về nội dung hoặc điểm nổi bật..."></textarea>
+                        </div>
+
+                        <!-- Tác giả -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Tác giả</label>
+                            <select asp-for="SelectedTacGia" asp-items="Model.TacGias" class="form-select" multiple>
                             </select>
+                            <small class="text-muted">Giữ Ctrl hoặc Cmd để chọn nhiều tác giả.</small>
+                        </div>
+
+                        <!-- Thể loại -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Thể loại</label>
+                            <select asp-for="SelectedTheLoai" asp-items="Model.TheLoais" class="form-select" multiple>
+                            </select>
+                            <small class="text-muted">Giữ Ctrl hoặc Cmd để chọn nhiều thể loại.</small>
                         </div>
                     </div>
 
-                    <!-- Giá + Số lượng -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label asp-for="GiaBan" class="form-label">Giá bán (VNĐ)</label>
-                            <input asp-for="GiaBan" class="form-control" />
-                            <span asp-validation-for="GiaBan" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="SoLuong" class="form-label">Số lượng</label>
-                            <input asp-for="SoLuong" class="form-control" />
-                        </div>
-                    </div>
-
-                    <!-- Năm XB -->
-                    <div class="mb-3">
-                        <label asp-for="NamXB" class="form-label">Năm xuất bản</label>
-                        <input asp-for="NamXB" class="form-control" />
-                    </div>
-
-                    <!-- Ảnh -->
-                    <div class="mb-3">
-                        <label class="form-label">Ảnh bìa</label>
-                        <input asp-for="HinhAnhFile" type="file" class="form-control" />
-                    </div>
-
-                    <!-- Mô tả -->
-                    <div class="mb-3">
-                        <label asp-for="MoTa" class="form-label">Mô tả</label>
-                        <textarea asp-for="MoTa" class="form-control" rows="4"></textarea>
-                    </div>
-
-                    <!-- Tác giả -->
-                    <div class="mb-3">
-                        <label class="form-label">Tác giả</label>
-                        <select asp-for="SelectedTacGia" asp-items="Model.TacGias" class="form-select" multiple></select>
-                    </div>
-
-                    <!-- Thể loại -->
-                    <div class="mb-3">
-                        <label class="form-label">Thể loại</label>
-                        <select asp-for="SelectedTheLoai" asp-items="Model.TheLoais" class="form-select" multiple></select>
+                    <div class="card-footer bg-light d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">⬅️ Quay lại</a>
+                        <button type="submit" class="btn btn-success">💾 Lưu sách mới</button>
                     </div>
                 </div>
-            </div>
+            </form>
+        </div>
 
-            <!-- Buttons -->
-            <div class="d-flex justify-content-between">
-                <a asp-action="Index" class="btn btn-secondary">Hủy</a>
-                <button type="submit" class="btn btn-success">💾 Lưu</button>
+        <!-- Cột phải: Gợi ý nhập liệu -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-light fw-bold">💡 Gợi ý</div>
+                <div class="card-body small text-muted">
+                    <ul class="mb-0 ps-3">
+                        <li>Ảnh nên có kích thước tối thiểu 400x600px.</li>
+                        <li>Giá bán nhập theo đơn vị VNĐ, không chứa ký tự đặc biệt.</li>
+                        <li>Chọn nhiều tác giả hoặc thể loại nếu cần.</li>
+                        <li>Mô tả ngắn gọn giúp khách dễ hiểu nội dung.</li>
+                    </ul>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        // Xem trước ảnh bìa khi chọn
+        document.getElementById("imgInput").addEventListener("change", function (event) {
+            const [file] = event.target.files;
+            const preview = document.getElementById("previewImg");
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = "block";
+            } else {
+                preview.style.display = "none";
+            }
+        });
+    </script>
 }

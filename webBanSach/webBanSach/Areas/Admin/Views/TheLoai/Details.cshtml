@@ -1,36 +1,47 @@
 ﻿@model webBanSach.Models.TheLoai
 @{
-    ViewData["Title"] = "Chi tiết Thể loại";
+    ViewData["Title"] = "Chi tiết thể loại";
 }
 
-<div class="row">
-    <!-- Thông tin thể loại -->
-    <div class="col-md-8">
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-light fw-bold">📖 Thông tin thể loại</div>
-            <div class="card-body">
-                <p><strong>Mã loại:</strong> #@Model.MaLoai</p>
-                <p><strong>Tên loại:</strong> @Model.TenLoai</p>
+<div class="container mt-4">
+    <div class="row g-4">
+        <!-- Thông tin -->
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-gradient text-white"
+                     style="background: linear-gradient(90deg, #20c997, #0d6efd);">
+                    <h4 class="mb-0">📚 Thông tin thể loại</h4>
+                </div>
+                <div class="card-body fs-5 p-4">
+                    <p><strong>Mã thể loại:</strong> <span class="badge bg-secondary">#@Model.MaLoai</span></p>
+                    <p><strong>Tên thể loại:</strong> <span class="text-primary">@Model.TenLoai</span></p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Thao tác -->
-    <div class="col-md-4">
-        <div class="card shadow-sm mb-3">
-            <div class="card-header bg-light fw-bold">⚙️ Thao tác</div>
-            <div class="card-body">
-                <a asp-action="Edit" asp-route-id="@Model.MaLoai" class="btn btn-warning w-100 mb-2">✏️ Chỉnh sửa thể loại</a>
+        <!-- Thao tác -->
+        <div class="col-lg-4">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-light fw-bold">
+                    ⚙️ Thao tác nhanh
+                </div>
+                <div class="card-body d-grid gap-2">
+                    <a asp-action="Edit" asp-route-id="@Model.MaLoai" class="btn btn-warning btn-lg">
+                        <i class="bi bi-pencil-square"></i> Chỉnh sửa
+                    </a>
 
-                <button type="button" class="btn btn-danger w-100 mb-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#confirmDeleteModal"
-                        data-id="@Model.MaLoai"
-                        data-name="@Model.TenLoai">
-                    🗑️ Xóa thể loại
-                </button>
+                    <button type="button" class="btn btn-danger btn-lg"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal"
+                            data-id="@Model.MaLoai"
+                            data-name="@Model.TenLoai">
+                        <i class="bi bi-trash"></i> Xóa thể loại
+                    </button>
 
-                <a asp-action="Index" class="btn btn-info w-100">🔙 Quay lại danh sách</a>
+                    <a asp-action="Index" class="btn btn-outline-primary btn-lg">
+                        <i class="bi bi-arrow-left"></i> Quay lại danh sách
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -39,19 +50,25 @@
 <!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-danger text-white rounded-top-4">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill"></i> Xác nhận xóa
+                </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
-                Bạn có chắc chắn muốn xóa thể loại <strong id="deleteItemName"></strong>?
+            <div class="modal-body fs-5">
+                Bạn có chắc chắn muốn xóa thể loại <strong id="deleteItemName" class="text-danger"></strong>?
             </div>
             <div class="modal-footer">
                 <form id="deleteForm" method="post">
                     <input type="hidden" name="id" id="deleteItemId" />
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Hủy
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Xóa
+                    </button>
                 </form>
             </div>
         </div>
@@ -60,16 +77,17 @@
 
 @section Scripts {
     <script>
-        var deleteModal = document.getElementById('confirmDeleteModal');
-        deleteModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var id = button.getAttribute('data-id');
-            var name = button.getAttribute('data-name');
+        document.addEventListener("DOMContentLoaded", function () {
+            const deleteModal = document.getElementById("confirmDeleteModal");
+            deleteModal.addEventListener("show.bs.modal", function (event) {
+                const button = event.relatedTarget;
+                const id = button.getAttribute("data-id");
+                const name = button.getAttribute("data-name");
 
-            document.getElementById('deleteItemName').textContent = name;
-            document.getElementById('deleteItemId').value = id;
-
-            document.getElementById('deleteForm').action = '/Admin/TheLoai/Delete/' + id;
+                document.getElementById("deleteItemName").textContent = name;
+                document.getElementById("deleteItemId").value = id;
+                document.getElementById("deleteForm").action = "/Admin/TheLoai/Delete/" + id;
+            });
         });
     </script>
 }

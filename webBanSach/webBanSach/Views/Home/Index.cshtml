@@ -8,22 +8,32 @@
 
 <div class="container mt-5">
 
-    <!-- BANNER -->
-    <div id="bookCarousel" class="carousel slide mb-4 shadow rounded overflow-hidden" data-bs-ride="carousel">
+    <!-- 🏞️ BANNER -->
+    <div id="bookCarousel" class="carousel slide mb-5 rounded-4 overflow-hidden shadow-lg" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="https://img.freepik.com/free-photo/stack-books_144627-20260.jpg"
-                     class="d-block w-100" style="height: 350px; object-fit: cover;">
+                     class="d-block w-100 banner-img">
+                <div class="carousel-caption d-none d-md-flex flex-column align-items-center justify-content-center bg-dark bg-opacity-50 rounded-4 p-4">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <img src="~/images/logo.jpg" alt="logo" class="logo-hero me-2">
+                        <h3 class="fw-bold text-white mb-0">Web<span class="text-warning">Book</span></h3>
+                    </div>
+                    <p class="text-light fs-5 fst-italic mb-0">“Khám phá tri thức - Mở rộng tâm hồn”</p>
+                </div>
             </div>
+
             <div class="carousel-item">
                 <img src="https://img.freepik.com/free-photo/books-on-wooden-table_144627-20123.jpg"
-                     class="d-block w-100" style="height: 350px; object-fit: cover;">
+                     class="d-block w-100 banner-img">
             </div>
+
             <div class="carousel-item">
                 <img src="https://img.freepik.com/free-photo/open-book-with-glasses_144627-20232.jpg"
-                     class="d-block w-100" style="height: 350px; object-fit: cover;">
+                     class="d-block w-100 banner-img">
             </div>
         </div>
+
         <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>
         </button>
@@ -32,18 +42,18 @@
         </button>
     </div>
 
-    <!-- NÚT XEM SÁCH -->
+
+    <!-- ✨ CTA Nút -->
     <div class="text-center mb-5">
-        <a href="/Sach/Index" class="btn btn-primary btn-lg rounded-pill shadow-sm px-5 py-2 fw-semibold">
+        <a href="/Sach/Index" class="btn btn-primary btn-lg rounded-pill shadow px-5 py-2 fw-semibold hover-scale">
             <i class="bi bi-book me-2"></i> Khám phá sách ngay
         </a>
     </div>
 
-    <!-- === SÁCH NỔI BẬT === -->
+    <!-- === 🔥 SÁCH NỔI BẬT === -->
     <section class="mb-5">
-        <div class="d-flex align-items-center mb-4">
-            <h3 class="fw-bold text-warning mb-0">🔥 Sách nổi bật</h3>
-            <div class="flex-grow-1 ms-3 border-bottom border-warning"></div>
+        <div class="section-header text-warning">
+            <h3 class="fw-bold"><i class="bi bi-star-fill me-2"></i>Sách nổi bật</h3>
         </div>
 
         <div class="row g-4">
@@ -52,13 +62,13 @@
                 foreach (var sach in Model.SachNoiBat)
                 {
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex justify-content-center">
-                        <div class="card book-card border-0 shadow-lg hover-card">
+                        <div class="card book-card border-0 shadow-sm hover-card">
                             <div class="position-relative">
-                                <img src="~/images/sach/@sach.HinhAnh" alt="@sach.TenSach" class="card-img-top">
+                                <img src="~/images/sach/@sach.HinhAnh" alt="@sach.TenSach" class="card-img-top rounded-top-3">
                                 <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2 px-3 py-2 rounded-pill fw-semibold">Hot</span>
                             </div>
-                            <div class="card-body text-center d-flex flex-column justify-content-between">
-                                <h6 class="fw-bold text-dark text-truncate">@sach.TenSach</h6>
+                            <div class="card-body text-center d-flex flex-column">
+                                <h6 class="fw-bold text-dark text-truncate mb-2">@sach.TenSach</h6>
                                 <p class="text-danger fw-bold mb-3">@sach.GiaBan.ToString("N0") ₫</p>
 
                                 <div class="d-grid gap-2 mt-auto">
@@ -70,7 +80,7 @@
                                     {
                                         if (sach.SoLuong > 0)
                                         {
-                                            <form asp-controller="Cart" asp-action="Add" method="post" class="d-inline">
+                                            <form asp-controller="Cart" asp-action="Add" method="post">
                                                 <input type="hidden" name="maSach" value="@sach.MaSach" />
                                                 <button type="submit" class="btn btn-primary btn-sm w-100">
                                                     <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ
@@ -101,11 +111,10 @@
         </div>
     </section>
 
-    <!-- === SÁCH BÁN CHẠY === -->
+    <!-- === 💚 SÁCH BÁN CHẠY === -->
     <section class="mb-5">
-        <div class="d-flex align-items-center mb-4">
-            <h3 class="fw-bold text-success mb-0">⭐ Sách bán chạy</h3>
-            <div class="flex-grow-1 ms-3 border-bottom border-success"></div>
+        <div class="section-header text-success">
+            <h3 class="fw-bold"><i class="bi bi-graph-up-arrow me-2"></i>Sách bán chạy</h3>
         </div>
 
         <div class="row g-4">
@@ -114,13 +123,13 @@
                 foreach (var sach in Model.SachBanChay)
                 {
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex justify-content-center">
-                        <div class="card book-card border-0 shadow-lg hover-card">
+                        <div class="card book-card border-0 shadow-sm hover-card">
                             <div class="position-relative">
-                                <img src="~/images/sach/@sach.HinhAnh" alt="@sach.TenSach" class="card-img-top">
+                                <img src="~/images/sach/@sach.HinhAnh" alt="@sach.TenSach" class="card-img-top rounded-top-3">
                                 <span class="badge bg-success position-absolute top-0 start-0 m-2 px-3 py-2 rounded-pill fw-semibold">Best Seller</span>
                             </div>
-                            <div class="card-body text-center d-flex flex-column justify-content-between">
-                                <h6 class="fw-bold text-dark text-truncate">@sach.TenSach</h6>
+                            <div class="card-body text-center d-flex flex-column">
+                                <h6 class="fw-bold text-dark text-truncate mb-2">@sach.TenSach</h6>
                                 <p class="text-danger fw-bold mb-3">@sach.GiaBan.ToString("N0") ₫</p>
 
                                 <div class="d-grid gap-2 mt-auto">
@@ -132,7 +141,7 @@
                                     {
                                         if (sach.SoLuong > 0)
                                         {
-                                            <form asp-controller="Cart" asp-action="Add" method="post" class="d-inline">
+                                            <form asp-controller="Cart" asp-action="Add" method="post">
                                                 <input type="hidden" name="maSach" value="@sach.MaSach" />
                                                 <button type="submit" class="btn btn-success btn-sm w-100">
                                                     <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ
@@ -164,33 +173,76 @@
     </section>
 </div>
 
+<!-- 🎨 STYLE -->
 <style>
+    .logo-hero {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ffc107;
+        background-color: #fff;
+        transition: transform 0.3s ease;
+    }
+
+        .logo-hero:hover {
+            transform: rotate(10deg) scale(1.05);
+        }
+
+    .carousel-caption {
+        bottom: 15%;
+    }
+    .banner-img {
+        height: 380px;
+        object-fit: cover;
+        filter: brightness(0.85);
+        transition: transform 0.6s ease;
+    }
+
+    .carousel-item:hover .banner-img {
+        transform: scale(1.03);
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        border-bottom: 3px solid currentColor;
+        padding-bottom: 0.3rem;
+    }
+
     .book-card {
         width: 100%;
-        border-radius: 14px;
+        border-radius: 16px;
         overflow: hidden;
-        transition: all 0.35s ease;
+        transition: all 0.3s ease-in-out;
         background-color: #fff;
     }
 
     .hover-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+        transform: translateY(-8px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
 
     .book-card img {
-        height: 220px;
+        height: 230px;
         object-fit: cover;
+        border-bottom: 1px solid #f0f0f0;
     }
 
     .book-card h6 {
         font-size: 1rem;
-        min-height: 40px;
         line-height: 1.4;
+        min-height: 42px;
     }
 
     .book-card .btn {
-        border-radius: 8px;
+        border-radius: 10px;
         transition: 0.25s ease;
     }
 
@@ -199,4 +251,6 @@
         transform: translateY(-2px);
     }
 
+    
+    
 </style>

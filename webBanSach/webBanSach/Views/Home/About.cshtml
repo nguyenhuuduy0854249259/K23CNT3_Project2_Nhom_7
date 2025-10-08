@@ -3,6 +3,7 @@
 }
 
 <div class="about-page container py-5">
+    <!-- Tiêu đề chính -->
     <div class="text-center mb-5">
         <h2 class="fw-bold text-primary mb-3 animate__animated animate__fadeInDown">
             Về Chúng Tôi
@@ -14,18 +15,19 @@
 
     <!-- Giới thiệu -->
     <section class="about-section shadow-sm p-4 p-md-5 rounded-4 mb-5 bg-white">
-        <div class="row align-items-center">
-            <div class="col-md-6 mb-4 mb-md-0">
-                <img src="~/images/logo.jpg" alt="Nhà Sách DVD" class="img-fluid rounded-4 shadow-sm">
+        <div class="row align-items-center g-4">
+            <div class="col-md-6 text-center">
+                <img src="~/images/logo.jpg" alt="Nhà Sách DVD" class="img-fluid rounded-4 shadow-sm about-image">
             </div>
             <div class="col-md-6">
                 <h4 class="fw-bold text-primary mb-3">Giới thiệu chung</h4>
                 <p class="text-secondary">
-                    <strong>Nhà Sách Việt</strong> là hệ thống bán sách trực tuyến cung cấp hàng ngàn đầu sách chất lượng thuộc nhiều lĩnh vực:
-                    <em>văn học, kỹ năng sống, công nghệ, thiếu nhi</em> và hơn thế nữa.
+                    <strong>Nhà Sách DVD</strong> là hệ thống bán sách trực tuyến cung cấp hàng ngàn đầu sách chất lượng
+                    thuộc nhiều lĩnh vực như <em>văn học, kỹ năng sống, công nghệ, thiếu nhi</em> và hơn thế nữa.
                 </p>
                 <p class="text-secondary mb-0">
-                    Với phương châm <em>"Sách hay - Giá tốt - Phục vụ tận tâm"</em>, chúng tôi không ngừng phát triển để mang lại trải nghiệm mua sắm tuyệt vời nhất cho độc giả Việt.
+                    Với phương châm <em>"Sách hay - Giá tốt - Phục vụ tận tâm"</em>, chúng tôi không ngừng phát triển
+                    để mang lại trải nghiệm mua sắm tuyệt vời nhất cho độc giả Việt.
                 </p>
             </div>
         </div>
@@ -34,7 +36,7 @@
     <!-- Tầm nhìn -->
     <section class="vision-section shadow-sm p-4 p-md-5 rounded-4 mb-5 bg-light border-start border-success border-4">
         <h4 class="fw-bold text-success mb-3"><i class="bi bi-eye me-2"></i>Tầm nhìn</h4>
-        <p class="text-secondary fs-5">
+        <p class="text-secondary fs-5 mb-0">
             Trở thành nền tảng sách trực tuyến hàng đầu Việt Nam – nơi mọi người dễ dàng tiếp cận tri thức,
             truyền cảm hứng đọc sách và lan tỏa văn hóa học tập suốt đời.
         </p>
@@ -43,7 +45,7 @@
     <!-- Sứ mệnh -->
     <section class="mission-section shadow-sm p-4 p-md-5 rounded-4 mb-5 bg-light border-start border-warning border-4">
         <h4 class="fw-bold text-warning mb-3"><i class="bi bi-bullseye me-2"></i>Sứ mệnh</h4>
-        <ul class="list-unstyled fs-5 text-secondary">
+        <ul class="list-unstyled fs-5 text-secondary mb-0">
             <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Cung cấp đầu sách đa dạng, cập nhật nhanh chóng.</li>
             <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Đem lại trải nghiệm mua sắm tiện lợi và thân thiện.</li>
             <li><i class="bi bi-check-circle-fill text-success me-2"></i> Phục vụ khách hàng tận tâm, chuyên nghiệp và hiệu quả.</li>
@@ -56,10 +58,10 @@
             <i class="bi bi-telephone me-2"></i>Liên hệ với chúng tôi
         </h4>
 
-        <div class="row g-3">
+        <div class="row g-4">
             <!-- Thông tin liên hệ -->
             <div class="col-md-6">
-                <div class="p-3 bg-light rounded-3 shadow-sm h-100">
+                <div class="p-4 bg-light rounded-3 shadow-sm h-100">
                     <p class="mb-2">
                         <i class="bi bi-geo-alt text-danger me-2"></i>
                         <strong>Địa chỉ:</strong> 28A, đường Lê Trọng Tấn, Hà Đông, Hà Nội
@@ -77,18 +79,18 @@
 
             <!-- Liên kết ngoài -->
             <div class="col-md-6">
-                <div class="p-3 bg-light rounded-3 shadow-sm h-100">
+                <div class="p-4 bg-light rounded-3 shadow-sm h-100">
                     <p class="mb-2">
                         <i class="bi bi-globe text-primary me-2"></i>
                         <strong>Website:</strong>
-                        <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-primary">
+                        <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-primary fw-semibold">
                             www.nhasachdvd.vn
                         </a>
                     </p>
                     <p class="mb-0">
                         <i class="bi bi-facebook text-primary me-2"></i>
                         <strong>Facebook:</strong>
-                        <a href="#" class="text-decoration-none text-primary">
+                        <a href="#" class="text-decoration-none text-primary fw-semibold">
                             facebook.com/nhasachdvd
                         </a>
                     </p>
@@ -96,19 +98,36 @@
             </div>
         </div>
     </section>
-
-    </section>
 </div>
 
-
-
 @section Styles {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
     <style>
+        /* Cơ bản */
+        body {
+            background-color: #f9fafc;
+        }
+
+        .about-page h2 {
+            letter-spacing: 1px;
+        }
+
+        /* Ảnh logo */
+        .about-image {
+            max-height: 260px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .about-image:hover {
+            transform: scale(1.05);
+        }
+
         /* Hiệu ứng xuất hiện khi cuộn */
         .about-section, .vision-section, .mission-section, .contact-section {
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.6s ease;
+            transition: all 0.7s ease;
         }
 
         .visible {
@@ -116,13 +135,13 @@
             transform: translateY(0);
         }
 
-       
+      
     </style>
 }
 
 @section Scripts {
     <script>
-        // Hiệu ứng xuất hiện khi cuộn
+        // Hiệu ứng xuất hiện khi cuộn (scroll reveal)
         document.addEventListener("scroll", function () {
             const sections = document.querySelectorAll(".about-section, .vision-section, .mission-section, .contact-section");
             sections.forEach(section => {

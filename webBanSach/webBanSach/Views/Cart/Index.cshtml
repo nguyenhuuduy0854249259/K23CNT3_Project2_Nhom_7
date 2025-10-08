@@ -7,47 +7,53 @@
     decimal subtotal = 0;
 }
 
-<div class="container mt-5">
-    <h2 class="mb-4 text-primary">🛒 Giỏ hàng của @userName</h2>
-
- 
+<div class="container my-5 cart-container">
+    <h2 class="mb-4 fw-bold text-primary text-center">
+        🛒 Giỏ hàng của <span class="text-dark">@userName</span>
+    </h2>
 
     @if (Model != null && Model.Any())
     {
-        <div class="row">
-            <div class="col-md-8">
+        <div class="row g-4">
+            <!-- Danh sách sản phẩm -->
+            <div class="col-lg-8">
                 @foreach (var item in Model)
                 {
                     subtotal += item.SoLuong * item.MaSachNavigation.GiaBan;
-                    <div class="card mb-3 shadow-sm cart-item" data-max="@item.MaSachNavigation.SoLuong" data-id="@item.MaSach">
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-3">
+                    <div class="card cart-item border-0 shadow-sm mb-4 rounded-4" data-max="@item.MaSachNavigation.SoLuong" data-id="@item.MaSach">
+                        <div class="row g-0 align-items-center p-3">
+                            <div class="col-4 col-md-3 text-center">
                                 <img src="~/images/sach/@item.MaSachNavigation.HinhAnh"
-                                     class="img-fluid rounded-start" style="height:120px; object-fit:cover;" />
+                                     class="img-fluid rounded-3 border cart-img" alt="@item.MaSachNavigation.TenSach" />
                             </div>
-                            <div class="col-md-5">
+
+                            <div class="col-8 col-md-5">
                                 <div class="card-body">
-                                    <h6 class="card-title fw-bold">@item.MaSachNavigation.TenSach</h6>
-                                    <p class="text-danger fw-bold">@item.MaSachNavigation.GiaBan.ToString("N0") đ</p>
+                                    <h6 class="fw-bold mb-2 text-dark">@item.MaSachNavigation.TenSach</h6>
+                                    <p class="text-danger fw-semibold mb-2">@item.MaSachNavigation.GiaBan.ToString("N0") đ</p>
+                                    <small class="text-muted">Còn lại: @item.MaSachNavigation.SoLuong</small>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="d-flex flex-column gap-2 me-2">
-                                    <form asp-action="UpdateQuantity" asp-controller="Cart" method="post" class="d-flex">
-                                        @Html.AntiForgeryToken()
-                                        <input type="hidden" name="maSach" value="@item.MaSach" />
-                                        <input type="number" name="soLuong" class="form-control form-control-sm quantity-input"
-                                               value="@item.SoLuong" min="1" max="@item.MaSachNavigation.SoLuong" style="width:70px;" />
-                                        <button type="submit" class="btn btn-outline-success btn-sm ms-2">
-                                            <i class="bi bi-arrow-repeat"></i> Cập nhật
-                                        </button>
-                                        <small class="text-danger quantity-error" style="display:none;">Số lượng không đủ tồn kho!</small>
-                                    </form>
 
-                                    <form asp-action="Delete" asp-controller="Cart" method="post" class="mt-2">
+                            <div class="col-12 col-md-4 mt-3 mt-md-0">
+                                <div class="d-flex flex-column gap-2 align-items-end">
+                                    <!-- Cập nhật số lượng -->
+                                    <form asp-action="UpdateQuantity" asp-controller="Cart" method="post" class="d-flex align-items-center">
                                         @Html.AntiForgeryToken()
                                         <input type="hidden" name="maSach" value="@item.MaSach" />
-                                        <button class="btn btn-outline-danger btn-sm w-100">
+                                        <input type="number" name="soLuong" class="form-control form-control-sm quantity-input text-center"
+                                               value="@item.SoLuong" min="1" max="@item.MaSachNavigation.SoLuong" />
+                                        <button type="submit" class="btn btn-outline-success btn-sm ms-2 px-3 py-2 rounded-3 shadow-sm update-btn">
+                                            <i class="bi bi-arrow-repeat me-1"></i> Cập nhật
+                                        </button>
+                                    </form>
+                                    <small class="text-danger quantity-error" style="display:none;">Số lượng không đủ tồn kho!</small>
+
+                                    <!-- Xóa -->
+                                    <form asp-action="Delete" asp-controller="Cart" method="post" class="w-100 mt-1">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="maSach" value="@item.MaSach" />
+                                        <button class="btn btn-outline-danger btn-sm w-100 py-2 rounded-3 shadow-sm delete-btn">
                                             <i class="bi bi-trash me-1"></i> Xóa
                                         </button>
                                     </form>
@@ -58,20 +64,27 @@
                 }
             </div>
 
-            <div class="col-md-4">
-                <div class="card shadow-sm p-3">
-                    <h5 class="mb-3">Tóm tắt đơn hàng</h5>
-                    <p>Tạm tính: <span class="float-end">@subtotal.ToString("N0") VNĐ</span></p>
-                    <p>Phí giao hàng: <span class="float-end">Miễn phí</span></p>
+            <!-- Tóm tắt đơn hàng -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 rounded-4 p-4 order-summary">
+                    <h5 class="fw-bold text-dark mb-4 text-center border-bottom pb-2">Tóm tắt đơn hàng</h5>
+                    <p class="d-flex justify-content-between mb-2">
+                        <span>Tạm tính:</span>
+                        <span class="fw-semibold">@subtotal.ToString("N0") VNĐ</span>
+                    </p>
+                    <p class="d-flex justify-content-between mb-2">
+                        <span>Phí giao hàng:</span>
+                        <span class="text-success fw-semibold">Miễn phí</span>
+                    </p>
                     <hr />
-                    <h5>
-                        Tổng cộng:
-                        <span class="text-danger float-end fw-bold">@subtotal.ToString("N0") VNĐ</span>
+                    <h5 class="d-flex justify-content-between align-items-center">
+                        <span>Tổng cộng:</span>
+                        <span class="text-danger fw-bold fs-5">@subtotal.ToString("N0") VNĐ</span>
                     </h5>
-                    <div class="d-grid mt-3">
+                    <div class="d-grid mt-4">
                         <a asp-controller="Cart" asp-action="Checkout"
-                           class="btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center">
-                            <i class="bi bi-credit-card me-2"></i> Thanh toán
+                           class="btn btn-primary btn-lg rounded-3 shadow-sm checkout-btn">
+                            <i class="bi bi-credit-card me-2"></i> Thanh toán ngay
                         </a>
                     </div>
                 </div>
@@ -80,12 +93,81 @@
     }
     else
     {
-        <p class="text-muted text-center fs-5">👉 Giỏ hàng trống. Hãy thêm sách vào giỏ!</p>
+        <div class="text-center py-5">
+            <i class="bi bi-cart-x display-3 text-secondary mb-3"></i>
+            <p class="text-muted fs-5">Giỏ hàng của bạn hiện đang trống.</p>
+            <a asp-controller="Sach" asp-action="Index" class="btn btn-outline-primary rounded-3 px-4 mt-2">
+                <i class="bi bi-book me-2"></i> Tiếp tục mua sắm
+            </a>
+        </div>
     }
 </div>
 
+@section Styles {
+    <style>
+        /* Tổng thể */
+        .cart-container {
+            background-color: #f8fafc;
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        /* Ảnh sách */
+        .cart-img {
+            height: 120px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Card sản phẩm */
+        .cart-item {
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        /* Input số lượng */
+        .quantity-input {
+            width: 70px;
+            border-radius: 6px;
+        }
+
+        /* Nút cập nhật / xóa */
+        .update-btn, .delete-btn {
+            transition: all 0.25s ease;
+        }
+
+        .update-btn:hover {
+            background-color: #198754;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .delete-btn:hover {
+            background-color: #dc3545;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Thẻ tóm tắt */
+        .order-summary {
+            background-color: #fff;
+        }
+
+       
+    </style>
+}
+
 @section Scripts {
     <script>
+        // Kiểm tra số lượng tồn kho
         document.querySelectorAll(".quantity-input").forEach(input => {
             input.addEventListener("change", function () {
                 const row = this.closest(".cart-item");
@@ -96,8 +178,10 @@
                 if (qty > max) {
                     errorText.style.display = "inline";
                     this.value = max;
+                    row.classList.add("border-danger");
                 } else {
                     errorText.style.display = "none";
+                    row.classList.remove("border-danger");
                 }
             });
         });

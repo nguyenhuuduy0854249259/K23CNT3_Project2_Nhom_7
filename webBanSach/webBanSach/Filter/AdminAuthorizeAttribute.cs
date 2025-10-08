@@ -8,7 +8,7 @@ namespace webBanSach.Filters
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var session = context.HttpContext.Session;
-            var adminId = session.GetInt32("MaND"); // Lưu MaND khi đăng nhập admin
+            var adminId = session.GetInt32("AdminId"); // trùng với session khi login
 
             if (adminId == null)
             {

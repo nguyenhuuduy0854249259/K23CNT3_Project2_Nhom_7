@@ -17,20 +17,23 @@ namespace webBanSach.Areas.Admin.Controllers
         // GET: Admin/LienHe
         public async Task<IActionResult> Index(string? search)
         {
-            var q = _context.LienHes.Include(l => l.MaNDNavigation).AsQueryable();
+            var query = _context.LienHes
+                .Include(l => l.MaNDNavigation)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                q = q.Where(l =>
+                query = query.Where(l =>
                     l.HoTen.Contains(search) ||
                     l.Email.Contains(search) ||
                     (l.TieuDe != null && l.TieuDe.Contains(search)));
             }
 
-            var list = await q
+            var list = await query
                 .OrderByDescending(l => l.NgayGui)
                 .ToListAsync();
 
+            ViewBag.Search = search;
             return View(list);
         }
 
@@ -46,7 +49,7 @@ namespace webBanSach.Areas.Admin.Controllers
             return View(lh);
         }
 
-        // POST: Admin/LienHe/Delete/5
+        // POST: Admin/LienHe/Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -56,11 +59,12 @@ namespace webBanSach.Areas.Admin.Controllers
             {
                 _context.LienHes.Remove(lh);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "🗑️ Xóa liên hệ thành công.";
             }
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: Admin/LienHe/Toggle/5 (Chưa xử lý ↔ Đã xử lý)
+        // POST: Admin/LienHe/Toggle
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Toggle(int id)
@@ -71,6 +75,10 @@ namespace webBanSach.Areas.Admin.Controllers
                 lh.TrangThai = (lh.TrangThai == "DaXuLy") ? "ChuaXuLy" : "DaXuLy";
                 _context.Update(lh);
                 await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = lh.TrangThai == "DaXuLy"
+                    ? "✅ Đánh dấu đã xử lý."
+                    : "↩️ Đã chuyển lại thành chưa xử lý.";
             }
             return RedirectToAction(nameof(Index));
         }

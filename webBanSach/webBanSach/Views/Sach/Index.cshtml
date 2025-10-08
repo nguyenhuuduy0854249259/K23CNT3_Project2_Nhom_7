@@ -21,13 +21,13 @@
                        class="form-control border-0 bg-transparent shadow-none"
                        placeholder="Tìm sách, tác giả, thể loại..." />
                 <button type="submit" class="btn btn-primary btn-sm ms-2 rounded-pill px-3">
-                    Tìm
+                    <i class="bi bi-search"></i>
                 </button>
             </form>
 
             <!-- Dropdown Thể loại -->
             <div class="dropdown">
-                <button class="btn btn-outline-primary rounded-pill px-4 d-flex align-items-center gap-2"
+                <button class="btn btn-outline-primary rounded-pill px-4 d-flex align-items-center gap-2 dropdown-toggle"
                         type="button" data-bs-toggle="dropdown">
                     <i class="bi bi-book"></i> Thể loại
                 </button>
@@ -48,7 +48,7 @@
 
             <!-- Dropdown Tác giả -->
             <div class="dropdown">
-                <button class="btn btn-outline-success rounded-pill px-4 d-flex align-items-center gap-2"
+                <button class="btn btn-outline-success rounded-pill px-4 d-flex align-items-center gap-2 dropdown-toggle"
                         type="button" data-bs-toggle="dropdown">
                     <i class="bi bi-person-lines-fill"></i> Tác giả
                 </button>
@@ -69,7 +69,7 @@
 
             <!-- Dropdown NXB -->
             <div class="dropdown">
-                <button class="btn btn-outline-danger rounded-pill px-4 d-flex align-items-center gap-2"
+                <button class="btn btn-outline-danger rounded-pill px-4 d-flex align-items-center gap-2 dropdown-toggle"
                         type="button" data-bs-toggle="dropdown">
                     <i class="bi bi-building"></i> NXB
                 </button>
@@ -103,16 +103,16 @@
             @foreach (var item in Model)
             {
                 <div class="col-lg-3 col-md-4 col-sm-6 col-6 d-flex justify-content-center">
-                    <div class="card book-card border-0 shadow-sm h-100">
+                    <div class="card book-card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
                         <div class="book-img-wrapper position-relative">
                             <img src="~/images/sach/@(item.HinhAnh ?? "no-image.png")"
-                                 class="card-img-top rounded-3"
+                                 class="card-img-top"
                                  style="height:300px; object-fit:cover;"
                                  alt="@item.TenSach" />
 
                             <div class="overlay d-flex flex-column justify-content-center align-items-center gap-2">
                                 <a asp-action="Details" asp-route-id="@item.MaSach"
-                                   class="btn btn-outline-light rounded-pill px-3 py-2 shadow-sm w-75">
+                                   class="btn btn-light rounded-pill px-3 py-2 shadow-sm w-75 fw-semibold">
                                     <i class="bi bi-eye"></i> Xem chi tiết
                                 </a>
 
@@ -124,7 +124,7 @@
                                               class="w-100 d-flex justify-content-center">
                                             <input type="hidden" name="maSach" value="@item.MaSach" />
                                             <button type="submit"
-                                                    class="btn btn-primary rounded-pill px-3 py-2 shadow-sm w-75">
+                                                    class="btn btn-gradient-primary rounded-pill px-3 py-2 shadow-sm w-75 fw-semibold">
                                                 <i class="bi bi-bag-check"></i> Mua ngay
                                             </button>
                                         </form>
@@ -132,7 +132,7 @@
                                     else
                                     {
                                         <a href="/Account/Login"
-                                           class="btn btn-primary rounded-pill px-3 py-2 shadow-sm w-75">
+                                           class="btn btn-gradient-primary rounded-pill px-3 py-2 shadow-sm w-75 fw-semibold">
                                             <i class="bi bi-bag-check"></i> Mua ngay
                                         </a>
                                     }
@@ -145,7 +145,7 @@
                         </div>
                         <div class="card-body text-center d-flex flex-column justify-content-between">
                             <div>
-                                <h6 class="fw-bold text-truncate">@item.TenSach</h6>
+                                <h6 class="fw-bold text-truncate" title="@item.TenSach">@item.TenSach</h6>
                                 <small class="text-muted">✍ @item.TacGias</small>
                             </div>
                             <div class="mt-2">
@@ -168,9 +168,23 @@
 
 <!-- ==================== STYLE ==================== -->
 <style>
-    /* Form lọc và tìm kiếm */
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f8fafc;
+    }
+
+    /* Filter bar */
     .filter-bar {
         transition: all 0.3s ease;
+    }
+
+    .filter-bar .btn {
+        transition: 0.3s;
+    }
+
+    .filter-bar .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     }
 
     .search-pill input:focus {
@@ -182,20 +196,21 @@
         border-radius: 12px;
         padding: 0.5rem 0;
         font-size: 0.95rem;
-        animation-duration: 0.2s;
+        animation-duration: 0.25s;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f1f3f9;
     }
 
     /* Book card */
     .book-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
     }
 
     .book-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+        transform: translateY(-6px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     .book-img-wrapper {
@@ -205,25 +220,25 @@
     }
 
     .book-img-wrapper img {
-        transition: transform 0.3s ease;
+        transition: transform 0.35s ease;
         width: 100%;
     }
 
     .book-card:hover img {
-        transform: scale(1.05);
+        transform: scale(1.06);
     }
 
     .overlay {
         position: absolute;
         inset: 0;
-        background: rgba(0,0,0,0.65);
+        background: rgba(0, 0, 0, 0.6);
         opacity: 0;
         transition: opacity 0.3s ease;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.6rem;
         padding: 0.5rem;
     }
 
@@ -231,10 +246,16 @@
         opacity: 1;
     }
 
-    .book-card .btn {
-        font-size: 0.85rem;
+    .btn-gradient-primary {
+        background: linear-gradient(90deg, #007bff, #00b4d8);
+        color: #fff;
+        border: none;
+    }
+
+    .btn-gradient-primary:hover {
+        background: linear-gradient(90deg, #0056b3, #0096c7);
+        color: #fff;
     }
 
    
 </style>
-

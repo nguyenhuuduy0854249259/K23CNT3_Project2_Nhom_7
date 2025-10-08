@@ -1,0 +1,132 @@
+﻿@model webBanSach.Models.LienHe
+@{
+    ViewData["Title"] = "Liên hệ";
+}
+
+<div class="contact-section container my-5">
+    <div class="row g-5 align-items-start">
+
+        <!-- FORM LIÊN HỆ -->
+        <div class="col-lg-6">
+            <div class="contact-card p-4 shadow-sm rounded-4 bg-white">
+                <h4 class="fw-bold mb-4 text-primary text-uppercase">
+                    <i class="fas fa-comment-dots me-2"></i> Gửi lời nhắn cho chúng tôi
+                </h4>
+
+                @if (ViewBag.ThongBao != null)
+                {
+                    <div class="alert alert-info text-center fw-bold rounded-pill py-2">@ViewBag.ThongBao</div>
+                }
+
+                <form asp-action="Index" method="post" class="needs-validation" novalidate>
+                    <div class="form-floating mb-3">
+                        <input asp-for="HoTen" class="form-control" placeholder="Họ và tên" />
+                        <label for="HoTen">Họ và tên</label>
+                        <span asp-validation-for="HoTen" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" class="form-control" placeholder="Email" />
+                        <label for="Email">Email</label>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="TieuDe" class="form-control" placeholder="Số điện thoại / Tiêu đề" />
+                        <label for="TieuDe">Số điện thoại / Tiêu đề</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="NoiDung" class="form-control" style="height:120px;" placeholder="Nội dung"></textarea>
+                        <label for="NoiDung">Nội dung</label>
+                        <span asp-validation-for="NoiDung" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning text-white fw-bold w-100 py-2 shadow-sm">
+                        <i class="fas fa-paper-plane me-2"></i> Gửi liên hệ của bạn
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- THÔNG TIN LIÊN HỆ -->
+        <div class="col-lg-6">
+            <div class="p-4 rounded-4 bg-white shadow-sm">
+                <h4 class="fw-bold text-uppercase mb-3 text-danger">
+                    <i class="fas fa-map-marker-alt me-2"></i> Thông tin liên hệ
+                </h4>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-3"><i class="fas fa-map-marker-alt text-danger me-2"></i>
+                        28A, Lê trọng tấn , Hà Đông, Hà Nội</li>
+                    <li class="mb-3"><i class="fas fa-phone-alt text-danger me-2"></i>
+                        <a href="tel:0828899333" class="text-dark text-decoration-none fw-semibold">0987654321</a></li>
+                    <li><i class="fas fa-envelope text-danger me-2"></i>
+                        <a href="mailto:vuasachcuonline@gmail.com" class="text-dark text-decoration-none fw-semibold">
+                            sach24@nhasachdvd.vn
+                        </a></li>
+                </ul>
+
+                <h5 class="fw-bold text-danger text-uppercase mb-3">
+                    <i class="fas fa-map me-2"></i> Đường đến cửa hàng
+                </h5>
+                <div class="map-container rounded-4 overflow-hidden shadow-sm">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.256471899251!2d105.76656377425893!3d21.020088080633288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab4dc5a86a65%3A0x4a60b76b6ff0216c!2zVsaw4bubYSBT4bqjY2ggQ8ah!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s"
+                        width="100%"
+                        height="350"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        background: #f7f8fa;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .contact-card {
+        transition: all 0.3s ease;
+        border: 1px solid #eee;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    .form-floating label {
+        color: #666;
+    }
+
+    .form-control:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.2rem rgba(255,193,7,0.25);
+    }
+
+    .btn-warning {
+        background: linear-gradient(90deg, #ffc107, #ffb300);
+        border: none;
+        transition: 0.3s ease;
+    }
+
+    .btn-warning:hover {
+        background: linear-gradient(90deg, #ffb300, #ff9800);
+        transform: translateY(-1px);
+    }
+
+    .map-container iframe {
+        border-radius: 10px;
+    }
+
+   
+</style>

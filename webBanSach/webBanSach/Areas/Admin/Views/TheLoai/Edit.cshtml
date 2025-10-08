@@ -3,18 +3,41 @@
     ViewData["Title"] = "Chỉnh sửa thể loại";
 }
 
-<h2>✏️ Chỉnh sửa thể loại</h2>
-<hr />
+<div class="container mt-4">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-gradient text-white d-flex justify-content-between align-items-center"
+             style="background: linear-gradient(90deg, #007bff, #6610f2);">
+            <h4 class="mb-0">
+                ✏️ @ViewData["Title"]
+            </h4>
+            <a asp-action="Index" class="btn btn-light btn-sm">
+                <i class="bi bi-arrow-left-circle"></i> Quay lại
+            </a>
+        </div>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="MaLoai" />
+        <div class="card-body p-4">
+            <form asp-action="Edit" method="post" novalidate>
+                <input type="hidden" asp-for="MaLoai" />
 
-    <div class="mb-3">
-        <label asp-for="TenLoai" class="form-label"></label>
-        <input asp-for="TenLoai" class="form-control" />
-        <span asp-validation-for="TenLoai" class="text-danger"></span>
+                <div class="mb-3">
+                    <label asp-for="TenLoai" class="form-label fw-semibold">Tên thể loại</label>
+                    <input asp-for="TenLoai" class="form-control form-control-lg shadow-sm" placeholder="Nhập tên thể loại..." />
+                    <span asp-validation-for="TenLoai" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary px-4 shadow-sm">
+                        <i class="bi bi-save"></i> Lưu thay đổi
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-x-circle"></i> Hủy
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 
-    <button type="submit" class="btn btn-primary">💾 Lưu thay đổi</button>
-    <a asp-action="Index" class="btn btn-secondary">↩️ Quay lại</a>
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,6 +1,6 @@
 ﻿@model webBanSach.Models.KhuyenMai
 @{
-    ViewData["Title"] = "Chỉnh sửa Khuyến mãi";
+    ViewData["Title"] = "Chỉnh sửa khuyến mãi";
 
     var loaiList = new List<SelectListItem>
     {
@@ -9,80 +9,125 @@
     };
 }
 
-<h2>@ViewData["Title"]</h2>
-
-<form asp-action="Edit" method="post" class="card p-4 shadow-sm">
-    <input type="hidden" asp-for="MaKM" />
-
-    <div class="mb-3">
-        <label asp-for="MaCode" class="form-label">Mã Code</label>
-        <input asp-for="MaCode" class="form-control" />
-        <span asp-validation-for="MaCode" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="MoTa" class="form-label">Mô tả</label>
-        <textarea asp-for="MoTa" class="form-control"></textarea>
-        <span asp-validation-for="MoTa" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="LoaiGiam" class="form-label">Loại giảm</label>
-        <select asp-for="LoaiGiam" class="form-select" asp-items="loaiList" id="LoaiGiamSelect">
-            <option value="">-- Chọn loại giảm --</option>
-        </select>
-        <span asp-validation-for="LoaiGiam" class="text-danger"></span>
-    </div>
-
-    <div class="row mb-3" id="PhanTramDiv">
-        <div class="col-md-6">
-            <label asp-for="PhanTramGiam" class="form-label">% Giảm</label>
-            <input asp-for="PhanTramGiam" class="form-control" type="number" step="0.01" />
-            <span asp-validation-for="PhanTramGiam" class="text-danger"></span>
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">
+                <i class="fa-solid fa-tags me-2"></i> @ViewData["Title"]
+            </h4>
+            <a asp-action="Index" class="btn btn-light btn-sm">
+                <i class="fa-solid fa-arrow-left"></i> Quay lại
+            </a>
         </div>
-        <div class="col-md-6">
-            <label asp-for="GiamToiDa" class="form-label">Giảm tối đa</label>
-            <input asp-for="GiamToiDa" class="form-control" type="number" step="0.01" />
-            <span asp-validation-for="GiamToiDa" class="text-danger"></span>
+
+        <div class="card-body p-4">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="MaKM" />
+
+                <!-- Mã code -->
+                <div class="mb-3">
+                    <label asp-for="MaCode" class="form-label fw-semibold">
+                        <i class="fa-solid fa-barcode me-1"></i> Mã khuyến mãi
+                    </label>
+                    <input asp-for="MaCode" class="form-control" placeholder="Nhập mã khuyến mãi..." />
+                    <span asp-validation-for="MaCode" class="text-danger small"></span>
+                </div>
+
+                <!-- Mô tả -->
+                <div class="mb-3">
+                    <label asp-for="MoTa" class="form-label fw-semibold">
+                        <i class="fa-solid fa-info-circle me-1"></i> Mô tả
+                    </label>
+                    <textarea asp-for="MoTa" class="form-control" rows="3" placeholder="Nhập mô tả..."></textarea>
+                    <span asp-validation-for="MoTa" class="text-danger small"></span>
+                </div>
+
+                <!-- Loại giảm -->
+                <div class="mb-3">
+                    <label asp-for="LoaiGiam" class="form-label fw-semibold">
+                        <i class="fa-solid fa-percent me-1"></i> Loại giảm
+                    </label>
+                    <select asp-for="LoaiGiam" class="form-select" asp-items="loaiList" id="LoaiGiamSelect">
+                        <option value="">-- Chọn loại giảm --</option>
+                    </select>
+                    <span asp-validation-for="LoaiGiam" class="text-danger small"></span>
+                </div>
+
+                <!-- Giảm phần trăm -->
+                <div class="row mb-3 g-3" id="PhanTramDiv">
+                    <div class="col-md-6">
+                        <label asp-for="PhanTramGiam" class="form-label fw-semibold">% Giảm</label>
+                        <div class="input-group">
+                            <input asp-for="PhanTramGiam" class="form-control" type="number" step="0.01" placeholder="Nhập %" />
+                            <span class="input-group-text">%</span>
+                        </div>
+                        <span asp-validation-for="PhanTramGiam" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="GiamToiDa" class="form-label fw-semibold">Giảm tối đa</label>
+                        <div class="input-group">
+                            <span class="input-group-text">₫</span>
+                            <input asp-for="GiamToiDa" class="form-control" type="number" step="0.01" placeholder="Nhập số tiền" />
+                        </div>
+                        <span asp-validation-for="GiamToiDa" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <!-- Giảm tiền mặt -->
+                <div class="row mb-3 g-3" id="SoTienDiv">
+                    <div class="col-md-6">
+                        <label asp-for="SoTienGiam" class="form-label fw-semibold">Số tiền giảm</label>
+                        <div class="input-group">
+                            <span class="input-group-text">₫</span>
+                            <input asp-for="SoTienGiam" class="form-control" type="number" step="0.01" placeholder="Nhập số tiền giảm" />
+                        </div>
+                        <span asp-validation-for="SoTienGiam" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <!-- Ngày áp dụng -->
+                <div class="row mb-3 g-3">
+                    <div class="col-md-6">
+                        <label asp-for="NgayBatDau" class="form-label fw-semibold">
+                            <i class="fa-solid fa-calendar-day me-1"></i> Ngày bắt đầu
+                        </label>
+                        <input asp-for="NgayBatDau" class="form-control" type="date" />
+                        <span asp-validation-for="NgayBatDau" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="NgayKetThuc" class="form-label fw-semibold">
+                            <i class="fa-solid fa-calendar-check me-1"></i> Ngày kết thúc
+                        </label>
+                        <input asp-for="NgayKetThuc" class="form-control" type="date" />
+                        <span asp-validation-for="NgayKetThuc" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <!-- Trạng thái -->
+                <div class="form-check form-switch mb-4">
+                    <input class="form-check-input" type="checkbox" asp-for="TrangThai" role="switch" />
+                    <label class="form-check-label fw-semibold">
+                        <i class="fa-solid fa-toggle-on me-1"></i> Đang áp dụng
+                    </label>
+                </div>
+
+                <!-- Nút -->
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-floppy-disk me-1"></i> Lưu thay đổi
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fa-solid fa-xmark me-1"></i> Hủy
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
-
-    <div class="row mb-3" id="SoTienDiv">
-        <div class="col-md-6">
-            <label asp-for="SoTienGiam" class="form-label">Số tiền giảm</label>
-            <input asp-for="SoTienGiam" class="form-control" type="number" step="0.01" />
-            <span asp-validation-for="SoTienGiam" class="text-danger"></span>
-        </div>
-        <div class="col-md-6">
-            <label asp-for="GiamToiDa" class="form-label">Giảm tối đa</label>
-            <input asp-for="GiamToiDa" class="form-control" type="number" step="0.01" />
-            <span asp-validation-for="GiamToiDa" class="text-danger"></span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label asp-for="NgayBatDau" class="form-label">Ngày bắt đầu</label>
-            <input asp-for="NgayBatDau" class="form-control" type="date" />
-            <span asp-validation-for="NgayBatDau" class="text-danger"></span>
-        </div>
-        <div class="col-md-6">
-            <label asp-for="NgayKetThuc" class="form-label">Ngày kết thúc</label>
-            <input asp-for="NgayKetThuc" class="form-control" type="date" />
-            <span asp-validation-for="NgayKetThuc" class="text-danger"></span>
-        </div>
-    </div>
-
-    <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" asp-for="TrangThai" />
-        <label class="form-check-label">Đang áp dụng</label>
-    </div>
-
-    <button type="submit" class="btn btn-primary">💾 Cập nhật</button>
-    <a asp-action="Index" class="btn btn-secondary">⬅ Quay lại</a>
-</form>
+</div>
 
 @section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
     <script>
         function toggleInputs() {
             var loai = document.getElementById("LoaiGiamSelect").value;
@@ -91,7 +136,9 @@
         }
 
         document.getElementById("LoaiGiamSelect").addEventListener("change", toggleInputs);
-        window.onload = toggleInputs; // tự động hiển thị đúng theo giá trị Model
+
+        // Tự hiển thị đúng khi load lại trang edit
+        window.onload = toggleInputs;
     </script>
 
     @await Html.PartialAsync("_ValidationScriptsPartial")

@@ -92,7 +92,7 @@ namespace webBanSach.Areas.Admin.Controllers
         }
 
         // POST: Admin/TacGia/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -104,6 +104,7 @@ namespace webBanSach.Areas.Admin.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
 
     }
 }

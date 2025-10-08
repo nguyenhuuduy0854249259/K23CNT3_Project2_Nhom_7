@@ -18,17 +18,31 @@ namespace webBanSach.Areas.Admin.Controllers
         }
 
         // GET: Admin/NguoiDung
-        public async Task<IActionResult> Index(string? searchString)
+        public async Task<IActionResult> Index(string? searchString, string? loaiNguoiDung)
         {
+            // Truy vấn ban đầu
             var query = _context.NguoiDungs.AsQueryable();
 
+            // Tìm kiếm theo tên
             if (!string.IsNullOrEmpty(searchString))
             {
                 query = query.Where(n => n.HoTen.Contains(searchString));
             }
 
+            // Lọc theo loại người dùng (Admin hoặc User)
+            if (!string.IsNullOrEmpty(loaiNguoiDung))
+            {
+                query = query.Where(n => n.LoaiNguoiDung == loaiNguoiDung);
+            }
+
+            // Lưu lại giá trị filter để view hiển thị lại
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["LoaiNguoiDung"] = loaiNguoiDung;
+
+            // Trả về danh sách sắp xếp theo Mã người dùng
             return View(await query.OrderBy(n => n.MaND).ToListAsync());
         }
+
 
         // GET: Admin/NguoiDung/Details/5
         public async Task<IActionResult> Details(int? id)

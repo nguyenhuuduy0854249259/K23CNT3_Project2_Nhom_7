@@ -143,7 +143,7 @@ namespace webBanSach.Controllers
         }
 
         // ================================
-        // GET Checkout
+        // GET Checkout - hiển thị trang thanh toán
         // ================================
         public async Task<IActionResult> Checkout()
         {
@@ -186,13 +186,13 @@ namespace webBanSach.Controllers
             }
 
             decimal tongTienSauGiam = Math.Max(tongTien - giamGia, 0);
-
             var nguoiDung = await _context.NguoiDungs.FindAsync(userId.Value);
 
             var vm = new CheckoutViewModel
             {
                 HoTen = nguoiDung?.HoTen ?? "",
                 Email = nguoiDung?.Email ?? "",
+                SDT = nguoiDung?.SDT ?? "",
                 DiaChiGiao = "",
                 GioHangs = gioHang,
                 MaCode = maCode,
@@ -225,7 +225,16 @@ namespace webBanSach.Controllers
                 return RedirectToAction("Index");
             }
 
-            // --- Kiểm tra đủ số lượng ---
+            // --- Cập nhật lại SĐT nếu người dùng nhập mới ---
+            var nguoiDung = await _context.NguoiDungs.FindAsync(userId.Value);
+            if (nguoiDung != null && !string.IsNullOrWhiteSpace(model.SDT))
+            {
+                nguoiDung.SDT = model.SDT;
+                _context.NguoiDungs.Update(nguoiDung);
+                await _context.SaveChangesAsync();
+            }
+
+            // --- Kiểm tra số lượng tồn ---
             foreach (var item in gioHang)
             {
                 if (item.MaSachNavigation.SoLuong < item.SoLuong)
@@ -279,11 +288,12 @@ namespace webBanSach.Controllers
 
             foreach (var item in gioHang)
             {
-                // --- Trừ số lượng sách ---
+                // Trừ kho
                 item.MaSachNavigation.SoLuong -= item.SoLuong;
                 if (item.MaSachNavigation.SoLuong < 0) item.MaSachNavigation.SoLuong = 0;
                 _context.Saches.Update(item.MaSachNavigation);
 
+                // Lưu chi tiết đơn
                 decimal donGiaSauGiam = Math.Round(item.MaSachNavigation.GiaBan * tyLeGiam, 0);
 
                 _context.CT_DonHangs.Add(new CT_DonHang
@@ -306,7 +316,7 @@ namespace webBanSach.Controllers
         }
 
         // ================================
-        // Mua ngay: thêm 1 sản phẩm và chuyển thẳng tới Checkout
+        // Mua ngay - bỏ qua giỏ hàng, mua trực tiếp
         // ================================
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -315,7 +325,6 @@ namespace webBanSach.Controllers
             var userId = HttpContext.Session.GetInt32("MaND");
             if (userId == null) return RedirectToAction("Login", "Account");
 
-            // Lấy sách
             var sach = await _context.Saches.FindAsync(maSach);
             if (sach == null || (sach.SoLuong ?? 0) < soLuong)
             {
@@ -323,11 +332,11 @@ namespace webBanSach.Controllers
                 return Redirect(Request.Headers["Referer"].ToString());
             }
 
-            // Xóa giỏ hàng hiện tại của user để chỉ mua sản phẩm này
+            // Xóa giỏ cũ
             var currentCart = await _context.GioHangs.Where(g => g.MaND == userId.Value).ToListAsync();
             _context.GioHangs.RemoveRange(currentCart);
 
-            // Thêm sản phẩm mua ngay
+            // Thêm sản phẩm mới
             _context.GioHangs.Add(new GioHang
             {
                 MaND = userId.Value,
@@ -336,12 +345,12 @@ namespace webBanSach.Controllers
             });
             await _context.SaveChangesAsync();
 
-            // Cập nhật CartCount
+            // Cập nhật session
             HttpContext.Session.SetInt32("CartCount", soLuong);
 
-            // Chuyển thẳng tới Checkout
             return RedirectToAction("Checkout");
         }
+
 
     }
 

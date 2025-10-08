@@ -9,122 +9,164 @@
     int totalPages = ViewBag.TotalPages ?? 1;
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h3><i class="fa-solid fa-cart-shopping"></i> @ViewData["Title"]</h3>
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+        <h3 class="fw-bold text-success mb-3 mb-md-0">
+            <i class="fa-solid fa-cart-shopping me-2"></i>@ViewData["Title"]
+        </h3>
 
-    <form method="get" class="d-flex gap-2">
-        <input type="text" name="searchString" class="form-control" placeholder="Tìm đơn hàng hoặc khách hàng..." value="@currentSearch" />
-        <select name="status" class="form-select">
-            <option value="">-- Tất cả trạng thái --</option>
-            @foreach (var s in statuses)
-            {
-                if (s == currentStatus)
+        <!-- Form tìm kiếm + lọc -->
+        <form method="get" class="d-flex flex-wrap gap-2">
+            <input type="text" name="searchString" class="form-control"
+                   placeholder="🔍 Tìm mã đơn / khách hàng..."
+                   value="@currentSearch" style="min-width:220px;" />
+
+            <select name="status" class="form-select"> <option value="">-- Tất cả trạng thái --</option> @foreach (var s in statuses)
                 {
-                    <option selected value="@s">@s</option>
-                }
-                else
-                {
-                    <option value="@s">@s</option>
-                }
-            }
-        </select>
+                    if (s == currentStatus)
+                    {
+                        <option selected value="@s">@s</option>
+                    }
+                    else
+                    {
+                        <option value="@s">@s</option>
+                    }
+                } </select>
 
-        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Tìm</button>
-    </form>
-</div>
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-search"></i> Tìm
+            </button>
+        </form>
+    </div>
 
-<table class="table table-striped align-middle">
-    <thead class="table-dark">
-        <tr>
-            <th>Mã ĐH</th>
-            <th>Khách hàng</th>
-            <th>Ngày đặt</th>
-            <th>Trạng thái</th>
-            <th class="text-end">Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var d in Model)
-        {
-            <tr>
-                <td>@d.MaDH</td>
-                <td>@d.MaNDNavigation?.HoTen</td>
-                <td>@d.NgayDat?.ToString("dd/MM/yyyy")</td>
-                <td>
-                    <span class="badge bg-@(d.TrangThai == OrderStatus.HoanTat ? "success" :
-                                           d.TrangThai == OrderStatus.DangGiao ? "info" :
-                                           d.TrangThai == OrderStatus.Huy ? "danger" : "secondary")">
-                        @d.TrangThai
-                    </span>
-                </td>
-                <td class="text-end">
-                    <a asp-action="Details" asp-route-id="@d.MaDH" class="btn btn-sm btn-info">
-                        <i class="fa fa-eye"></i> Chi tiết
+    <!-- Bảng danh sách -->
+    <div class="card shadow border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-success text-center">
+                    <tr>
+                        <th>Mã ĐH</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Trạng thái</th>
+                        <th class="text-end pe-4">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <i class="fa-regular fa-face-frown me-2"></i>Không có đơn hàng nào.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var d in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold text-center">@d.MaDH</td>
+                                <td>@d.MaNDNavigation?.HoTen</td>
+                                <td>@d.NgayDat?.ToString("dd/MM/yyyy")</td>
+                                <td class="text-center">
+                                    <span class="badge px-3 py-2 fs-6 bg-@(
+                                        d.TrangThai == OrderStatus.HoanTat ? "success" :
+                                        d.TrangThai == OrderStatus.DangGiao ? "info" :
+                                        d.TrangThai == OrderStatus.Huy ? "danger" : "secondary")">
+                                        @d.TrangThai
+                                    </span>
+                                </td>
+                                <td class="text-end pe-3">
+                                    <a asp-action="Details" asp-route-id="@d.MaDH"
+                                       class="btn btn-sm btn-outline-info me-1">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+
+                                    @if (d.TrangThai != OrderStatus.HoanTat && d.TrangThai != OrderStatus.Huy)
+                                    {
+                                        <form asp-action="Cancel" asp-route-id="@d.MaDH" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-warning me-1"
+                                                    onclick="return confirm('Xác nhận hủy đơn hàng này?');">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                        </form>
+                                    }
+
+                                    @if (d.TrangThai == OrderStatus.Huy)
+                                    {
+                                        <button class="btn btn-sm btn-outline-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#confirmDeleteModal"
+                                                data-id="@d.MaDH">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Phân trang -->
+    @if (totalPages > 1)
+    {
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link"
+                       href="?searchString=@currentSearch&status=@currentStatus&page=@(currentPage-1)">
+                        « Trước
                     </a>
-
-                    @if (d.TrangThai != OrderStatus.HoanTat && d.TrangThai != OrderStatus.Huy)
-                    {
-                        <form asp-action="Cancel" asp-route-id="@d.MaDH" method="post" class="d-inline">
-                            @Html.AntiForgeryToken()
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Xác nhận hủy đơn hàng này?');">
-                                <i class="fa fa-times"></i> Hủy
-                            </button>
-                        </form>
-                    }
-
-                    @if (d.TrangThai == OrderStatus.Huy)
-                    {
-                        <button class="btn btn-danger btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#confirmDeleteModal"
-                                data-id="@d.MaDH">
-                            🗑️
-                        </button>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<!-- Phân trang -->
-@if (totalPages > 1)
-{
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
-                <a class="page-link" href="?searchString=@currentSearch&status=@currentStatus&page=@(currentPage-1)">« Trước</a>
-            </li>
-            @for (int i = 1; i <= totalPages; i++)
-            {
-                <li class="page-item @(i == currentPage ? "active" : "")">
-                    <a class="page-link" href="?searchString=@currentSearch&status=@currentStatus&page=@i">@i</a>
                 </li>
-            }
-            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
-                <a class="page-link" href="?searchString=@currentSearch&status=@currentStatus&page=@(currentPage+1)">Sau »</a>
-            </li>
-        </ul>
-    </nav>
-}
+
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link"
+                           href="?searchString=@currentSearch&status=@currentStatus&page=@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link"
+                       href="?searchString=@currentSearch&status=@currentStatus&page=@(currentPage+1)">
+                        Sau »
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>
 
 <!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <h5 class="modal-title"><i class="fa fa-triangle-exclamation me-2"></i>Xác nhận xóa</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form id="deleteForm" method="post">
                 @Html.AntiForgeryToken()
-                <div class="modal-body">
-                    Bạn có chắc muốn xóa đơn hàng <strong id="deleteOrderId"></strong> không?
+                <div class="modal-body fs-5">
+                    Bạn có chắc muốn xóa đơn hàng <strong id="deleteOrderId"></strong> không?<br />
+                    <small class="text-muted">Thao tác này không thể hoàn tác.</small>
                     <input type="hidden" name="id" id="deleteId" />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-xmark"></i> Hủy
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Xóa
+                    </button>
                 </div>
             </form>
         </div>
@@ -137,11 +179,12 @@
         deleteModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
             var id = button.getAttribute('data-id');
-
             document.getElementById('deleteOrderId').textContent = id;
             document.getElementById('deleteId').value = id;
-
             document.getElementById('deleteForm').action = '/Admin/DonHang/Delete/' + id;
         });
     </script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 }

@@ -3,27 +3,59 @@
     ViewData["Title"] = "Thêm Nhà Xuất Bản";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
 
-<form asp-action="Create" method="post">
-    <div class="mb-3">
-        <label asp-for="TenNXB" class="form-label"></label>
-        <input asp-for="TenNXB" class="form-control" />
-        <span asp-validation-for="TenNXB" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="DiaChi" class="form-label"></label>
-        <input asp-for="DiaChi" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="SDT" class="form-label"></label>
-        <input asp-for="SDT" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control" />
-    </div>
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white fw-bold d-flex align-items-center">
+                    <i class="bi bi-building me-2"></i> @ViewData["Title"]
+                </div>
 
-    <button type="submit" class="btn btn-success">Lưu</button>
-    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
-</form>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <!-- Tên NXB -->
+                        <div class="mb-3">
+                            <label asp-for="TenNXB" class="form-label fw-semibold">Tên Nhà Xuất Bản</label>
+                            <input asp-for="TenNXB" class="form-control" placeholder="Nhập tên nhà xuất bản..." />
+                            <span asp-validation-for="TenNXB" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Địa chỉ -->
+                        <div class="mb-3">
+                            <label asp-for="DiaChi" class="form-label fw-semibold">Địa chỉ</label>
+                            <input asp-for="DiaChi" class="form-control" placeholder="Nhập địa chỉ nhà xuất bản..." />
+                        </div>
+
+                        <!-- Số điện thoại -->
+                        <div class="mb-3">
+                            <label asp-for="SDT" class="form-label fw-semibold">Số điện thoại</label>
+                            <input asp-for="SDT" class="form-control" placeholder="VD: 0987xxxxxx" />
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-semibold">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="VD: contact@nxb.com" />
+                        </div>
+
+                        <!-- Nút thao tác -->
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left-circle"></i> Quay lại
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save"></i> Lưu NXB
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,37 +1,35 @@
 ﻿@model webBanSach.Models.Sach
 
 @{
-    ViewData["Title"] = "Chi tiết sách";
+    ViewData["Title"] = "📖 Chi tiết sách";
 }
 
+<h2 class="mb-4">@ViewData["Title"]</h2>
+
 <div class="row">
-    <!-- Thông tin sản phẩm -->
+    <!-- Thông tin chính -->
     <div class="col-md-8">
         <div class="card shadow-sm mb-4">
-            <div class="card-header bg-light fw-bold">
-                📘 Thông tin sách
-            </div>
+            <div class="card-header bg-light fw-bold">📚 Thông tin sách</div>
             <div class="card-body">
                 <div class="row">
-                    <!-- Ảnh sách -->
+                    <!-- Ảnh -->
                     <div class="col-md-4 text-center">
-                        <img src="~/images/sach/@Model.HinhAnh"
+                        <img src="~/images/sach/@(Model.HinhAnh ?? "no-image.png")"
                              class="img-fluid rounded border"
-                             alt="@Model.TenSach"
                              style="max-height:250px; object-fit:cover;" />
+                        <p class="text-muted small mt-2">@Model.HinhAnh</p>
                     </div>
 
-                    <!-- Thông tin -->
+                    <!-- Chi tiết -->
                     <div class="col-md-8">
                         <p><strong>ID sách:</strong> #@Model.MaSach</p>
                         <p><strong>Tên sách:</strong> @Model.TenSach</p>
                         <p><strong>NXB:</strong> @Model.MaNXBNavigation?.TenNXB</p>
-                        <p><strong>Năm xuất bản:</strong> @Model.NamXB</p>
+                        <p><strong>Năm XB:</strong> @Model.NamXB</p>
                         <p>
                             <strong>Giá bán:</strong>
-                            <span class="text-danger fw-bold">
-                                @string.Format("{0:N0} VNĐ", Model.GiaBan)
-                            </span>
+                            <span class="text-danger fw-bold">@string.Format("{0:N0} VNĐ", Model.GiaBan)</span>
                         </p>
                         <p>
                             <strong>Trạng thái:</strong>
@@ -44,26 +42,25 @@
                                 <span class="badge bg-danger">Hết hàng</span>
                             }
                         </p>
-                        <p><strong>File ảnh:</strong> @Model.HinhAnh</p>
                     </div>
                 </div>
+
                 <hr />
-                <h6>📖 Mô tả sách:</h6>
-                <p>@Model.MoTa</p>
+                <h6>📝 Mô tả:</h6>
+                <p>@(string.IsNullOrEmpty(Model.MoTa) ? "Chưa có mô tả." : Model.MoTa)</p>
             </div>
         </div>
     </div>
 
-    <!-- Thao tác -->
+    <!-- Cột phải -->
     <div class="col-md-4">
         <div class="card shadow-sm mb-3">
             <div class="card-header bg-light fw-bold">⚙️ Thao tác</div>
             <div class="card-body">
                 <a asp-action="Edit" asp-route-id="@Model.MaSach" class="btn btn-warning w-100 mb-2">
-                    ✏️ Chỉnh sửa sách
+                    ✏️ Chỉnh sửa
                 </a>
 
-                <!-- Nút mở modal xoá -->
                 <button type="button" class="btn btn-danger w-100 mb-2"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmDeleteModal"
@@ -72,42 +69,43 @@
                     🗑️ Xóa sách
                 </button>
 
-                <a asp-action="Index" class="btn btn-info w-100">
-                    🔙 Quay lại danh sách
-                </a>
+                <a asp-action="Index" class="btn btn-secondary w-100">⬅️ Quay lại</a>
             </div>
         </div>
 
-<!-- Thống kê -->
-<div class="card shadow-sm">
-    <div class="card-header bg-light fw-bold">📊 Thống kê</div>
-    <div class="card-body text-center">
-        <div class="row">
-            <div class="col">
+        <!-- Thống kê -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-light fw-bold">📊 Thống kê</div>
+            <div class="card-body text-center">
+                <div class="row">
+                    <div class="col">
                         <h5 class="mb-0">@Model.LuotXem</h5>
-                <small class="text-muted">Lượt xem</small>
-            </div>
-            <div class="col">
+                        <small class="text-muted">Lượt xem</small>
+                    </div>
+                    <div class="col">
                         <h5 class="mb-0">@ViewBag.DaBan</h5>
-                <small class="text-muted">Đã bán</small>
+                        <small class="text-muted">Đã bán</small>
+                    </div>
+                </div>
+                <hr />
+                <small class="text-muted">
+                    🕒 Cập nhật: @DateTime.Now.ToString("dd/MM/yyyy")
+                </small>
             </div>
         </div>
-        <hr>
-        <small class="text-muted">📅 Cập nhật cuối: @DateTime.Now.ToString("dd/MM/yyyy")</small>
     </div>
 </div>
-
 
 <!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content border-0 shadow">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"></i> Xác nhận xóa</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                Bạn có chắc chắn muốn xóa sách <strong id="deleteItemName"></strong>?
+                Bạn có chắc chắn muốn xóa sách <strong id="deleteItemName"></strong> không?
             </div>
             <div class="modal-footer">
                 <form id="deleteForm" method="post">
@@ -122,16 +120,14 @@
 
 @section Scripts {
     <script>
-        var deleteModal = document.getElementById('confirmDeleteModal');
-        deleteModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var id = button.getAttribute('data-id');
-            var name = button.getAttribute('data-name');
+        const deleteModal = document.getElementById('confirmDeleteModal');
+        deleteModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
 
             document.getElementById('deleteItemName').textContent = name;
             document.getElementById('deleteItemId').value = id;
-
-            // Gửi form về DeleteConfirmed
             document.getElementById('deleteForm').action = '/Admin/Sach/Delete/' + id;
         });
     </script>

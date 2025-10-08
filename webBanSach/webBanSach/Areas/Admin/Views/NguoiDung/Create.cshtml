@@ -4,79 +4,117 @@
     ViewData["Title"] = "Thêm Người Dùng";
 }
 
-<h2 class="mb-4">➕ Thêm Người dùng mới</h2>
+<div class="container mt-4">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-primary text-white rounded-top-4 py-3 d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="bi bi-person-plus"></i> Thêm Người Dùng Mới</h4>
+            <a asp-action="Index" class="btn btn-light btn-sm"><i class="bi bi-arrow-left"></i> Quay lại</a>
+        </div>
 
-<form asp-action="Create" enctype="multipart/form-data" method="post" class="row g-3">
-    <!-- Họ tên -->
-    <div class="col-md-6">
-        <label asp-for="HoTen" class="form-label">Họ và tên</label>
-        <input asp-for="HoTen" class="form-control" />
-        <span asp-validation-for="HoTen" class="text-danger"></span>
-    </div>
+        <div class="card-body p-4">
+            <form asp-action="Create" enctype="multipart/form-data" method="post" class="row g-4">
+                <!-- Họ tên -->
+                <div class="col-md-6">
+                    <label asp-for="HoTen" class="form-label fw-semibold">Họ và tên</label>
+                    <input asp-for="HoTen" class="form-control shadow-sm" placeholder="Nhập họ tên đầy đủ..." />
+                    <span asp-validation-for="HoTen" class="text-danger small"></span>
+                </div>
 
-    <!-- Email -->
-    <div class="col-md-6">
-        <label asp-for="Email" class="form-label">Email</label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+                <!-- Email -->
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label fw-semibold">Email</label>
+                    <input asp-for="Email" class="form-control shadow-sm" placeholder="vd: example@email.com" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
 
-    <!-- Mật khẩu -->
-    <div class="col-md-6">
-        <label asp-for="MatKhau" class="form-label">Mật khẩu</label>
-        <input asp-for="MatKhau" class="form-control" type="password" />
-        <span asp-validation-for="MatKhau" class="text-danger"></span>
-    </div>
+                <!-- Mật khẩu -->
+                <div class="col-md-6">
+                    <label asp-for="MatKhau" class="form-label fw-semibold">Mật khẩu</label>
+                    <div class="input-group shadow-sm">
+                        <input asp-for="MatKhau" type="password" class="form-control" placeholder="********" />
+                        <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                    </div>
+                    <span asp-validation-for="MatKhau" class="text-danger small"></span>
+                </div>
 
-    <!-- SĐT -->
-    <div class="col-md-6">
-        <label asp-for="SDT" class="form-label">Số điện thoại</label>
-        <input asp-for="SDT" class="form-control" />
-        <span asp-validation-for="SDT" class="text-danger"></span>
-    </div>
+                <!-- SĐT -->
+                <div class="col-md-6">
+                    <label asp-for="SDT" class="form-label fw-semibold">Số điện thoại</label>
+                    <input asp-for="SDT" class="form-control shadow-sm" placeholder="Nhập số điện thoại..." />
+                    <span asp-validation-for="SDT" class="text-danger small"></span>
+                </div>
 
-    <!-- Địa chỉ -->
-    <div class="col-12">
-        <label asp-for="DiaChi" class="form-label">Địa chỉ</label>
-        <input asp-for="DiaChi" class="form-control" />
-        <span asp-validation-for="DiaChi" class="text-danger"></span>
-    </div>
+                <!-- Địa chỉ -->
+                <div class="col-12">
+                    <label asp-for="DiaChi" class="form-label fw-semibold">Địa chỉ</label>
+                    <textarea asp-for="DiaChi" class="form-control shadow-sm" rows="2" placeholder="Nhập địa chỉ..."></textarea>
+                    <span asp-validation-for="DiaChi" class="text-danger small"></span>
+                </div>
 
-    <!-- Loại người dùng -->
-    <div class="col-md-6">
-        <label asp-for="LoaiNguoiDung" class="form-label">Loại người dùng</label>
-        <select asp-for="LoaiNguoiDung" class="form-select">
-            <option value="Admin">Admin</option>
-            <option value="User">User</option>
-        </select>
-        <span asp-validation-for="LoaiNguoiDung" class="text-danger"></span>
-    </div>
+                <!-- Loại người dùng -->
+                <div class="col-md-6">
+                    <label asp-for="LoaiNguoiDung" class="form-label fw-semibold">Loại người dùng</label>
+                    <select asp-for="LoaiNguoiDung" class="form-select shadow-sm">
+                        <option value="Admin">🛠️ Admin</option>
+                        <option value="User">👤 User</option>
+                    </select>
+                    <span asp-validation-for="LoaiNguoiDung" class="text-danger small"></span>
+                </div>
 
-    <!-- Trạng thái -->
-    <div class="col-md-6">
-        <label asp-for="TrangThai" class="form-label">Trạng thái</label>
-        <select asp-for="TrangThai" class="form-select">
-            <option value="Hoạt động">Hoạt động</option>
-            <option value="Khóa">Khóa</option>
-        </select>
-        <span asp-validation-for="TrangThai" class="text-danger"></span>
-    </div>
+                <!-- Trạng thái -->
+                <div class="col-md-6">
+                    <label asp-for="TrangThai" class="form-label fw-semibold">Trạng thái</label>
+                    <select asp-for="TrangThai" class="form-select shadow-sm">
+                        <option value="Hoạt động">🟢 Hoạt động</option>
+                        <option value="Khóa">🔒 Khóa</option>
+                    </select>
+                    <span asp-validation-for="TrangThai" class="text-danger small"></span>
+                </div>
 
-    <!-- Ảnh đại diện -->
-    <div class="col-12">
-        <label asp-for="HinhAnhFile" class="form-label">Ảnh đại diện</label>
-        <input asp-for="HinhAnhFile" type="file" class="form-control" />
-        <span asp-validation-for="HinhAnhFile" class="text-danger"></span>
-    </div>
+                <!-- Ảnh đại diện -->
+                <div class="col-md-6">
+                    <label asp-for="HinhAnhFile" class="form-label fw-semibold">Ảnh đại diện</label>
+                    <input asp-for="HinhAnhFile" type="file" class="form-control shadow-sm" accept="image/*" id="imageInput" />
+                    <span asp-validation-for="HinhAnhFile" class="text-danger small"></span>
+                </div>
 
-    <!-- Buttons -->
-    <div class="col-12">
-        <button type="submit" class="btn btn-success">💾 Lưu</button>
-        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+                <div class="col-md-6 text-center">
+                    <img id="previewImage" src="~/images/placeholder.png"
+                         class="rounded-circle border shadow-sm"
+                         style="width:120px; height:120px; object-fit:cover;"
+                         alt="Preview ảnh" />
+                    <p class="text-muted mt-2 small">Xem trước ảnh đại diện</p>
+                </div>
+
+                <!-- Buttons -->
+                <div class="col-12 text-end mt-4">
+                    <button type="submit" class="btn btn-success px-4">
+                        <i class="bi bi-save"></i> Lưu người dùng
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-x-circle"></i> Hủy
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>
 
 @section Scripts {
+    <script>
+        // Xem trước ảnh
+        document.getElementById("imageInput").addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (ev) {
+                    document.getElementById("previewImage").src = ev.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

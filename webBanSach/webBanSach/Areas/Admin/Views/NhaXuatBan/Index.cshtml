@@ -2,72 +2,136 @@
 
 @{
     ViewData["Title"] = "Quản lý Nhà Xuất Bản";
+    var total = Model.Count();
 }
 
-<h2>@ViewData["Title"]</h2>
-
-<form asp-action="Index" method="get" class="mb-3">
-    <div class="input-group">
-        <input type="text" name="searchString" class="form-control" placeholder="Tìm theo tên NXB..." />
-        <button type="submit" class="btn btn-primary">🔍 Tìm</button>
-        <a asp-action="Create" class="btn btn-success ms-2">➕ Thêm NXB</a>
+<div class="container mt-4">
+    <!-- Tiêu đề & nút thêm -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-dark mb-0">
+            <i class="bi bi-building text-success"></i> @ViewData["Title"]
+            <small class="text-muted fs-6">(@total nhà xuất bản)</small>
+        </h2>
+        <a asp-action="Create" class="btn btn-success shadow-sm">
+            <i class="bi bi-plus-circle"></i> Thêm NXB
+        </a>
     </div>
-</form>
 
-<table class="table table-hover align-middle shadow-sm">
-    <thead class="table-light">
-        <tr>
-            <th style="width:80px;">Mã NXB</th>
-            <th>Tên NXB</th>
-            <th>Địa chỉ</th>
-            <th>Điện thoại</th>
-            <th>Email</th>
-            <th style="width:180px;">Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.MaNXB</td>
-                <td>
-                    <strong>@item.TenNXB</strong>
-                </td>
-                <td>@item.DiaChi</td>
-                <td>@item.SDT</td>
-                <td>@item.Email</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.MaNXB" class="btn btn-info btn-sm">👁️</a>
-                    <a asp-action="Edit" asp-route-id="@item.MaNXB" class="btn btn-warning btn-sm">✏️</a>
-                    <button type="button" class="btn btn-danger btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal"
-                            data-id="@item.MaNXB"
-                            data-name="@item.TenNXB">
-                        🗑️
+    <!-- Thanh tìm kiếm -->
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-center">
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-search text-muted"></i>
+                        </span>
+                        <input type="text" name="searchString" class="form-control border-start-0"
+                               placeholder="Nhập tên nhà xuất bản cần tìm..."
+                               value="@Context.Request.Query["searchString"]" />
+                    </div>
+                </div>
+                <div class="col-md-3 text-end">
+                    <button type="submit" class="btn btn-primary me-2">
+                        <i class="bi bi-search"></i> Tìm
                     </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-clockwise"></i> Làm mới
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bảng dữ liệu -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-success text-dark">
+                        <tr>
+                            <th style="width: 80px;">Mã</th>
+                            <th>Tên NXB</th>
+                            <th>Địa chỉ</th>
+                            <th>Điện thoại</th>
+                            <th>Email</th>
+                            <th class="text-center" style="width: 180px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    <i class="bi bi-emoji-frown"></i> Không có nhà xuất bản nào được tìm thấy.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><span class="badge bg-secondary">@item.MaNXB</span></td>
+                                    <td class="fw-semibold">@item.TenNXB</td>
+                                    <td>@item.DiaChi</td>
+                                    <td><span class="text-primary">@item.SDT</span></td>
+                                    <td>
+                                        <a href="mailto:@item.Email" class="text-decoration-none">
+                                            <i class="bi bi-envelope"></i> @item.Email
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a asp-action="Details" asp-route-id="@item.MaNXB"
+                                           class="btn btn-sm btn-info me-1"
+                                           title="Xem chi tiết" data-bs-toggle="tooltip">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.MaNXB"
+                                           class="btn btn-sm btn-warning me-1"
+                                           title="Chỉnh sửa" data-bs-toggle="tooltip">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                title="Xóa" data-bs-toggle="modal"
+                                                data-bs-target="#confirmDeleteModal"
+                                                data-id="@item.MaNXB"
+                                                data-name="@item.TenNXB">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                <h5 class="modal-title" id="confirmDeleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill"></i> Xác nhận xóa
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form id="deleteForm" method="post">
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa NXB <strong id="deleteItemName"></strong>?
+                    <p>Bạn có chắc chắn muốn xóa NXB <strong id="deleteItemName"></strong> không?</p>
                     <input type="hidden" name="id" id="deleteItemId" />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Hủy
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash3"></i> Xóa
+                    </button>
                 </div>
             </form>
         </div>
@@ -76,17 +140,21 @@
 
 @section Scripts {
     <script>
-        var deleteModal = document.getElementById('confirmDeleteModal');
-        deleteModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var id = button.getAttribute('data-id');
-            var name = button.getAttribute('data-name');
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteModal = document.getElementById('confirmDeleteModal');
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
 
-            document.getElementById('deleteItemName').textContent = name;
-            document.getElementById('deleteItemId').value = id;
+                document.getElementById('deleteItemName').textContent = name;
+                document.getElementById('deleteItemId').value = id;
+                document.getElementById('deleteForm').action = '/Admin/NhaXuatBan/Delete/' + id;
+            });
 
-            // POST tới /Admin/NhaXuatBan/Delete/{id}
-            document.getElementById('deleteForm').action = '/Admin/NhaXuatBan/Delete/' + id;
+            // Tooltip Bootstrap
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
         });
     </script>
 }

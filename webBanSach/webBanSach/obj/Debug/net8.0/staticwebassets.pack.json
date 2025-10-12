@@ -29,8 +29,20 @@
       "PackagePath": "staticwebassets\\images\\admins\\duc.jpg"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\admins\\duy.jpg",
+      "PackagePath": "staticwebassets\\images\\admins\\duy.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\admins\\vu.jpg",
+      "PackagePath": "staticwebassets\\images\\admins\\vu.jpg"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\logo.jpg",
       "PackagePath": "staticwebassets\\images\\logo.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\028a85d9-81ca-415e-a491-b082a7954a95.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\028a85d9-81ca-415e-a491-b082a7954a95.jpg"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\06e23221-94f9-455a-9907-ef8ad4016001.jpg",
@@ -45,12 +57,28 @@
       "PackagePath": "staticwebassets\\images\\nguoidung\\35e104ff-c375-4384-852a-3d09d6253764.jpg"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\4a7a0820-bee3-414e-b3b4-b9e2bbf44973.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\4a7a0820-bee3-414e-b3b4-b9e2bbf44973.jpg"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\5945d238-b1cc-4fcd-909f-7d8d3bc47591.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\5945d238-b1cc-4fcd-909f-7d8d3bc47591.jpg"
     },
     {
-      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\7a844eca-27aa-444b-9ae5-d36cd013b2f9.jpg",
-      "PackagePath": "staticwebassets\\images\\nguoidung\\7a844eca-27aa-444b-9ae5-d36cd013b2f9.jpg"
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\5c7bab9c-323f-4c7b-801c-927ef6e8f148.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\5c7bab9c-323f-4c7b-801c-927ef6e8f148.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\66f9d070-329c-4a6c-a363-ddca09adbef5.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\66f9d070-329c-4a6c-a363-ddca09adbef5.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\97f8289d-0e6e-473e-bfd9-2c7bb28e349e.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\97f8289d-0e6e-473e-bfd9-2c7bb28e349e.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\abab74fb-0879-4b4c-bdf4-1a104eade8e6.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\abab74fb-0879-4b4c-bdf4-1a104eade8e6.jpg"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\ae460f0e-0f88-4813-925e-e2c046f67c19.jpg",
@@ -67,10 +95,6 @@
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\b2eca1f5-53ba-4ffe-a4d0-57eb10424360.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\b2eca1f5-53ba-4ffe-a4d0-57eb10424360.jpg"
-    },
-    {
-      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\default.jpg",
-      "PackagePath": "staticwebassets\\images\\nguoidung\\default.jpg"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung14_Screenshot 2024-09-10 090142.png",
@@ -101,12 +125,16 @@
       "PackagePath": "staticwebassets\\images\\sach\\chi pheo.jpg"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\cotinhvn.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\cotinhvn.jpg"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\date_a_live1.jpg",
       "PackagePath": "staticwebassets\\images\\sach\\date_a_live1.jpg"
     },
     {
-      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\nhanhandcham.jpg",
-      "PackagePath": "staticwebassets\\images\\sach\\nhanhandcham.jpg"
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\nha_gia_kim.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\nha_gia_kim.jpg"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\js\\jquery-2.1.4.min.js",

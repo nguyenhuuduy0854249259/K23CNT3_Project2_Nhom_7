@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using webBanSach.Helpers;
 using webBanSach.Models;
 using webBanSach.ViewModels;
 
@@ -19,8 +20,9 @@ namespace webBanSach.Areas.Admin.Controllers
         }
 
         // GET: Admin/Sach
-        public async Task<IActionResult> Index(string? searchString)
+        public async Task<IActionResult> Index(string? searchString, int pageNumber = 1)
         {
+            int pageSize = 10; // số item mỗi trang
             var query = _context.Saches
                 .Include(s => s.MaNXBNavigation)
                 .Include(s => s.Sach_TacGias).ThenInclude(st => st.MaTGNavigation)
@@ -32,7 +34,8 @@ namespace webBanSach.Areas.Admin.Controllers
                 query = query.Where(s => s.TenSach.Contains(searchString));
             }
 
-            return View(await query.ToListAsync());
+            var pagedList = await PaginatedList<Sach>.CreateAsync(query, pageNumber, pageSize);
+            return View(pagedList);
         }
 
         // GET: Admin/Sach/Details/5

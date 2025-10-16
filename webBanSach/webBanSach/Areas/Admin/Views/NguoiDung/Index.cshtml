@@ -1,11 +1,14 @@
-﻿@model IEnumerable<webBanSach.Models.NguoiDung>
+﻿@model webBanSach.Helpers.PaginatedList<webBanSach.Models.NguoiDung>
+
 @{
     ViewData["Title"] = "Quản lý Người Dùng";
+    var total = Model.Count; // tổng số bản ghi trong trang hiện tại
 }
 
 <h2 class="mb-4">
     <i class="fa-solid fa-users-gear text-primary me-2"></i>
     @ViewData["Title"]
+    <small class="text-muted fs-6">(@total bản ghi trong trang)</small>
 </h2>
 
 <!-- Bộ lọc -->
@@ -23,14 +26,9 @@
             <option value="">-- Tất cả loại --</option>
             @foreach (var type in new[] { "Admin", "User" })
             {
-                if (type == (ViewData["LoaiNguoiDung"]?.ToString() ?? ""))
-                {
-                    <option selected value="@type">@type</option>
-                }
-                else
-                {
-                    <option value="@type">@type</option>
-                }
+                <option value="@type" selected="@(type == (ViewData["LoaiNguoiDung"]?.ToString() ?? ""))">
+                    @type
+                </option>
             }
         </select>
     </div>
@@ -95,7 +93,6 @@
                                     </div>
                                 }
                             </td>
-
                             <td class="fw-semibold">@item.HoTen</td>
                             <td>@item.Email</td>
                             <td>@item.SDT</td>
@@ -119,7 +116,6 @@
                                        class="btn btn-warning btn-sm text-white">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-
                                     <form asp-action="ToggleStatus" asp-route-id="@item.MaND" method="post" class="d-inline">
                                         @if (item.TrangThai == "Hoạt động")
                                         {
@@ -143,3 +139,42 @@
         </table>
     </div>
 </div>
+
+<!-- PHÂN TRANG -->
+@if (Model.TotalPages > 1)
+{
+    <nav class="mt-3">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-searchString="@ViewData["CurrentFilter"]"
+                   asp-route-loaiNguoiDung="@ViewData["LoaiNguoiDung"]">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+            </li>
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pageNumber="@i"
+                       asp-route-searchString="@ViewData["CurrentFilter"]"
+                       asp-route-loaiNguoiDung="@ViewData["LoaiNguoiDung"]">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-searchString="@ViewData["CurrentFilter"]"
+                   asp-route-loaiNguoiDung="@ViewData["LoaiNguoiDung"]">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+}

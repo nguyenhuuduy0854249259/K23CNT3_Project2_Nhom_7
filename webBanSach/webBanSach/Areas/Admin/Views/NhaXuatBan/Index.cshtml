@@ -1,8 +1,8 @@
-﻿@model IEnumerable<webBanSach.Models.NhaXuatBan>
+﻿@model webBanSach.Helpers.PaginatedList<webBanSach.Models.NhaXuatBan>
 
 @{
     ViewData["Title"] = "Quản lý Nhà Xuất Bản";
-    var total = Model.Count();
+    var total = Model.Count; // tổng số bản ghi của trang hiện tại
 }
 
 <div class="container mt-4">
@@ -10,7 +10,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold text-dark mb-0">
             <i class="bi bi-building text-success"></i> @ViewData["Title"]
-            <small class="text-muted fs-6">(@total nhà xuất bản)</small>
+            <small class="text-muted fs-6">(@total bản ghi trong trang)</small>
         </h2>
         <a asp-action="Create" class="btn btn-success shadow-sm">
             <i class="bi bi-plus-circle"></i> Thêm NXB
@@ -88,7 +88,7 @@
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
                                         <a asp-action="Edit" asp-route-id="@item.MaNXB"
-                                           class="btn btn-sm btn-warning me-1"
+                                           class="btn btn-sm btn-warning me-1 text-white"
                                            title="Chỉnh sửa" data-bs-toggle="tooltip">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
@@ -108,6 +108,42 @@
             </div>
         </div>
     </div>
+
+    <!-- PHÂN TRANG -->
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-searchString="@Context.Request.Query["searchString"]">
+                        Trước
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-pageNumber="@i"
+                           asp-route-searchString="@Context.Request.Query["searchString"]">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-searchString="@Context.Request.Query["searchString"]">
+                        Sau
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    }
 </div>
 
 <!-- Modal xác nhận xóa -->

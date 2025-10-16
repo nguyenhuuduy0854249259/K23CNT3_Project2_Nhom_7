@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using webBanSach.Helpers;
 using webBanSach.Models;
 
 namespace webBanSach.Areas.Admin.Controllers
@@ -14,18 +15,23 @@ namespace webBanSach.Areas.Admin.Controllers
         }
 
         // GET: Admin/KhuyenMai
-        public async Task<IActionResult> Index(string? search)
+        public async Task<IActionResult> Index(string? search, int pageNumber = 1)
         {
-            var q = _context.KhuyenMais.AsQueryable();
+            int pageSize = 10;
+
+            var query = _context.KhuyenMais.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                q = q.Where(k => k.MaCode.Contains(search) || (k.MoTa ?? "").Contains(search));
+                query = query.Where(k => k.MaCode.Contains(search) || (k.MoTa ?? "").Contains(search));
             }
 
-            var list = await q.OrderByDescending(k => k.NgayBatDau).ToListAsync();
-            return View(list);
+            query = query.OrderByDescending(k => k.NgayBatDau);
+
+            var pagedList = await PaginatedList<KhuyenMai>.CreateAsync(query, pageNumber, pageSize);
+            return View(pagedList);
         }
+
 
         // GET: Admin/KhuyenMai/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<webBanSach.Models.Sach>
+﻿@model webBanSach.Helpers.PaginatedList<webBanSach.Models.Sach>
 
 @{
     ViewData["Title"] = "📚 Quản lý Sách";
@@ -14,7 +14,7 @@
 <!-- Thanh tìm kiếm -->
 <form asp-action="Index" method="get" class="mb-4">
     <div class="input-group shadow-sm">
-        <input type="text" name="searchString" class="form-control" placeholder="🔍 Tìm theo tên sách..." />
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="🔍 Tìm theo tên sách..." />
         <button type="submit" class="btn btn-primary">Tìm</button>
     </div>
 </form>
@@ -37,15 +37,12 @@
             @foreach (var item in Model)
             {
                 <tr class="align-middle">
-                    <!-- Ảnh -->
                     <td>
                         <img src="~/images/sach/@(item.HinhAnh ?? "no-image.png")"
                              alt="@item.TenSach"
                              class="img-thumbnail border-0 shadow-sm"
                              style="width:80px; height:80px; object-fit:cover;" />
                     </td>
-
-                    <!-- Tên sách + mô tả -->
                     <td>
                         <strong class="text-dark">@item.TenSach</strong><br />
                         <small class="text-muted">
@@ -55,19 +52,11 @@
                             }
                         </small>
                     </td>
-
-                    <!-- NXB -->
                     <td>@item.MaNXBNavigation?.TenNXB</td>
-
-                    <!-- Năm XB -->
                     <td>@item.NamXB</td>
-
-                    <!-- Giá -->
                     <td class="text-danger fw-semibold text-end">
                         @string.Format("{0:N0} ₫", item.GiaBan)
                     </td>
-
-                    <!-- Trạng thái -->
                     <td>
                         @if (item.SoLuong > 0)
                         {
@@ -82,8 +71,6 @@
                             </span>
                         }
                     </td>
-
-                    <!-- Thao tác -->
                     <td>
                         <div class="btn-group" role="group">
                             <a asp-action="Details" asp-route-id="@item.MaSach"
@@ -111,6 +98,50 @@
     </table>
 </div>
 
+<!-- PHÂN TRANG -->
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Page navigation" class="mt-3 d-flex justify-content-center">
+        <ul class="pagination">
+            @if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-searchString="@ViewData["CurrentFilter"]">« Trước</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">« Trước</span>
+                </li>
+            }
+
+            <li class="page-item disabled">
+                <span class="page-link">Trang @Model.PageIndex / @Model.TotalPages</span>
+            </li>
+
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-searchString="@ViewData["CurrentFilter"]">Sau »</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">Sau »</span>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+
 <!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -137,7 +168,6 @@
 
 @section Scripts {
     <script>
-        // Xử lý khi mở modal xác nhận xoá
         const deleteModal = document.getElementById('confirmDeleteModal');
         deleteModal.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using webBanSach.Helpers;
 using webBanSach.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -17,16 +18,17 @@ namespace webBanSach.Areas.Admin.Controllers
         }
 
         // GET: Admin/TacGia
-        public async Task<IActionResult> Index(string? searchString)
+        public async Task<IActionResult> Index(string? searchString, int pageNumber = 1)
         {
+            int pageSize = 10; // số item mỗi trang
             var query = _context.TacGias.AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 query = query.Where(n => n.TenTG.Contains(searchString));
             }
-
-            return View(await query.OrderBy(n => n.MaTG).ToListAsync());
+            var pagedList = await PaginatedList<TacGia>.CreateAsync(query, pageNumber, pageSize);
+            return View(pagedList);
         }
 
         // GET: Admin/TacGia/Details/5

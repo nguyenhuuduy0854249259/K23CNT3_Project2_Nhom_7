@@ -1,8 +1,8 @@
-﻿@model IEnumerable<webBanSach.Models.TacGia>
+﻿@model webBanSach.Helpers.PaginatedList<webBanSach.Models.TacGia>
 
 @{
     ViewData["Title"] = "Quản lý tác giả";
-    var total = Model.Count();
+    var total = Model.Count; // tổng số bản ghi của trang hiện tại
 }
 
 <div class="container mt-4">
@@ -10,7 +10,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold text-dark mb-0">
             <i class="bi bi-person-lines-fill text-primary"></i> @ViewData["Title"]
-            <small class="text-muted fs-6">(@total tác giả)</small>
+            <small class="text-muted fs-6">(@total bản ghi trong trang)</small>
         </h2>
         <a asp-action="Create" class="btn btn-success shadow-sm">
             <i class="bi bi-plus-circle"></i> Thêm tác giả
@@ -96,6 +96,42 @@
             </div>
         </div>
     </div>
+
+    <!-- PHÂN TRANG -->
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-searchString="@Context.Request.Query["searchString"]">
+                        Trước
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-pageNumber="@i"
+                           asp-route-searchString="@Context.Request.Query["searchString"]">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-searchString="@Context.Request.Query["searchString"]">
+                        Sau
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    }
 </div>
 
 <!-- Modal xác nhận xóa -->

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using webBanSach.Helpers;
 using webBanSach.Models;
 
 namespace webBanSach.Areas.Admin.Controllers
@@ -14,22 +15,28 @@ namespace webBanSach.Areas.Admin.Controllers
         }
 
         // GET: Admin/DanhGia
-        public async Task<IActionResult> Index(string? search)
+        public async Task<IActionResult> Index(string? search, int pageNumber = 1)
         {
-            var q = _context.DanhGias
+            int pageSize = 10;
+
+            var query = _context.DanhGias
                 .Include(d => d.MaNDNavigation)
                 .Include(d => d.MaSachNavigation)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                q = q.Where(d => d.MaNDNavigation.HoTen.Contains(search)
-                              || d.MaSachNavigation.TenSach.Contains(search));
+                query = query.Where(d =>
+                    d.MaNDNavigation.HoTen.Contains(search) ||
+                    d.MaSachNavigation.TenSach.Contains(search));
             }
 
-            var list = await q.OrderByDescending(d => d.NgayDG).ToListAsync();
-            return View(list);
+            query = query.OrderByDescending(d => d.NgayDG);
+
+            var pagedList = await PaginatedList<DanhGia>.CreateAsync(query, pageNumber, pageSize);
+            return View(pagedList);
         }
+
 
         // POST: Admin/DanhGia/Delete/5
         [HttpPost]

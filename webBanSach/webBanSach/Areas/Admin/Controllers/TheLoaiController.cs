@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using webBanSach.Helpers;
 using webBanSach.Models;
 
 namespace webBanSach.Areas.Admin.Controllers
@@ -16,8 +17,9 @@ namespace webBanSach.Areas.Admin.Controllers
 
         // GET: Admin/TheLoai
         // GET: Admin/TheLoai
-        public async Task<IActionResult> Index(string? searchString)
+        public async Task<IActionResult> Index(string? searchString,int pageNumber = 1)
         {
+            int pageSize = 10; // số item mỗi trang
             var query = _context.TheLoais.AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
@@ -28,7 +30,8 @@ namespace webBanSach.Areas.Admin.Controllers
             // ✅ Sắp xếp theo MaLoai tăng dần
             query = query.OrderBy(l => l.MaLoai);
 
-            return View(await query.ToListAsync());
+            var pagedList = await PaginatedList<TheLoai>.CreateAsync(query, pageNumber, pageSize);
+            return View(pagedList);
         }
 
 

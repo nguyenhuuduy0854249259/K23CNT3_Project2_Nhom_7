@@ -41,10 +41,6 @@
       "PackagePath": "staticwebassets\\images\\logo.jpg"
     },
     {
-      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\028a85d9-81ca-415e-a491-b082a7954a95.jpg",
-      "PackagePath": "staticwebassets\\images\\nguoidung\\028a85d9-81ca-415e-a491-b082a7954a95.jpg"
-    },
-    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\06e23221-94f9-455a-9907-ef8ad4016001.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\06e23221-94f9-455a-9907-ef8ad4016001.jpg"
     },
@@ -61,6 +57,10 @@
       "PackagePath": "staticwebassets\\images\\nguoidung\\4a7a0820-bee3-414e-b3b4-b9e2bbf44973.jpg"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\51823901-64e4-420c-a64f-b5fa9f208fa4.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\51823901-64e4-420c-a64f-b5fa9f208fa4.jpg"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\5945d238-b1cc-4fcd-909f-7d8d3bc47591.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\5945d238-b1cc-4fcd-909f-7d8d3bc47591.jpg"
     },
@@ -71,6 +71,10 @@
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\66f9d070-329c-4a6c-a363-ddca09adbef5.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\66f9d070-329c-4a6c-a363-ddca09adbef5.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\6bd22dd5-d2b0-462d-a0da-0873334d050d.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\6bd22dd5-d2b0-462d-a0da-0873334d050d.jpg"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\97f8289d-0e6e-473e-bfd9-2c7bb28e349e.jpg",
@@ -97,12 +101,24 @@
       "PackagePath": "staticwebassets\\images\\nguoidung\\b2eca1f5-53ba-4ffe-a4d0-57eb10424360.jpg"
     },
     {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\d524b0d2-74d0-4e45-91b0-df9c06b287ca.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\d524b0d2-74d0-4e45-91b0-df9c06b287ca.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\default.jpg",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\default.jpg"
+    },
+    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung14_Screenshot 2024-09-10 090142.png",
       "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung14_Screenshot 2024-09-10 090142.png"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung14_anhsv1.jpg",
       "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung14_anhsv1.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung15_nguoidung14_Screenshot 2024-09-10 090142.png",
+      "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung15_nguoidung14_Screenshot 2024-09-10 090142.png"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\nguoidung\\nguoidung17_book2.jpg",
@@ -117,24 +133,68 @@
       "PackagePath": "staticwebassets\\images\\nguoidung\\nguoidung19_book1.jpg"
     },
     {
-      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\book2.jpg",
-      "PackagePath": "staticwebassets\\images\\sach\\book2.jpg"
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Cổ Tích Việt Nam Bằng Thơ.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Cổ Tích Việt Nam Bằng Thơ.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Kho Tàng Truyện Cổ Tích Việt Nam.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Kho Tàng Truyện Cổ Tích Việt Nam.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Mua Đắc Nhân Tâm (Khổ Lớn) tại Chính Thông.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Mua Đắc Nhân Tâm (Khổ Lớn) tại Chính Thông.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Truyện Cổ Tích Việt Nam - Tập 1.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Truyện Cổ Tích Việt Nam - Tập 1.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Truyện Cổ Tích Việt Nam - Tập 2.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Truyện Cổ Tích Việt Nam - Tập 2.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Truyện Cổ Tích Việt Nam Dành Cho Bé.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Truyện Cổ Tích Việt Nam Dành Cho Bé.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Truyện Cổ Tích Việt Nam Hay Nhất.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Truyện Cổ Tích Việt Nam Hay Nhất.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Truyện Cổ Việt Nam Chọn Lọc.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Truyện Cổ Việt Nam Chọn Lọc.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Tuyển Tập Truyện Cổ Tích Việt Nam Dành Cho Thiếu Nhi.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Tuyển Tập Truyện Cổ Tích Việt Nam Dành Cho Thiếu Nhi.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\Tổng hợp những truyện cổ nổi bật nhất trong kho tàng dân gian Việt Nam..jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\Tổng hợp những truyện cổ nổi bật nhất trong kho tàng dân gian Việt Nam..jpg"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\chi pheo.jpg",
       "PackagePath": "staticwebassets\\images\\sach\\chi pheo.jpg"
     },
     {
-      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\cotinhvn.jpg",
-      "PackagePath": "staticwebassets\\images\\sach\\cotinhvn.jpg"
-    },
-    {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\date_a_live1.jpg",
       "PackagePath": "staticwebassets\\images\\sach\\date_a_live1.jpg"
     },
     {
-      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\nha_gia_kim.jpg",
-      "PackagePath": "staticwebassets\\images\\sach\\nha_gia_kim.jpg"
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\de-men-phieu-luu-ky.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\de-men-phieu-luu-ky.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\lao-hac.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\lao-hac.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\mat-biec.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\mat-biec.jpg"
+    },
+    {
+      "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\images\\sach\\truyen-kieu.jpg",
+      "PackagePath": "staticwebassets\\images\\sach\\truyen-kieu.jpg"
     },
     {
       "Id": "D:\\Project2\\K23CNT3_VuTienDuc_Project2\\webBanSach\\webBanSach\\wwwroot\\js\\jquery-2.1.4.min.js",

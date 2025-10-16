@@ -1,4 +1,5 @@
-﻿@model IEnumerable<webBanSach.Models.DanhGia>
+﻿
+@model webBanSach.Helpers.PaginatedList<webBanSach.Models.DanhGia>
 @{
     ViewData["Title"] = "Quản lý Bình luận & Đánh giá";
 }
@@ -62,7 +63,16 @@ else
                             }
                         </td>
 
-                        <td>@(string.IsNullOrEmpty(dg.BinhLuan) ? "<i class='text-muted'>Không có bình luận</i>" : dg.BinhLuan)</td>
+                        <td>
+                            @if (string.IsNullOrEmpty(dg.BinhLuan))
+                            {
+                                <span class="text-muted fst-italic">Không có bình luận</span>
+                            }
+                            else
+                            {
+                                @dg.BinhLuan
+                            }
+                        </td>
 
                         <td class="text-center">
                             <button class="btn btn-sm btn-outline-danger"
@@ -75,7 +85,9 @@ else
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content border-0 shadow-lg rounded-3">
                                         <div class="modal-header bg-danger text-white">
-                                            <h5 class="modal-title"><i class="fa-solid fa-triangle-exclamation me-2"></i>Xác nhận xóa</h5>
+                                            <h5 class="modal-title">
+                                                <i class="fa-solid fa-triangle-exclamation me-2"></i>Xác nhận xóa
+                                            </h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">
@@ -90,6 +102,7 @@ else
                                         </div>
                                         <div class="modal-footer">
                                             <form asp-action="DeleteConfirmed" method="post">
+                                                @Html.AntiForgeryToken()
                                                 <input type="hidden" name="id" value="@dg.MaDG" />
                                                 <button type="submit" class="btn btn-danger">
                                                     <i class="fa-solid fa-trash-can"></i> Xóa
@@ -108,7 +121,33 @@ else
             </tbody>
         </table>
     </div>
+
+    <!-- PHÂN TRANG -->
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-search="@Context.Request.Query["search"]">«</a>
+            </li>
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                    <a class="page-link" asp-action="Index"
+                       asp-route-pageNumber="@i"
+                       asp-route-search="@Context.Request.Query["search"]">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-search="@Context.Request.Query["search"]">»</a>
+            </li>
+        </ul>
+    </nav>
 }
 
-<!-- Font Awesome CDN -->
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />

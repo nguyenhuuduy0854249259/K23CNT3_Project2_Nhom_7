@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using webBanSach.Helpers;
 using webBanSach.Models;
 
 namespace webBanSach.Areas.Admin.Controllers
@@ -15,17 +16,22 @@ namespace webBanSach.Areas.Admin.Controllers
         }
 
         // GET: Admin/NhaXuatBan
-        public async Task<IActionResult> Index(string? searchString)
+        public async Task<IActionResult> Index(string? searchString, int pageNumber = 1)
         {
+            int pageSize = 10;
+            ViewData["CurrentFilter"] = searchString;
+
             var query = _context.NhaXuatBans.AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
-            {
                 query = query.Where(n => n.TenNXB.Contains(searchString));
-            }
 
-            return View(await query.OrderBy(n => n.MaNXB).ToListAsync());
+            query = query.OrderBy(n => n.MaNXB);
+
+            var pagedList = await PaginatedList<NhaXuatBan>.CreateAsync(query, pageNumber, pageSize);
+            return View(pagedList);
         }
+
 
         // GET: Admin/NhaXuatBan/Details/5
         public async Task<IActionResult> Details(int? id)
